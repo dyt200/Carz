@@ -1,21 +1,22 @@
 package com.example.carz.Objects;
 
 public class Car {
-    public int id;
-    public int manufacturer;
-    public int type;
-    public int user;
-    public int year;
-    public int mileage;
-    public String title;
-    public String description;
-    public String condition;
-    public String image1;
-    public String image2;
+    private int id;
+    private int manufacturer;
+    private int type;
+    private int user;
+    private int year;
+    private int mileage;
+    private String title;
+    private String description;
+    private String condition;
+    private String image1;
+    private String image2;
 
-    public Car (int id, int type, int user, int year, int mileage, String title, String description, String condition, String image1, String image2) {
+    public Car (int id, int type, int manufacturer, int user, int year, int mileage, String title, String description, String condition, String image1, String image2) {
         this.id = id;
         this.type = type;
+        this.manufacturer = manufacturer;
         this.user = user;
         this.year = year;
         this.mileage = mileage;
@@ -46,9 +47,7 @@ public class Car {
         return type;
     }
 
-    public void setType(int type) {
-        this.type = type;
-    }
+    public void setType(int type) { this.type = type; }
 
     public int getUser() {
         return user;

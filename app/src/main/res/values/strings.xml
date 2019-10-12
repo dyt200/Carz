@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">Carz</string>
+    <string name="carImage">Image of the car</string>
     <string name="createAccount">Create an account</string>
     <string name="email">Email</string>
     <string name="login">Login</string>
+    <string name="manufacturer_1">BMW</string>
+    <string name="manufacturer_2">Opal</string>
+    <string name="manufacturer_3">Skoda</string>
     <string name="or">- OR -</string>
     <string name="password">Password</string>
 </resources>
