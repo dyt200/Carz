@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:layout_margin="10dp">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
     <ImageView
         android:id="@+id/listImage"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginHorizontal="10dp"
         android:contentDescription="@string/carImage"/>
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -20,23 +19,27 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:textColor="@color/textDark"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:text="@string/test"/>
         <TextView
             android:id="@+id/listYear"
             android:layout_width="100dp"
             android:layout_height="20dp"
             android:layout_below="@+id/listTitle"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            android:text="@string/test"/>
         <TextView
             android:id="@+id/listMileage"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_toEndOf="@+id/listYear"
-            android:layout_below="@id/listTitle"/>
+            android:layout_below="@id/listTitle"
+            android:text="@string/test"/>
         <TextView
             android:id="@+id/listManufacturer"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_below="@+id/listYear"/>
+            android:layout_below="@+id/listYear"
+            android:text="@string/test"/>
     </RelativeLayout>
 </RelativeLayout>
