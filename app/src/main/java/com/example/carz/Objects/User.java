@@ -1,18 +1,20 @@
 package com.example.carz.Objects;
 
 public class User {
-    public int id;
-    public String firstName;
-    public String lastName;
-    public String email;
-    public String telephone;
-    public String address;
+    private int id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String telephone;
+    private String password;
+    private String address;
 
-    public User(int id, String firstName, String lastName, String email, String telephone, String address) {
+    public User(int id, String firstName, String lastName, String email,String password, String telephone, String address) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.password = password;
         this.telephone = telephone;
         this.address = address;
     }
@@ -48,6 +50,10 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getPassword() { return password; }
+
+    public void setPassword(String password) { this.password = password; }
 
     public String getTelephone() {
         return telephone;

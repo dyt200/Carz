@@ -1,8 +1,23 @@
 <resources>
+    <string name="addressCreate">Address :</string>
     <string name="app_name">Carz</string>
+    <string name="carImage">Image of the car</string>
     <string name="createAccount">Create an account</string>
     <string name="email">Email</string>
+    <string name="emailCreate">Email :</string>
+    <string name="firstNameCreate">First name :</string>
+    <string name="lastNameCreate">Surname :</string>
     <string name="login">Login</string>
+    <string name="manufacturer_1">BMW</string>
+    <string name="manufacturer_2">Opal</string>
+    <string name="manufacturer_3">Skoda</string>
     <string name="or">- OR -</string>
     <string name="password">Password</string>
+    <string name="passwordCreate">Password :</string>
+    <string name="passwordCreate2">Re-type password :</string>
+    <string name="search">Search</string>
+    <string name="submit">Submit</string>
+    <string name="telephoneCreate">Telephone :</string>
+    <string name="test">Test</string>
+    <string name="user">User</string>
 </resources>
