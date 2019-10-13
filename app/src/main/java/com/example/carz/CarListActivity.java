@@ -9,6 +9,7 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.carz.Objects.Car;
+import com.example.carz.Objects.CarAdapter;
 
 import java.util.ArrayList;
 

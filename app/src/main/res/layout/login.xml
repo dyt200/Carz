@@ -56,5 +56,6 @@
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/createAccount"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/or"/>
+        android:layout_below="@+id/or"
+        android:onClick="createUser"/>
 </RelativeLayout>

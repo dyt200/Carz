@@ -46,6 +46,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void createUser(View view) {
+        Intent intent = new Intent(this, CreateUserActivity.class);
+        startActivity(intent);
+    }
+
     private boolean checkLogin(String email, String pass) {
         User[] users = new User[3];
         users[0] = new User(1, "Ben", "Pocklington", "ben@test.com", "test", "0791234567", "Route de Test 16, Ayent, Valais, Suisse");
@@ -56,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
             if(user.getEmail().equals(email) && user.getPassword().equals(pass))
                 return true;
         }
-
         return false;
     }
 }

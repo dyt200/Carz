@@ -1,4 +1,4 @@
-package com.example.carz;
+package com.example.carz.Objects;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.carz.Objects.Car;
+import com.example.carz.R;
+
 import java.util.ArrayList;
 
 public class CarAdapter extends ArrayAdapter<Car> {
