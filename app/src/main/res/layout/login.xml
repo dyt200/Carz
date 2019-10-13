@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_centerHorizontal="true"
+        android:inputType="textEmailAddress"
         android:layout_below="@id/emailT"/>
     <TextView
         android:id="@+id/passwordT"
@@ -39,6 +40,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/password"
         android:layout_marginTop="20dp"
+        android:onClick="login"
         android:text="@string/login"/>
     <TextView
         android:id="@+id/or"
