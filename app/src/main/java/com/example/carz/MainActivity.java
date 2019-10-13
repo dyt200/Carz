@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         users[0] = new User(1, "Ben", "Pocklington", "ben@test.com", "test", "0791234567", "Route de Test 16, Ayent, Valais, Suisse");
         users[1] = new User(2, "Dylan", "Thompson", "dylan@test.com", "test","0791234567", "Route de Test 16, Ayent, Valais, Suisse");
         users[2] = new User(3, "Cloud", "Strife", "cloud@test.com", "test","0791234567", "No. 1, Sector 7, Midgar");
+        users[0] = new User(1, "test", "test", "a", "a", "0791234567", "Route de Test 16, Ayent, Valais, Suisse");
 
         for (User user : users) {
             if(user.getEmail().equals(email) && user.getPassword().equals(pass))

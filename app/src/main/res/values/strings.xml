@@ -20,4 +20,21 @@
     <string name="telephoneCreate">Telephone :</string>
     <string name="test">Test</string>
     <string name="user">User</string>
+
+    <string-array name="type_array">
+        <item>Limousine</item>
+        <item>Coupé</item>
+        <item>Cabriolet</item>
+        <item>Monster-truck</item>
+        <item>Karting</item>
+    </string-array>
+
+    <string-array name="make_array">
+        <item>Skoda</item>
+        <item>BWM</item>
+        <item>Elon Musk</item>
+        <item>Opel</item>
+        <item>Renault</item>
+        <item>VW</item>
+    </string-array>
 </resources>
