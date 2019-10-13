@@ -1,5 +1,6 @@
 package com.example.carz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -59,7 +60,8 @@ public class CarListActivity  extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.listActionSearch:
-                System.out.println("SEARCH MENU OPENS");
+                Intent intent = new Intent(this, SearchParameters.class);
+                startActivity(intent);
                 return true;
 
             case R.id.listActionUser:
