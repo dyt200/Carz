@@ -1,15 +1,15 @@
 package com.example.carz;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
+import androidx.appcompat.app.AppCompatActivity;
 import com.example.carz.Objects.Car;
-
 import java.util.ArrayList;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -17,6 +17,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.car_list);
         ListView carList = findViewById(R.id.carList);
 
+        //test data
         ArrayList<Car> cars = new ArrayList<>();
         cars.add( new Car(1, 1, 1, 1,2015, 85000, "BMW 6 Series", "","","car_example_1",""));
         cars.add( new Car(2, 1, 2, 1,2008, 126500, "Skoda Octavia 2008 TDI", "","","car_example_2",""));
@@ -39,7 +40,30 @@ public class MainActivity extends Activity {
                 0,
                 cars
         );
-
         carList.setAdapter(adapter);
+
+        // Get ActionBar
+        getSupportActionBar();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.car_list_action_bar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.listActionSearch:
+                System.out.println("SEARCH MENU OPENS");
+                return true;
+
+            case R.id.listActionUser:
+                System.out.println("USER MENU OPENS");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

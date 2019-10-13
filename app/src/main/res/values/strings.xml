@@ -9,5 +9,7 @@
     <string name="manufacturer_3">Skoda</string>
     <string name="or">- OR -</string>
     <string name="password">Password</string>
+    <string name="search">Search</string>
     <string name="test">Test</string>
+    <string name="user">User</string>
 </resources>
