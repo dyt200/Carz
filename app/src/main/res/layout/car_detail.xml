@@ -27,39 +27,50 @@
             android:layout_height="match_parent"
             android:paddingTop="15dp"
             android:layout_below="@id/carTitle">
-            <TextView
-                android:id="@+id/carType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textLight"
-                android:textSize="20sp" />
-            <TextView
-                android:id="@+id/carManufacturer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:layout_toEndOf="@+id/carType"
+            <LinearLayout
+                android:id="@+id/line1"
+                android:layout_width = "fill_parent"
+                android:layout_height = "wrap_content"
+                android:orientation="horizontal"
+                android:weightSum = "2">
+                <TextView
+                    android:id="@+id/carType"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textLight"
+                    android:textSize="20sp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/carManufacturer"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textLight"
+                    android:textSize="20sp"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/line2"
+                android:layout_width = "fill_parent"
+                android:layout_height = "wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/line1"
+                android:weightSum = "2">
+                <TextView
+                    android:id="@+id/carYear"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textLight"
+                    android:textSize="20sp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/carMileage"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textLight"
+                    android:textSize="20sp"
+                    android:layout_weight="1"/>
+            </LinearLayout>
 
-                android:textColor="@color/textLight"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/carYear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textLight"
-                android:layout_below="@+id/carType"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/carMileage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:layout_toEndOf="@+id/carYear"
-                android:layout_below="@+id/carManufacturer"
-                android:textColor="@color/textLight"
-                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/descriptionLabel"
@@ -69,7 +80,7 @@
                 android:textSize="20sp"
                 android:textColor="@color/textDark"
                 android:text="Description"
-                android:layout_below="@+id/carMileage">
+                android:layout_below="@+id/line2">
             </TextView>
             <TextView
                 android:id="@+id/description"
