@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".CarDetailActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,11 +24,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SearchParameters"
+        <activity
+            android:name=".SearchParametersActivity"
             android:parentActivityName=".CarListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".CarListActivity"/>
+                android:value=".CarListActivity" />
         </activity>
         <activity android:name=".CreateUserActivity">
             <intent-filter>
