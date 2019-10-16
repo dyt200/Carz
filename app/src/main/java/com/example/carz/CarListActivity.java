@@ -51,12 +51,11 @@ public class CarListActivity  extends AppCompatActivity {
 
         final Intent detailIntent = new Intent(this, CarDetailActivity.class);
 
-
+        //listener for search parameters button
         carList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                Car car = cars.get(position);
-               System.out.println(car.getId() + " ---------------------");
                detailIntent.putExtra("carObj", car);
                startActivity(detailIntent);
             }
@@ -67,7 +66,6 @@ public class CarListActivity  extends AppCompatActivity {
         getSupportActionBar();
 
     }
-    // ListView on item selected listener.
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -78,6 +76,7 @@ public class CarListActivity  extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
+
             case R.id.listActionSearch:
                 Intent intent = new Intent(this, SearchParametersActivity.class);
                 startActivity(intent);
@@ -86,6 +85,7 @@ public class CarListActivity  extends AppCompatActivity {
             case R.id.listActionUser:
                 System.out.println("USER MENU OPENS");
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
