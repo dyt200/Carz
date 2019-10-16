@@ -42,6 +42,7 @@ public class CarListActivity  extends AppCompatActivity {
         cars.add( new Car(14, 1, 3, 1,2001, 180000, "Opal Corsa 1.2L", "","","car_example_4",""));
         cars.add( new Car(15, 1, 1, 1,2010, 95000, "BMW Coupé 2010", "","","car_example_1",""));
 
+        //creates instance of customised adapter for listView
         ArrayAdapter<Car> adapter = new CarAdapter(
                 this,
                 0,
@@ -51,7 +52,7 @@ public class CarListActivity  extends AppCompatActivity {
 
         final Intent detailIntent = new Intent(this, CarDetailActivity.class);
 
-        //listener for search parameters button
+        //listener for car details
         carList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -61,10 +62,8 @@ public class CarListActivity  extends AppCompatActivity {
             }
         });
 
-
         // Get ActionBar
         getSupportActionBar();
-
     }
 
     @Override
