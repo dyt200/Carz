@@ -3,24 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="30dp">
-
     <TextView
         android:id="@+id/type_label"
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:text="Type:"/>
+        android:text="@string/typeField"/>
     <Spinner
         android:id="@+id/type_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_below="@+id/type_label"/>
-
     <TextView
         android:id="@+id/make_label"
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:text="Make:"
+        android:text="@string/makeField"
         android:layout_below="@+id/type_spinner"/>
     <Spinner
         android:id="@+id/make_spinner"
@@ -28,56 +26,50 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_below="@+id/make_label"/>
-
-
     <TextView
+        android:labelFor="@+id/model_text"
         android:id="@+id/model_label"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:text="Model:"
+        android:text="@string/modelField"
         android:layout_below="@+id/make_spinner"/>
-
     <EditText
         android:id="@+id/model_text"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/model_label"/>
-
     <TextView
         android:id="@+id/mileage_label"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:text="Mileage:"
+        android:text="@string/mileageField"
         android:layout_below="@+id/model_text"/>
-
     <EditText
         android:id="@+id/mileage_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:layout_below="@+id/mileage_label"/>
-
     <TextView
         android:id="@+id/year_label"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:text="Year:"
+        android:text="@string/yearField"
         android:layout_below="@+id/mileage_text"/>
-
     <EditText
         android:id="@+id/year_text"
+        android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/year_label"/>
-
     <Button
         android:id="@+id/btn_pick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Search"
-        android:textSize="15dp"
+        android:text="@string/search"
+        android:textSize="15sp"
         android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/year_text"/>
-
 </RelativeLayout>

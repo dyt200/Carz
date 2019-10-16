@@ -8,9 +8,12 @@
     <string name="firstNameCreate">First name :</string>
     <string name="lastNameCreate">Surname :</string>
     <string name="login">Login</string>
+    <string name="makeField">Manufacturer :</string>
     <string name="manufacturer_1">BMW</string>
     <string name="manufacturer_2">Opal</string>
     <string name="manufacturer_3">Skoda</string>
+    <string name="mileageField">Mileage :</string>
+    <string name="modelField">Model :</string>
     <string name="or">- OR -</string>
     <string name="password">Password</string>
     <string name="passwordCreate">Password :</string>
@@ -18,8 +21,10 @@
     <string name="search">Search</string>
     <string name="submit">Submit</string>
     <string name="telephoneCreate">Telephone :</string>
+    <string name="typeField">Type :</string>
     <string name="test">Test</string>
     <string name="user">User</string>
+    <string name="yearField">Year :</string>
 
     <string-array name="type_array">
         <item>Limousine</item>
@@ -37,4 +42,5 @@
         <item>Renault</item>
         <item>VW</item>
     </string-array>
+
 </resources>
