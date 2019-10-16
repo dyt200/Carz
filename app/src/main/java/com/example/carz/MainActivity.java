@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.carz.Objects.Car;
+import com.example.carz.Objects.CarList;
 import com.example.carz.Objects.User;
 
 import java.util.ArrayList;
@@ -33,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
         String pass = passT.getText().toString();
 
         if(checkLogin(email, pass)) {
+            CarList cars = new CarList();
             Intent intent = new Intent(this, CarListActivity.class);
+            intent.putExtra("carList", cars.getList());
             startActivity(intent);
         } else {
             passT.setText("");

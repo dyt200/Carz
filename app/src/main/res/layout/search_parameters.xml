@@ -40,29 +40,73 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/model_label"/>
     <TextView
-        android:id="@+id/mileage_label"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:text="@string/mileageField"
-        android:layout_below="@+id/model_text"/>
-    <EditText
-        android:id="@+id/mileage_text"
-        android:layout_width="match_parent"
+        android:id="@+id/mileage_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:layout_below="@+id/mileage_label"/>
+        android:layout_below="@id/model_text"
+        android:text="@string/mileage"/>
     <TextView
-        android:id="@+id/year_label"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:text="@string/yearField"
-        android:layout_below="@+id/mileage_text"/>
-    <EditText
-        android:id="@+id/year_text"
-        android:inputType="number"
+        android:id="@+id/min_mileage_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/year_label"/>
+        android:layout_below="@id/mileage_title"
+        android:textColor="@color/textLight"
+        android:textSize="14sp"
+        android:text="@string/min"/>
+    <EditText
+        android:id="@+id/min_mileage"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/min_mileage_label"
+        android:inputType="number"/>
+    <TextView
+        android:id="@+id/max_mileage_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/min_mileage"
+        android:textColor="@color/textLight"
+        android:textSize="14sp"
+        android:text="@string/max"/>
+    <EditText
+        android:id="@+id/max_mileage"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/max_mileage_label"
+        android:inputType="number"/>
+    <TextView
+        android:id="@+id/year_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/max_mileage"
+        android:text="@string/year"/>
+    <TextView
+        android:id="@+id/min_year_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/year_title"
+        android:textColor="@color/textLight"
+        android:textSize="14sp"
+        android:text="@string/min"/>
+    <EditText
+        android:id="@+id/min_year"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/min_year_label"
+        android:inputType="number"/>
+    <TextView
+        android:id="@+id/max_year_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/min_year"
+        android:textColor="@color/textLight"
+        android:textSize="14sp"
+        android:text="@string/max"/>
+    <EditText
+        android:id="@+id/max_year"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/max_year_label"
+        android:inputType="number"/>
     <Button
         android:id="@+id/btn_pick"
         android:layout_width="wrap_content"
@@ -71,5 +115,6 @@
         android:textSize="15sp"
         android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/year_text"/>
+        android:layout_below="@+id/max_year"
+        android:onClick="search"/>
 </RelativeLayout>
