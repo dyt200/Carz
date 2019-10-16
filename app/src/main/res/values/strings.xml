@@ -10,10 +10,13 @@
     <string name="firstNameCreate">First name :</string>
     <string name="lastNameCreate">Surname :</string>
     <string name="login">Login</string>
+    <string name="max">Max :</string>
+    <string name="min">Min :</string>
     <string name="makeField">Manufacturer :</string>
     <string name="manufacturer_1">BMW</string>
     <string name="manufacturer_2">Opal</string>
     <string name="manufacturer_3">Skoda</string>
+    <string name="mileage">Mileage</string>
     <string name="mileageField">Mileage :</string>
     <string name="modelField">Model :</string>
     <string name="or">- OR -</string>
@@ -26,23 +29,29 @@
     <string name="typeField">Type :</string>
     <string name="test">Test</string>
     <string name="user">User</string>
+    <string name="year">Year</string>
     <string name="yearField">Year :</string>
 
     <string-array name="type_array">
-        <item>Limousine</item>
+        <item>Family</item>
         <item>Coupé</item>
         <item>Cabriolet</item>
-        <item>Monster-truck</item>
-        <item>Karting</item>
     </string-array>
+    <integer-array name="type_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </integer-array>
 
     <string-array name="make_array">
         <item>Skoda</item>
         <item>BWM</item>
-        <item>Elon Musk</item>
         <item>Opel</item>
-        <item>Renault</item>
-        <item>VW</item>
     </string-array>
+    <integer-array name="make_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </integer-array>
 
 </resources>
