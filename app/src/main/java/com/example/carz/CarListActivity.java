@@ -1,15 +1,20 @@
 package com.example.carz;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.carz.Objects.Car;
@@ -77,6 +82,26 @@ public class CarListActivity  extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        final String[] option = {"User", "Edit Details"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, option);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        final AlertDialog userMenu = builder.create();
+        userMenu.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        WindowManager.LayoutParams wmlp = userMenu.getWindow().getAttributes();
+        wmlp.gravity = Gravity.TOP | Gravity.START;
+        wmlp.x = 50;   //x position
+        wmlp.y = 0;   //y position
+
+
+
         switch(item.getItemId()) {
             case R.id.listActionSearch:
                 Intent intent = new Intent(this, SearchParametersActivity.class);
@@ -84,6 +109,7 @@ public class CarListActivity  extends AppCompatActivity {
                 return true;
 
             case R.id.listActionUser:
+                userMenu.show();
                 System.out.println("USER MENU OPENS");
                 return true;
             default:
