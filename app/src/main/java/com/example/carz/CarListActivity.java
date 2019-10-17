@@ -1,9 +1,11 @@
 package com.example.carz;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -82,24 +85,6 @@ public class CarListActivity  extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        final String[] option = {"User", "Edit Details"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, option);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-
-        final AlertDialog userMenu = builder.create();
-        userMenu.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        WindowManager.LayoutParams wmlp = userMenu.getWindow().getAttributes();
-        wmlp.gravity = Gravity.TOP | Gravity.START;
-        wmlp.x = 50;   //x position
-        wmlp.y = 0;   //y position
-
 
 
         switch(item.getItemId()) {
@@ -109,7 +94,28 @@ public class CarListActivity  extends AppCompatActivity {
                 return true;
 
             case R.id.listActionUser:
+                // custom dialog
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+                LayoutInflater inflater = getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.user_menu_dialog,null);
+                builder.setView(dialogView);
+
+                TextView text = (TextView) dialogView.findViewById(R.id.text);
+                text.setText("USER MENU");
+
+                AlertDialog userMenu = builder.create();
+                userMenu.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                WindowManager.LayoutParams wmlp = userMenu.getWindow().getAttributes();
+                wmlp.gravity = Gravity.TOP | Gravity.START;
+                wmlp.x = 50;   //x position
+                wmlp.y = 0;   //y position
+
+
+
                 userMenu.show();
+
                 System.out.println("USER MENU OPENS");
                 return true;
             default:
