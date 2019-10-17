@@ -59,11 +59,5 @@ public class CarDetailActivity extends AppCompatActivity {
         TextView userMailTextView = findViewById(R.id.mail);
         String mail = "Mail of user: " + car.getUser();
         userMailTextView.setText(mail);
-
-
-
-
-
-
     }
 }

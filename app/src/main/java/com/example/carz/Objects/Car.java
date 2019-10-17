@@ -111,7 +111,9 @@ public class Car implements Serializable {
         return image2;
     }
 
-    public void setImage2(String image2) {
-        this.image2 = image2;
+    public void setImage2(String image2) { this.image2 = image2; }
+
+    public void ToString() {
+        System.out.println(", Type : "+type+", Make : "+manufacturer+", Year : "+year+", Mileage : "+mileage);
     }
 }

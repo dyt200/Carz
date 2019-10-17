@@ -3,81 +3,133 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="30dp">
-
     <TextView
         android:id="@+id/type_label"
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:text="Type:"/>
+        android:text="@string/typeField"/>
     <Spinner
         android:id="@+id/type_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="20dp"
         android:layout_below="@+id/type_label"/>
-
     <TextView
         android:id="@+id/make_label"
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:text="Make:"
+        android:text="@string/makeField"
         android:layout_below="@+id/type_spinner"/>
     <Spinner
         android:id="@+id/make_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="20dp"
         android:layout_below="@+id/make_label"/>
-
-
     <TextView
+        android:labelFor="@+id/model_text"
         android:id="@+id/model_label"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:text="Model:"
+        android:text="@string/modelField"
         android:layout_below="@+id/make_spinner"/>
-
     <EditText
         android:id="@+id/model_text"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/model_label"/>
-
+        android:layout_below="@+id/model_label"
+        android:layout_marginBottom="20dp"/>
     <TextView
-        android:id="@+id/mileage_label"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:text="Mileage:"
-        android:layout_below="@+id/model_text"/>
+        android:id="@+id/mileage_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/model_text"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/mileage"/>
+    <TextView
+        android:id="@+id/min_mileage_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mileage_title"
+        android:textColor="@color/textLight"
+        android:textSize="12sp"
+        android:text="@string/min"/>
+    <EditText
+        android:id="@+id/min_mileage"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/min_mileage_label"
+        android:inputType="number"/>
+    <TextView
+        android:id="@+id/max_mileage_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mileage_title"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/textLight"
+        android:textSize="12sp"
+        android:text="@string/max"/>
 
     <EditText
-        android:id="@+id/mileage_text"
-        android:layout_width="match_parent"
+        android:id="@+id/max_mileage"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:layout_below="@+id/mileage_label"/>
+        android:layout_below="@id/max_mileage_label"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="-100dp"
+        android:layout_toStartOf="@id/max_mileage_label"
+        android:inputType="number" />
 
     <TextView
-        android:id="@+id/year_label"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:text="Year:"
-        android:layout_below="@+id/mileage_text"/>
-
-    <EditText
-        android:id="@+id/year_text"
-        android:layout_width="match_parent"
+        android:id="@+id/year_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/year_label"/>
-
+        android:layout_below="@id/max_mileage"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/year"/>
+    <TextView
+        android:id="@+id/min_year_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/year_title"
+        android:textColor="@color/textLight"
+        android:textSize="12sp"
+        android:text="@string/min"/>
+    <EditText
+        android:id="@+id/min_year"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/min_year_label"
+        android:inputType="number"/>
+    <TextView
+        android:id="@+id/max_year_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/year_title"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/textLight"
+        android:textSize="12sp"
+        android:text="@string/max"/>
+    <EditText
+        android:id="@+id/max_year"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/max_year_label"
+        android:layout_centerHorizontal="true"
+        android:layout_toStartOf="@id/max_year_label"
+        android:layout_marginEnd="-60dp"
+        android:inputType="number" />
     <Button
         android:id="@+id/btn_pick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Search"
-        android:textSize="15dp"
+        android:text="@string/search"
+        android:textSize="15sp"
         android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/year_text"/>
-
+        android:layout_below="@+id/max_year"
+        android:onClick="search"/>
 </RelativeLayout>

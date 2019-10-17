@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.example.carz.Objects.Car;
 import com.example.carz.R;
 
 import java.util.ArrayList;
@@ -59,9 +58,9 @@ public class CarAdapter extends ArrayAdapter<Car> {
         String string;
 
         switch(id) {
-            case 1:     string = "BMW";       break;
-            case 2:     string = "Skoda";     break;
-            case 3:     string = "Opal";      break;
+            case 1:     string = "Skoda";   break;
+            case 2:     string = "BMW";     break;
+            case 3:     string = "Opel";    break;
             default:    string = "ERROR";
         }
         return string;
