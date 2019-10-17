@@ -44,10 +44,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/model_text"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:text="@string/mileage"/>
     <TextView
         android:id="@+id/min_mileage_label"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/mileage_title"
         android:textColor="@color/textLight"
@@ -61,9 +63,10 @@
         android:inputType="number"/>
     <TextView
         android:id="@+id/max_mileage_label"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/min_mileage"
+        android:layout_below="@id/mileage_title"
+        android:layout_centerHorizontal="true"
         android:textColor="@color/textLight"
         android:textSize="14sp"
         android:text="@string/max"/>
@@ -72,16 +75,19 @@
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/max_mileage_label"
+        android:layout_centerHorizontal="true"
         android:inputType="number"/>
     <TextView
         android:id="@+id/year_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/max_mileage"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:text="@string/year"/>
     <TextView
         android:id="@+id/min_year_label"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/year_title"
         android:textColor="@color/textLight"
@@ -95,9 +101,10 @@
         android:inputType="number"/>
     <TextView
         android:id="@+id/max_year_label"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/min_year"
+        android:layout_below="@id/year_title"
+        android:layout_centerHorizontal="true"
         android:textColor="@color/textLight"
         android:textSize="14sp"
         android:text="@string/max"/>
@@ -106,6 +113,7 @@
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/max_year_label"
+        android:layout_centerHorizontal="true"
         android:inputType="number"/>
     <Button
         android:id="@+id/btn_pick"

@@ -34,7 +34,7 @@ public class SearchParametersActivity extends AppCompatActivity {
     }
 
     public void search(View view) {
-        CarList cars = new CarList();
+        //var for finding spinner values by position
         int pos;
 
         //get type
@@ -81,6 +81,8 @@ public class SearchParametersActivity extends AppCompatActivity {
         else
             maxMileage = Integer.parseInt(maxMileageT.getText().toString());
 
+        //get test data
+        CarList cars = new CarList();
         cars.filter(
                 type,
                 make, minYear,
@@ -88,7 +90,8 @@ public class SearchParametersActivity extends AppCompatActivity {
                 minMileage,
                 maxMileage
         );
-        System.out.println("END OF FILTER");
+
+        //pass search results into CarListActivity
         Intent intent = new Intent(this, CarListActivity.class);
         intent.putExtra("carList", cars.getList());
         startActivity(intent);
