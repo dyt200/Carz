@@ -33,22 +33,26 @@
     <string name="yearField">Year :</string>
 
     <string-array name="type_array">
+        <item>Any</item>
         <item>Family</item>
         <item>Coupé</item>
         <item>Cabriolet</item>
     </string-array>
     <integer-array name="type_values">
+        <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
     </integer-array>
 
     <string-array name="make_array">
+        <item>Any</item>
         <item>Skoda</item>
         <item>BWM</item>
         <item>Opel</item>
     </string-array>
     <integer-array name="make_values">
+        <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
