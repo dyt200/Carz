@@ -17,13 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CarListActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".CarListActivity"/>
         <activity
             android:name=".SearchParametersActivity"
             android:parentActivityName=".CarListActivity">
@@ -31,13 +25,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".CarListActivity" />
         </activity>
-        <activity android:name=".CreateUserActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".CreateUserActivity"/>
+        <activity android:name=".AppSettingsActivity" />
     </application>
 
 </manifest>

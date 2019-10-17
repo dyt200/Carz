@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.carz.Objects.Car;
 import com.example.carz.Objects.CarAdapter;
+import com.example.carz.Objects.CarList;
 
 import java.util.ArrayList;
 
@@ -74,7 +76,7 @@ public class CarListActivity  extends AppCompatActivity {
         switch(item.getItemId()) {
 
             case R.id.listActionSearch:
-                Intent intent = new Intent(this, SearchParametersActivity.class);
+                final Intent intent = new Intent(this, SearchParametersActivity.class);
                 startActivity(intent);
                 return true;
 
@@ -98,6 +100,36 @@ public class CarListActivity  extends AppCompatActivity {
                 wmlp.y = 0;   //y position
 
                 userMenu.getWindow().setAttributes(wmlp);
+
+
+                TextView appSettingsButton = dialogView.findViewById(R.id.app_settings);
+                appSettingsButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(v.getContext(), AppSettingsActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                TextView myCarsButton = dialogView.findViewById(R.id.my_cars);
+                myCarsButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CarList cars = new CarList();
+                        //TODO: pass the user_id to here somehow (genre de session...?)
+                        cars.myCars(1);
+                        Intent intent = new Intent(v.getContext(), CarListActivity.class);
+                        intent.putExtra("carList", cars.getList());
+                        startActivity(intent);
+                    }
+                });
+                TextView logOutButton = dialogView.findViewById(R.id.log_out);
+                logOutButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(v.getContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
 
                 System.out.println("USER MENU OPENS");
                 return true;
