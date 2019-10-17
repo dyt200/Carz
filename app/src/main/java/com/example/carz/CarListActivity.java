@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.carz.Objects.Car;
 import com.example.carz.Objects.CarAdapter;
 import com.example.carz.Objects.CarList;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -56,6 +57,14 @@ public class CarListActivity  extends AppCompatActivity {
                Car car = cars.get(position);
                detailIntent.putExtra("carObj", car);
                startActivity(detailIntent);
+            }
+        });
+
+        FloatingActionButton myFab = findViewById(R.id.addCar);
+        myFab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), AddCarActivity.class);
+                startActivity(intent);
             }
         });
 
