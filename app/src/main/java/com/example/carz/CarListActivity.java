@@ -26,6 +26,7 @@ import com.example.carz.Objects.CarAdapter;
 import java.util.ArrayList;
 
 public class CarListActivity  extends AppCompatActivity {
+
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -86,19 +87,17 @@ public class CarListActivity  extends AppCompatActivity {
                 View dialogView = inflater.inflate(R.layout.user_menu_dialog,null);
                 builder.setView(dialogView);
 
-                TextView text = (TextView) dialogView.findViewById(R.id.text);
-                text.setText("USER MENU");
-
                 AlertDialog userMenu = builder.create();
                 userMenu.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                userMenu.show();
+
                 WindowManager.LayoutParams wmlp = userMenu.getWindow().getAttributes();
-                wmlp.gravity = Gravity.TOP | Gravity.START;
+                wmlp.gravity = Gravity.TOP | Gravity.END;
+                wmlp.width = 550;
                 wmlp.x = 50;   //x position
                 wmlp.y = 0;   //y position
 
-
-
-                userMenu.show();
+                userMenu.getWindow().setAttributes(wmlp);
 
                 System.out.println("USER MENU OPENS");
                 return true;
