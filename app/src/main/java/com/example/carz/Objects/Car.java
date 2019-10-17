@@ -7,22 +7,24 @@ public class Car implements Serializable {
     private int manufacturer;
     private int type;
     private int user;
+    private int price;
     private int year;
     private int mileage;
-    private String title;
+    private String model;
     private String description;
     private String condition;
     private String image1;
     private String image2;
 
-    public Car (int id, int type, int manufacturer, int user, int year, int mileage, String title, String description, String condition, String image1, String image2) {
+    public Car (int id, int type, int manufacturer, int user, int price, int year, int mileage, String model, String description, String condition, String image1, String image2) {
         this.id = id;
         this.type = type;
         this.manufacturer = manufacturer;
         this.user = user;
+        this.price = price;
         this.year = year;
         this.mileage = mileage;
-        this.title = title;
+        this.model = model;
         this.description = description;
         this.condition = condition;
         this.image1 = image1;
@@ -76,11 +78,7 @@ public class Car implements Serializable {
     }
 
     public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+        return getManufacturerString(manufacturer)+" "+getTypeString(type)+" "+model;
     }
 
     public String getDescription() {
@@ -115,5 +113,35 @@ public class Car implements Serializable {
 
     public void ToString() {
         System.out.println(", Type : "+type+", Make : "+manufacturer+", Year : "+year+", Mileage : "+mileage);
+    }
+
+    public String getManufacturerString(int id) {
+        String string;
+        switch(id) {
+            case 1:     string = "Skoda";   break;
+            case 2:     string = "BMW";     break;
+            case 3:     string = "Opel";    break;
+            default:    string = "ERROR";
+        }
+        return string;
+    }
+
+    public String getTypeString(int id) {
+        String string;
+        switch(id) {
+            case 1:     string = "Family";   break;
+            case 2:     string = "Coupé";     break;
+            case 3:     string = "Cabriolet";    break;
+            default:    string = "ERROR";
+        }
+        return string;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

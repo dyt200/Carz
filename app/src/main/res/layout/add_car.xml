@@ -1,11 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_marginStart="20dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginEnd="20dp">
     <TextView
+        android:id="@+id/makeT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:textSize="18sp"
+        android:text="@string/makeField"/>
+    <Spinner
+        android:id="@id/make_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@id/makeT"/>
+    <TextView
+        android:id="@+id/typeT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_below="@id/make_spinner"
+        android:text="@string/typeField"/>
+    <Spinner
+        android:id="@+id/type_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@id/typeT"/>
+    <TextView
+        android:id="@+id/modelT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/type_spinner"
+        android:textSize="18sp"
+        android:text="@string/modelField"/>
+    <EditText
+        android:id="@+id/model"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/modelT"/>
+    <TextView
+        android:id="@+id/yearT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_below="@id/model"
+        android:text="@string/yearField"/>
+    <EditText
+        android:id="@+id/year"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/yearT"
+        android:inputType="number"/>
+    <TextView
+        android:id="@+id/mileageT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_below="@id/year"
+        android:text="@string/mileageField"/>
+    <EditText
+        android:id="@+id/mileage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:layout_below="@id/mileageT"/>
+    <TextView
+        android:id="@+id/descriptionT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mileage"
+        android:textSize="18sp"
+        android:text="@string/descriptionField"/>
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/descriptionT"
+        android:inputType="textMultiLine"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:text="@string/addCar"/>
+        android:layout_below="@id/description"
+        android:text="@string/add"/>
 </RelativeLayout>

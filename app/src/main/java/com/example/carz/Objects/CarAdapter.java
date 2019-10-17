@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.carz.R;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class CarAdapter extends ArrayAdapter<Car> {
@@ -34,17 +36,20 @@ public class CarAdapter extends ArrayAdapter<Car> {
         TextView mileageT = view.findViewById(R.id.listMileage);
         TextView manufacturerT = view.findViewById(R.id.listManufacturer);
         TextView yearT = view.findViewById(R.id.listYear);
+        TextView priceT = view.findViewById(R.id.listPrice);
         ImageView imageT = view.findViewById(R.id.listImage);
 
         String title = car.getTitle();
         String mileage = car.getMileage()+" km";
         String year = String.valueOf(car.getYear());
+        String price = String.valueOf(car.getPrice()+" CHF");
         String manufacturer = getManufacturer(car.getManufacturer());
 
         titleT.setText(title);
         mileageT.setText(mileage);
         manufacturerT.setText(manufacturer);
         yearT.setText(year);
+        priceT.setText(price);
 
         int imageID = context.getResources().getIdentifier(car.getImage1(), "drawable", context.getPackageName());
         imageT.setImageResource(imageID);

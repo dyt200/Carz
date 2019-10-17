@@ -29,49 +29,93 @@
                 android:layout_height="match_parent"
                 android:paddingTop="15dp"
                 android:layout_below="@id/carTitle">
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/line1"
                     android:layout_width = "fill_parent"
                     android:layout_height = "wrap_content"
                     android:orientation="horizontal"
                     android:weightSum = "2">
+                    <Space
+                        android:id="@+id/center1"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_centerHorizontal="true"/>
                     <TextView
-                        android:id="@+id/carType"
-                        android:layout_width="fill_parent"
+                        android:id="@+id/carTypeT"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/textLight"
                         android:textSize="20sp"
-                        android:layout_weight="1"/>
+                        android:text="@string/typeField"/>
+                    <TextView
+                        android:id="@+id/carType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textLight"
+                        android:textSize="20sp"
+                        android:layout_toEndOf="@id/carTypeT"
+                        android:text="@string/test"/>
+                    <TextView
+                        android:id="@+id/carManufacturerT"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textLight"
+                        android:textSize="20sp"
+                        android:layout_toEndOf="@id/center1"
+                        android:text="@string/makeField"/>
                     <TextView
                         android:id="@+id/carManufacturer"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/textLight"
                         android:textSize="20sp"
-                        android:layout_weight="1"/>
-                </LinearLayout>
-                <LinearLayout
+                        android:layout_toEndOf="@id/carManufacturerT"
+                        android:text="@string/test"/>
+                </RelativeLayout>
+                <RelativeLayout
                     android:id="@+id/line2"
                     android:layout_width = "fill_parent"
                     android:layout_height = "wrap_content"
                     android:orientation="horizontal"
                     android:layout_below="@+id/line1"
                     android:weightSum = "2">
+                    <Space
+                        android:id="@+id/center2"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_centerHorizontal="true"/>
+                    <TextView
+                        android:id="@+id/carYearT"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textLight"
+                        android:textSize="20sp"
+                        android:text="@string/yearField"/>
                     <TextView
                         android:id="@+id/carYear"
-                        android:layout_width="fill_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/textLight"
                         android:textSize="20sp"
-                        android:layout_weight="1"/>
+                        android:layout_toEndOf="@id/carYearT"
+                        android:text="@string/test"/>
+                    <TextView
+                        android:id="@+id/carMileageT"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textLight"
+                        android:textSize="20sp"
+                        android:layout_toEndOf="@id/center2"
+                        android:text="@string/mileageField"/>
                     <TextView
                         android:id="@+id/carMileage"
-                        android:layout_width="fill_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/textLight"
                         android:textSize="20sp"
-                        android:layout_weight="1"/>
-                </LinearLayout>
+                        android:layout_toEndOf="@id/carMileageT"
+                        android:text="@string/test"/>
+                </RelativeLayout>
                 <TextView
                     android:id="@+id/descriptionLabel"
                     android:layout_width="wrap_content"
