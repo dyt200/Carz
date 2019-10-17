@@ -21,14 +21,20 @@ public class SearchParametersActivity extends AppCompatActivity {
         setContentView(R.layout.search_parameters);
 
         Spinner typeSpinner = findViewById(R.id.type_spinner);
-        ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(this,
-                R.array.type_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.type_array,
+                android.R.layout.simple_spinner_item
+        );
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         typeSpinner.setAdapter(typeAdapter);
 
         Spinner makeSpinner = findViewById(R.id.make_spinner);
-        ArrayAdapter<CharSequence> makeAdapter = ArrayAdapter.createFromResource(this,
-                R.array.make_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> makeAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.make_array,
+                android.R.layout.simple_spinner_item
+        );
         makeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         makeSpinner.setAdapter(makeAdapter);
     }
@@ -85,7 +91,8 @@ public class SearchParametersActivity extends AppCompatActivity {
         CarList cars = new CarList();
         cars.filter(
                 type,
-                make, minYear,
+                make,
+                minYear,
                 maxYear,
                 minMileage,
                 maxMileage

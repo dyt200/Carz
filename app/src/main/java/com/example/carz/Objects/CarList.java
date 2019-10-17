@@ -1,6 +1,7 @@
 package com.example.carz.Objects;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class CarList {
     public ArrayList<Car> list;
@@ -37,56 +38,55 @@ public class CarList {
     }
 
     private void filterType(int type) {
-        if(type > 0) {
-            int count = 0;
-            while (list.size() > count) {
-                if (list.get(count).getType() != type) {
-                    list.remove(count);
+        if(type != 0) {
+            Iterator i = list.iterator();
+            while (i.hasNext()) {
+                Car car = (Car) i.next();
+                if (car.getType() != type) {
+                    i.remove();
                 }
-                count++;
             }
-
         }
     }
 
     private void filterManufacturer(int type) {
         if(type > 0) {
-            int count = 0;
-            while (list.size() > count) {
-                if (list.get(count).getManufacturer() != type) {
-                    list.remove(count);
+            Iterator i = list.iterator();
+            while(i.hasNext()) {
+                Car car = (Car)i.next();
+                if (car.getManufacturer() != type) {
+                    i.remove();
                 }
-                count++;
             }
         }
     }
 
     private void filterMileage(int min, int max) {
-        int count = 0;
         int mileage;
-        while (list.size() > count) {
-            mileage = list.get(count).getMileage();
-            if(max > 0 && mileage > max) {
-                list.remove(count);
-            }
-            if(min > 0 && mileage < min) {
-                list.remove(count);
-            }
-            count++;
+        Iterator i = list.iterator();
+
+        while(i.hasNext()) {
+            Car car = (Car) i.next();
+            mileage = car.getMileage();
+
+            if(max > 0 && mileage > max)
+                i.remove();
+            if(min > 0 && mileage < min)
+                i.remove();
         }
     }
+
     private void filterYear(int min, int max) {
-        int count = 0;
         int year;
-        while (list.size() > count) {
-            year = list.get(count).getYear();
-            if(max > 0 && year > max) {
-                list.remove(count);
-            }
-            if(min > 0 && year < min) {
-                list.remove(count);
-            }
-            count++;
+        Iterator i = list.iterator();
+        while(i.hasNext()) {
+            Car car = (Car) i.next();
+            year = car.getYear();
+
+            if(max > 0 && year > max)
+                i.remove();
+            if(min > 0 && year < min)
+                i.remove();
         }
     }
 

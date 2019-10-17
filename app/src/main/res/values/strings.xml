@@ -48,7 +48,7 @@
     <string-array name="make_array">
         <item>Any</item>
         <item>Skoda</item>
-        <item>BWM</item>
+        <item>BMW</item>
         <item>Opel</item>
     </string-array>
     <integer-array name="make_values">
