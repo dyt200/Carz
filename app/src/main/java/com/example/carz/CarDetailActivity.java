@@ -34,19 +34,19 @@ public class CarDetailActivity extends AppCompatActivity {
         carTitleTextView.setText(car.getTitle());
 
         TextView carTypeTextView = findViewById(R.id.carType);
-        String type = "Type :" + car.getType();
+        String type = car.getTypeString(car.getType());
         carTypeTextView.setText(type);
 
         TextView carManufacturerTextView = findViewById(R.id.carManufacturer);
-        String manufacturer = "Manufacturer :" + car.getManufacturer();
+        String manufacturer = car.getManufacturerString(car.getManufacturer());
         carManufacturerTextView.setText(manufacturer);
 
         TextView carYearTextView = findViewById(R.id.carYear);
-        String year =  "Year:" + car.getYear();
+        String year =  Integer.toString(car.getYear());
         carYearTextView.setText(year);
 
         TextView carMileageTextView = findViewById(R.id.carMileage);
-        String mileage = "Mileage :" + car.getMileage();
+        String mileage = car.getMileage()+" km";
         carMileageTextView.setText(mileage);
 
         TextView carDescriptionTextView = findViewById(R.id.description);

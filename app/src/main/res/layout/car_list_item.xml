@@ -38,9 +38,16 @@
             android:text="@string/test"/>
         <TextView
             android:id="@+id/listManufacturer"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_below="@+id/listYear"
+            android:text="@string/test"/>
+        <TextView
+            android:id="@+id/listPrice"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/listMileage"
+            android:layout_alignStart="@+id/listMileage"
+            android:layout_height="20dp"
             android:text="@string/test"/>
     </RelativeLayout>
 </RelativeLayout>
