@@ -15,6 +15,9 @@ public interface CarDao {
     @Query("SELECT * FROM car")
     LiveData<List<Car>> getAll();
 
+    @Query("SELECT * FROM car WHERE id = (:id)")
+    LiveData<Car> getCarById(int id);
+
     @Insert
     void insert(Car car);
 

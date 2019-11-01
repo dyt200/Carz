@@ -1,4 +1,4 @@
-package com.example.carz.Activities;
+package com.example.carz.activities;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;

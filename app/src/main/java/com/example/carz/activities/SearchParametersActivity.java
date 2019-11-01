@@ -1,4 +1,4 @@
-package com.example.carz.Activities;
+package com.example.carz.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 

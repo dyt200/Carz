@@ -1,11 +1,11 @@
-package com.example.carz.Async;
+package com.example.carz.async;
 
 import android.content.Context;
 import android.os.AsyncTask;
 
 import com.example.carz.Database.AppDatabase;
 import com.example.carz.Entities.Car;
-import com.example.carz.Util.OnAsyncEventListener;
+import com.example.carz.util.OnAsyncEventListener;
 
 public class UpdateCar extends AsyncTask<Car, Void, Void> {
     private AppDatabase database;

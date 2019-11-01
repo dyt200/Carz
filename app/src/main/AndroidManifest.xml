@@ -9,25 +9,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.CarDetailActivity"></activity>
-        <activity android:name=".Activities.MainActivity">
+        <activity android:name=".activities.CarDetailActivity"></activity>
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.CarListActivity"/>
+        <activity android:name=".activities.CarListActivity"/>
         <activity
-            android:name=".Activities.SearchParametersActivity"
-            android:parentActivityName=".Activities.CarListActivity">
+            android:name=".activities.SearchParametersActivity"
+            android:parentActivityName=".activities.CarListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.CarListActivity" />
+                android:value=".activities.CarListActivity" />
         </activity>
-        <activity android:name=".Activities.CreateUserActivity"/>
-        <activity android:name=".Activities.AppSettingsActivity" />
-        <activity android:name=".Activities.AddCarActivity" />
+        <activity android:name=".activities.CreateUserActivity"/>
+        <activity android:name=".activities.AppSettingsActivity" />
+        <activity android:name=".activities.AddCarActivity" />
     </application>
 
 </manifest>

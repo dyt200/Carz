@@ -1,4 +1,4 @@
-package com.example.carz.Util;
+package com.example.carz.util;
 
 public interface OnAsyncEventListener {
     void onSuccess();

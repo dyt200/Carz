@@ -16,7 +16,7 @@ public interface UserDao {
     LiveData<List<User>> getAll();
 
     @Query("SELECT * FROM user WHERE id = (:id)")
-    User getUserById(int id);
+    LiveData<User> getUserById(int id);
 
     @Query("SELECT COUNT(*) FROM user WHERE email = (:email) AND password = (:password)")
     int validateLogin(String email, String password);

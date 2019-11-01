@@ -1,15 +1,15 @@
-package com.example.carz.Repositories;
+package com.example.carz.repositories;
 
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.carz.Async.CreateUser;
-import com.example.carz.Async.DeleteUser;
-import com.example.carz.Async.UpdateUser;
+import com.example.carz.async.CreateUser;
+import com.example.carz.async.DeleteUser;
+import com.example.carz.async.UpdateUser;
 import com.example.carz.Database.AppDatabase;
 import com.example.carz.Entities.User;
-import com.example.carz.Util.OnAsyncEventListener;
+import com.example.carz.util.OnAsyncEventListener;
 
 import java.util.List;
 
@@ -31,6 +31,10 @@ public class UserRepository {
 
     public LiveData<List<User>> getAllUsers(Context context) {
         return AppDatabase.getInstance(context).userDao().getAll();
+    }
+
+    public LiveData<User> getUserById(int id, Context context) {
+        return AppDatabase.getInstance(context).userDao().getUserById(id);
     }
 
     public void insert(final User user, OnAsyncEventListener callback, Context context) {

@@ -1,27 +1,28 @@
-package com.example.carz.Async;
+package com.example.carz.async;
 
 import android.content.Context;
 import android.os.AsyncTask;
 
 import com.example.carz.Database.AppDatabase;
-import com.example.carz.Entities.Car;
-import com.example.carz.Util.OnAsyncEventListener;
+import com.example.carz.Entities.User;
+import com.example.carz.util.OnAsyncEventListener;
 
-public class DeleteCar extends AsyncTask<Car, Void, Void> {
+public class CreateUser extends AsyncTask<User, Void, Void> {
+
     private AppDatabase database;
     private OnAsyncEventListener callback;
     private Exception exception;
 
-    public DeleteCar(Context context, OnAsyncEventListener callback) {
+    public CreateUser(Context context, OnAsyncEventListener callback) {
         database = AppDatabase.getInstance(context);
         this.callback = callback;
     }
 
     @Override
-    protected Void doInBackground(Car... params) {
+    protected Void doInBackground(User... params) {
         try {
-            for (Car car : params)
-                database.carDao().delete(car);
+            for (User user : params)
+                database.userDao().insert(user);
         } catch (Exception e) {
             exception = e;
         }
