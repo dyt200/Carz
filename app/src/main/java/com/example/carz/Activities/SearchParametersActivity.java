@@ -1,17 +1,16 @@
-package com.example.carz;
+package com.example.carz.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.fonts.SystemFonts;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.carz.Objects.CarList;
+import com.example.carz.Entities.CarList;
+import com.example.carz.R;
 
 public class SearchParametersActivity extends AppCompatActivity {
 

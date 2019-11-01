@@ -1,7 +1,5 @@
-package com.example.carz;
+package com.example.carz.Activities;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -13,17 +11,16 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.carz.Objects.Car;
-import com.example.carz.Objects.CarAdapter;
-import com.example.carz.Objects.CarList;
+import com.example.carz.Entities.Car;
+import com.example.carz.Entities.CarAdapter;
+import com.example.carz.Entities.CarList;
+import com.example.carz.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
