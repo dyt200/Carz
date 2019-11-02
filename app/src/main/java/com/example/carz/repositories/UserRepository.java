@@ -37,6 +37,10 @@ public class UserRepository {
         return AppDatabase.getInstance(context).userDao().getUserById(id);
     }
 
+    public LiveData<User> validateLogin(String email, String pass, Context context) {
+        return AppDatabase.getInstance(context).userDao().validateLogin(email, pass);
+    }
+
     public void insert(final User user, OnAsyncEventListener callback, Context context) {
         new CreateUser(context, callback).execute(user);
     }

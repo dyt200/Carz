@@ -22,8 +22,12 @@ public class UserViewModel extends AndroidViewModel {
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
     private final MediatorLiveData<User> observableUser;
 
-    public UserViewModel(@NonNull Application application,
-                           final int userId, UserRepository userRepository) {
+    public UserViewModel(
+            @NonNull Application application,
+            final String email,
+            final String pass,
+            UserRepository userRepository
+    ) {
         super(application);
 
         this.application = application;
@@ -34,7 +38,7 @@ public class UserViewModel extends AndroidViewModel {
         // set by default null, until we get data from the database.
         observableUser.setValue(null);
 
-        LiveData<User> client = repository.getUserById(userId, application);
+        LiveData<User> client = repository.validateLogin(email, pass, application);
 
         // observe the changes of the client entity from the database and forward them
         observableUser.addSource(client, observableUser::setValue);
@@ -48,27 +52,29 @@ public class UserViewModel extends AndroidViewModel {
         @NonNull
         private final Application application;
 
-        private final int userId;
+        private final String email;
+        private final String pass;
 
         private final UserRepository repository;
 
-        public Factory(@NonNull Application application, int userId) {
+        public Factory(@NonNull Application application, String email, String pass){
             this.application = application;
-            this.userId = userId;
-            repository = ((BaseApp) application).getUserRepository();
+            this.email = email;
+            this.pass = pass;
+            repository = UserRepository.getInstance();
         }
 
         @Override
         public <T extends ViewModel> T create(Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new UserViewModel(application, userId, repository);
+            return (T) new UserViewModel(application, email, pass, repository);
         }
     }
 
     /**
      * Expose the LiveData ClientEntity query so the UI can observe it.
      */
-    public LiveData<User> getClient() {
+    public LiveData<User> getUser() {
         return observableUser;
     }
 

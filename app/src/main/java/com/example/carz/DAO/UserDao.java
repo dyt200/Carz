@@ -18,8 +18,8 @@ public interface UserDao {
     @Query("SELECT * FROM user WHERE id = (:id)")
     LiveData<User> getUserById(int id);
 
-    @Query("SELECT COUNT(*) FROM user WHERE email = (:email) AND password = (:password)")
-    int validateLogin(String email, String password);
+    @Query("SELECT * FROM user WHERE email = (:email) AND password = (:password)")
+    LiveData<User> validateLogin(String email, String password);
 
     @Insert
     void insert(User user);
