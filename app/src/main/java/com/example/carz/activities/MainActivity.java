@@ -12,29 +12,32 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.carz.Entities.CarList;
 import com.example.carz.Entities.User;
 import com.example.carz.R;
+import com.example.carz.repositories.UserRepository;
 import com.example.carz.viewmodel.UserListViewModel;
 import com.example.carz.viewmodel.UserViewModel;
 
 public class MainActivity extends AppCompatActivity {
-
-    UserViewModel loggedUser;
+    
+    String e_email = "";
+    String e_pass = "";
+    UserRepository ur;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(getString(R.string.app_name));
         setContentView(R.layout.login);
+        ur = UserRepository.getInstance();
+
     }
 
     public void login(View view) {
         EditText emailT = findViewById(R.id.email);
-        String email = emailT.getText().toString();
+        e_email = emailT.getText().toString();
 
         EditText passT = findViewById(R.id.password);
-        String pass = passT.getText().toString();
+        e_pass = passT.getText().toString();
 
-        UserViewModel.Factory factory = new UserViewModel.Factory(getApplication(), email, pass);
-        loggedUser = ViewModelProviders.of(this, factory).get(UserViewModel.class);
-        loggedUser.getUser().observe(this, userData -> {
+        ur.validateLogin(e_email,e_pass, view.getContext()).observe(this, userData -> {
             if(userData == null) {
                 passT.setText("");
                 Toast toast = Toast.makeText(getApplicationContext(),
@@ -50,8 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-}
+    }
 
     public void createUser(View view) {
         Intent intent = new Intent(this, CreateUserActivity.class);
@@ -71,4 +73,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+
 }
+
