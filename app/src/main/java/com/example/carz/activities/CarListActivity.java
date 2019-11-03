@@ -55,14 +55,14 @@ public class CarListActivity  extends AppCompatActivity {
         switch(action) {
             case "my_cars":
                 CarListViewModel.MyCarsFactory myCarsFactory = new CarListViewModel.MyCarsFactory(userId, getApplication());
-                    viewModel = ViewModelProviders.of(this, myCarsFactory).get(CarListViewModel.class);
-                    viewModel.getCars().observe(this, carEntities -> {
-                        if(carEntities != null) {
-                            cars = new ArrayList<>(carEntities);
-                            ArrayAdapter<Car> adapter = new CarAdapter(this,0,cars);
-                            carList.setAdapter(adapter);
-                        }
-                    });
+                viewModel = ViewModelProviders.of(this, myCarsFactory).get(CarListViewModel.class);
+                viewModel.getCars().observe(this, carEntities -> {
+                    if(carEntities != null) {
+                        cars = new ArrayList<>(carEntities);
+                        ArrayAdapter<Car> adapter = new CarAdapter(this,0,cars);
+                        carList.setAdapter(adapter);
+                    }
+                });
                 break;
 
             default:
@@ -105,7 +105,6 @@ public class CarListActivity  extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
 
         switch(item.getItemId()) {
 
@@ -156,7 +155,6 @@ public class CarListActivity  extends AppCompatActivity {
                     startActivity(intent13);
                 });
 
-                System.out.println("USER MENU OPENS");
                 return true;
 
             default:
