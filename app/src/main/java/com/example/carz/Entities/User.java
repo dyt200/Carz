@@ -1,16 +1,33 @@
-package com.example.carz.Objects;
+package com.example.carz.Entities;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "user")
 public class User {
+    @PrimaryKey(autoGenerate = true)
     private int id;
+
+    @ColumnInfo(name = "firstName")
     private String firstName;
+
+    @ColumnInfo(name = "lastName")
     private String lastName;
+
+    @ColumnInfo(name = "email")
     private String email;
+
+    @ColumnInfo(name = "telephone")
     private String telephone;
+
+    @ColumnInfo(name = "password")
     private String password;
+
+    @ColumnInfo(name = "address")
     private String address;
 
-    public User(int id, String firstName, String lastName, String email,String password, String telephone, String address) {
-        this.id = id;
+    public User(String firstName, String lastName, String email,String password, String telephone, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

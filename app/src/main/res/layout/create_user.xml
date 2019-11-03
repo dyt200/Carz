@@ -65,11 +65,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:inputType="textMultiLine"/>
-    <EditText
-        android:id="@+id/address2"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:inputType="textMultiLine"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,14 +72,15 @@
         android:textSize="18sp"
         android:layout_marginTop="15dp"/>
     <EditText
+        android:id="@+id/telephone"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:inputType="phone"/>
     <Button
-        android:id="@+id/telephone"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
-        android:text="@string/submit"/>
+        android:text="@string/submit"
+        android:onClick="create_user"/>
 
 </LinearLayout>

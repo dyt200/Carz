@@ -1,7 +1,9 @@
-package com.example.carz;
+package com.example.carz.activities;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.carz.R;
 
 public class AppSettingsActivity extends AppCompatActivity {
 

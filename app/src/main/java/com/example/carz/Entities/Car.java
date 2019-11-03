@@ -1,23 +1,50 @@
-package com.example.carz.Objects;
+package com.example.carz.Entities;
+
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
+@Entity(tableName = "car")
 public class Car implements Serializable {
+    @PrimaryKey(autoGenerate = true)
     private int id;
+
+    @ColumnInfo(name = "manufacturer")
     private int manufacturer;
+
+    @ColumnInfo(name = "type")
     private int type;
+
+    @ColumnInfo(name = "user")
     private int user;
+
+    @ColumnInfo(name = "price")
     private int price;
+
+    @ColumnInfo(name = "year")
     private int year;
+
+    @ColumnInfo(name = "mileage")
     private int mileage;
+
+    @ColumnInfo(name = "model")
     private String model;
+
+    @ColumnInfo(name = "description")
     private String description;
+
+    @ColumnInfo(name = "condition")
     private String condition;
+
+    @ColumnInfo(name = "image1")
     private String image1;
+
+    @ColumnInfo(name = "image2")
     private String image2;
 
-    public Car (int id, int type, int manufacturer, int user, int price, int year, int mileage, String model, String description, String condition, String image1, String image2) {
-        this.id = id;
+    public Car (int type, int manufacturer, int user, int price, int year, int mileage, String model, String description, String condition, String image1, String image2) {
         this.type = type;
         this.manufacturer = manufacturer;
         this.user = user;
@@ -76,6 +103,10 @@ public class Car implements Serializable {
     public void setMileage(int mileage) {
         this.mileage = mileage;
     }
+
+    public String getModel() { return model; }
+
+    public void setModel(String model) { this.model = model; }
 
     public String getTitle() {
         return getManufacturerString(manufacturer)+" "+getTypeString(type)+" "+model;

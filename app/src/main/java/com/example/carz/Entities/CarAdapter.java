@@ -1,4 +1,4 @@
-package com.example.carz.Objects;
+package com.example.carz.Entities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,8 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.carz.R;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 

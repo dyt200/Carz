@@ -1,15 +1,15 @@
-package com.example.carz;
+package com.example.carz.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.carz.Objects.Car;
+import com.example.carz.Entities.Car;
+import com.example.carz.R;
 
 public class CarDetailActivity extends AppCompatActivity {
 
