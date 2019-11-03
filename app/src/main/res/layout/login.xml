@@ -40,7 +40,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/password"
         android:layout_marginTop="20dp"
-        android:onClick="login"
+        android:onClick="tryLogin"
         android:text="@string/login"/>
     <TextView
         android:id="@+id/or"

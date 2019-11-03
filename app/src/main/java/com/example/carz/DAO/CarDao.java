@@ -18,6 +18,9 @@ public interface CarDao {
     @Query("SELECT * FROM car WHERE id = (:id)")
     LiveData<Car> getCarById(int id);
 
+    @Query("SELECT * FROM car WHERE user = (:userId)")
+    LiveData<List<Car>> getMyCars(int userId);
+
     @Insert
     void insert(Car car);
 
@@ -29,4 +32,5 @@ public interface CarDao {
 
     @Query("DELETE FROM car")
     void deleteAll();
+
 }

@@ -33,8 +33,6 @@ public class CarListViewModel extends AndroidViewModel {
         observableCars = new MediatorLiveData<>();
         observableCars.setValue(null);
 
-/*        LiveData<List<Car>> cars = repository.getAllCars(applicationContext);*/
-
         LiveData<List<Car>> cars = repository.getAllCars(application);
 
         observableCars.addSource(cars, observableCars::setValue);

@@ -48,20 +48,20 @@ public class CarViewModel extends AndroidViewModel {
         @NonNull
         private final Application application;
 
-        private final int userId;
+        private final int carId;
 
         private final CarRepository repository;
 
-        public Factory(@NonNull Application application, int userId) {
+        public Factory(@NonNull Application application, int carId) {
             this.application = application;
-            this.userId = userId;
+            this.carId = carId;
             repository = ((BaseApp) application).getCarRepository();
         }
 
         @Override
         public <T extends ViewModel> T create(Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new CarViewModel(application, userId, repository);
+            return (T) new CarViewModel(application, carId, repository);
         }
     }
 

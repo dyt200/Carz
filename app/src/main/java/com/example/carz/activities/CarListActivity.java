@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,8 +19,8 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.carz.Entities.Car;
 import com.example.carz.Entities.CarAdapter;
-import com.example.carz.Entities.CarList;
 import com.example.carz.R;
+import com.example.carz.repositories.CarRepository;
 import com.example.carz.viewmodel.CarListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -30,7 +29,7 @@ import java.util.ArrayList;
 public class CarListActivity  extends AppCompatActivity {
 
     private CarListViewModel viewModel;
-
+    private CarRepository cr;
     private ArrayList cars;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -38,50 +37,53 @@ public class CarListActivity  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.car_list);
         ListView carList = findViewById(R.id.carList);
-
-        //receives data from any source (eg. main or search activities)
-/*        Intent i = getIntent();*/
-  /*      final ArrayList<Car> cars = (ArrayList<Car>)i.getSerializableExtra("carList");*/
-
-
-        CarListViewModel.Factory factory = new CarListViewModel.Factory(getApplication());
-        viewModel = ViewModelProviders.of(this, factory).get(CarListViewModel.class);
-        viewModel.getCars().observe(this, carEntities -> {
-            if (carEntities != null){
-                cars = new ArrayList<>(carEntities);
-                ArrayAdapter<Car> adapter = new CarAdapter(
-                        this,
-                        0,
-                        cars
-                );
-                carList.setAdapter(adapter);
-                for (Car car: carEntities) {
-                    System.out.println(car.getModel());
-                }
-            }
-        });
-
-        //creates instance of customised adapter for listView
-
-
-
         final Intent detailIntent = new Intent(this, CarDetailActivity.class);
 
-/*        //listener for car details
-        carList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               Car car = cars.get(position);
-               detailIntent.putExtra("carObj", car);
-               startActivity(detailIntent);
-            }
-        });*/
+        //receives data from any source (eg. main or search activities)
+        Intent i = getIntent();
+        final String action = (String)i.getSerializableExtra("action");
+
+        //handles different types of car lists (i.e. my cars and all cars)
+        switch(action) {
+            case "my_cars":
+                cr = CarRepository.getInstance();
+                int userId = (int)i.getSerializableExtra("user_id");
+                cr.getMyCars(userId,getApplicationContext()).observe(CarListActivity.this, myCars ->{
+                    if(myCars != null) {
+                        cars = new ArrayList<>(myCars);
+                        ArrayAdapter<Car> adapter = new CarAdapter(this,0,cars);
+                        carList.setAdapter(adapter);
+                    }
+
+                });
+                break;
+
+            default:
+                CarListViewModel.Factory factory = new CarListViewModel.Factory(getApplication());
+                viewModel = ViewModelProviders.of(this, factory).get(CarListViewModel.class);
+                viewModel.getCars().observe(this, carEntities -> {
+                    if(carEntities != null) {
+                        cars = new ArrayList<>(carEntities);
+                        ArrayAdapter<Car> adapter = new CarAdapter(this,0,cars);
+                        carList.setAdapter(adapter);
+                    }
+                });
+        }
+
+        //Onclick listener for each car
+        carList.setOnItemClickListener((parent, view, position, id) -> {
+            cr = CarRepository.getInstance();
+            cr.getCarById(position+1, getApplicationContext()).observe(CarListActivity.this, car -> {
+                detailIntent.putExtra("carObj", car);
+                startActivity(detailIntent);
+            });
+        });
+
+        //add car button listener
         FloatingActionButton myFab = findViewById(R.id.addCar);
-        myFab.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), AddCarActivity.class);
-                startActivity(intent);
-            }
+        myFab.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), AddCarActivity.class);
+            startActivity(intent);
         });
 
         // Get ActionBar
@@ -106,8 +108,6 @@ public class CarListActivity  extends AppCompatActivity {
                 return true;
 
             case R.id.listActionUser:
-                // custom dialog
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
                 LayoutInflater inflater = getLayoutInflater();
@@ -128,32 +128,25 @@ public class CarListActivity  extends AppCompatActivity {
 
 
                 TextView appSettingsButton = dialogView.findViewById(R.id.app_settings);
-                appSettingsButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(v.getContext(), AppSettingsActivity.class);
-                        startActivity(intent);
-                    }
+                appSettingsButton.setOnClickListener(v -> {
+                    Intent intent1 = new Intent(v.getContext(), AppSettingsActivity.class);
+                    startActivity(intent1);
                 });
+
                 TextView myCarsButton = dialogView.findViewById(R.id.my_cars);
-                myCarsButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        CarList cars = new CarList();
-                        //TODO: pass the user_id to here somehow (genre de session...?)
-                        cars.myCars(1);
-                        Intent intent = new Intent(v.getContext(), CarListActivity.class);
-                        intent.putExtra("carList", cars.getList());
-                        startActivity(intent);
-                    }
+                myCarsButton.setOnClickListener(v -> {
+                    Intent myCarsIntent = new Intent(v.getContext(), CarListActivity.class);
+                    myCarsIntent.putExtra("action", "my_cars");
+                    //TODO replace the int 1 below with the user_id of the current session!
+                    //right now we only show user_id 1's cars
+                    myCarsIntent.putExtra("user_id", 1);
+                    startActivity(myCarsIntent);
                 });
+
                 TextView logOutButton = dialogView.findViewById(R.id.log_out);
-                logOutButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(v.getContext(), MainActivity.class);
-                        startActivity(intent);
-                    }
+                logOutButton.setOnClickListener(v -> {
+                    Intent intent13 = new Intent(v.getContext(), MainActivity.class);
+                    startActivity(intent13);
                 });
 
                 System.out.println("USER MENU OPENS");

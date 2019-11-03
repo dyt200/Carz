@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void login(View view) {
+    public void tryLogin(View view) {
         EditText emailT = findViewById(R.id.email);
         e_email = emailT.getText().toString();
 
@@ -38,20 +38,10 @@ public class MainActivity extends AppCompatActivity {
         e_pass = passT.getText().toString();
 
         ur.validateLogin(e_email,e_pass, view.getContext()).observe(this, userData -> {
-            if(userData == null) {
-                passT.setText("");
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "E-mail or password was incorrect",
-                        Toast.LENGTH_SHORT
-                );
-                toast.setGravity(Gravity.CENTER, 0, 200);
-                toast.show();
-            } else {
-                CarList cars = new CarList();
-                Intent intent = new Intent(this, CarListActivity.class);
-                intent.putExtra("carList", cars.getList());
-                startActivity(intent);
-            }
+            if(userData != null)
+                login();
+            else
+                invalidLogin();
         });
     }
 
@@ -60,19 +50,21 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private boolean checkLogin(String email, String pass) {
-        User[] users = new User[3];
-        users[0] = new User("Ben", "Pocklington", "ben@test.com", "test", "0791234567", "Route de Test 16, Ayent, Valais, Suisse");
-        users[1] = new User("Dylan", "Thompson", "dylan@test.com", "test","0791234567", "Route de Test 16, Ayent, Valais, Suisse");
-        users[2] = new User("Cloud", "Strife", "cloud@test.com", "test","0791234567", "No. 1, Sector 7, Midgar");
-        users[0] = new User("test", "test", "a", "a", "0791234567", "Route de Test 16, Ayent, Valais, Suisse");
-
-        for (User user : users) {
-            if(user.getEmail().equals(email) && user.getPassword().equals(pass))
-                return true;
-        }
-        return false;
+    private void login(){
+        Intent intent = new Intent(this, CarListActivity.class);
+        intent.putExtra("action", "all_cars");
+        startActivity(intent);
     }
 
+    private void invalidLogin() {
+        EditText passT = findViewById(R.id.password);
+        passT.setText("");
+        Toast toast = Toast.makeText(getApplicationContext(),
+                "E-mail or password was incorrect",
+                Toast.LENGTH_SHORT
+        );
+        toast.setGravity(Gravity.CENTER, 0, 200);
+        toast.show();
+    }
 }
 
