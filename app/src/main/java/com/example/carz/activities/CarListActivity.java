@@ -46,21 +46,21 @@ public class CarListActivity  extends AppCompatActivity {
         //handles different types of car lists (i.e. my cars and all cars)
         switch(action) {
             case "my_cars":
-                cr = CarRepository.getInstance();
                 int userId = (int)i.getSerializableExtra("user_id");
-                cr.getMyCars(userId,getApplicationContext()).observe(CarListActivity.this, myCars ->{
-                    if(myCars != null) {
-                        cars = new ArrayList<>(myCars);
-                        ArrayAdapter<Car> adapter = new CarAdapter(this,0,cars);
-                        carList.setAdapter(adapter);
-                    }
-
-                });
+                CarListViewModel.MyCarsFactory myCarsFactory = new CarListViewModel.MyCarsFactory(userId, getApplication());
+                    viewModel = ViewModelProviders.of(this, myCarsFactory).get(CarListViewModel.class);
+                    viewModel.getCars().observe(this, carEntities -> {
+                        if(carEntities != null) {
+                            cars = new ArrayList<>(carEntities);
+                            ArrayAdapter<Car> adapter = new CarAdapter(this,0,cars);
+                            carList.setAdapter(adapter);
+                        }
+                    });
                 break;
 
             default:
-                CarListViewModel.Factory factory = new CarListViewModel.Factory(getApplication());
-                viewModel = ViewModelProviders.of(this, factory).get(CarListViewModel.class);
+                CarListViewModel.AllCarsFactory allCarsFactory = new CarListViewModel.AllCarsFactory(getApplication());
+                viewModel = ViewModelProviders.of(this, allCarsFactory).get(CarListViewModel.class);
                 viewModel.getCars().observe(this, carEntities -> {
                     if(carEntities != null) {
                         cars = new ArrayList<>(carEntities);

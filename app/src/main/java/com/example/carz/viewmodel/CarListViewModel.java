@@ -23,7 +23,7 @@ public class CarListViewModel extends AndroidViewModel {
 
     private final MediatorLiveData<List<Car>> observableCars;
 
-    public CarListViewModel(@NonNull Application application, CarRepository carRepository){
+    private CarListViewModel(@NonNull Application application, CarRepository carRepository){
         super(application);
 
         repository = carRepository;
@@ -38,14 +38,29 @@ public class CarListViewModel extends AndroidViewModel {
         observableCars.addSource(cars, observableCars::setValue);
     }
 
-    public static class Factory extends ViewModelProvider.NewInstanceFactory {
+    private CarListViewModel(@NonNull int userId, Application application, CarRepository carRepository){
+        super(application);
+
+        repository = carRepository;
+
+        applicationContext = application.getApplicationContext();
+
+        observableCars = new MediatorLiveData<>();
+        observableCars.setValue(null);
+
+        LiveData<List<Car>> cars = repository.getMyCars(userId, application);
+
+        observableCars.addSource(cars, observableCars::setValue);
+    }
+
+    public static class AllCarsFactory extends ViewModelProvider.NewInstanceFactory {
 
         @NonNull
         private final Application application;
 
         private final CarRepository carRepository;
 
-        public Factory(@NonNull Application application) {
+        public AllCarsFactory(@NonNull Application application) {
             this.application = application;
             carRepository = CarRepository.getInstance();
         }
@@ -54,6 +69,26 @@ public class CarListViewModel extends AndroidViewModel {
         public <T extends ViewModel> T create(Class<T> modelClass) {
             //noinspection unchecked
             return (T) new CarListViewModel(application, carRepository);
+        }
+    }
+
+    public static class MyCarsFactory extends ViewModelProvider.NewInstanceFactory {
+
+        @NonNull
+        private final Application application;
+        private final int userId;
+        private final CarRepository carRepository;
+
+        public MyCarsFactory(int userId, @NonNull Application application) {
+            this.application = application;
+            this.userId = userId;
+            carRepository = CarRepository.getInstance();
+        }
+
+        @Override
+        public <T extends ViewModel> T create(Class<T> modelClass) {
+            //noinspection unchecked
+            return (T) new CarListViewModel(userId, application, carRepository);
         }
     }
 
