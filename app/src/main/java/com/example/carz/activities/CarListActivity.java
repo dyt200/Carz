@@ -16,16 +16,22 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.carz.Entities.Car;
 import com.example.carz.Entities.CarAdapter;
 import com.example.carz.Entities.CarList;
 import com.example.carz.R;
+import com.example.carz.viewmodel.CarListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 public class CarListActivity  extends AppCompatActivity {
+
+    private CarListViewModel viewModel;
+
+    private ArrayList cars;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -34,20 +40,34 @@ public class CarListActivity  extends AppCompatActivity {
         ListView carList = findViewById(R.id.carList);
 
         //receives data from any source (eg. main or search activities)
-        Intent i = getIntent();
-        final ArrayList<Car> cars = (ArrayList<Car>)i.getSerializableExtra("carList");
+/*        Intent i = getIntent();*/
+  /*      final ArrayList<Car> cars = (ArrayList<Car>)i.getSerializableExtra("carList");*/
+
+
+        CarListViewModel.Factory factory = new CarListViewModel.Factory(getApplication());
+        viewModel = ViewModelProviders.of(this, factory).get(CarListViewModel.class);
+        viewModel.getCars().observe(this, carEntities -> {
+            if (carEntities != null){
+                cars = new ArrayList<>(carEntities);
+                ArrayAdapter<Car> adapter = new CarAdapter(
+                        this,
+                        0,
+                        cars
+                );
+                carList.setAdapter(adapter);
+                for (Car car: carEntities) {
+                    System.out.println(car.getModel());
+                }
+            }
+        });
 
         //creates instance of customised adapter for listView
-        ArrayAdapter<Car> adapter = new CarAdapter(
-                this,
-                0,
-                cars
-        );
-        carList.setAdapter(adapter);
+
+
 
         final Intent detailIntent = new Intent(this, CarDetailActivity.class);
 
-        //listener for car details
+/*        //listener for car details
         carList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -55,8 +75,7 @@ public class CarListActivity  extends AppCompatActivity {
                detailIntent.putExtra("carObj", car);
                startActivity(detailIntent);
             }
-        });
-
+        });*/
         FloatingActionButton myFab = findViewById(R.id.addCar);
         myFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
