@@ -1,5 +1,6 @@
 package com.example.carz.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -7,14 +8,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
+import android.content.SharedPreferences;
 
-import com.example.carz.Entities.CarList;
 import com.example.carz.Entities.User;
 import com.example.carz.R;
 import com.example.carz.repositories.UserRepository;
-import com.example.carz.viewmodel.UserListViewModel;
-import com.example.carz.viewmodel.UserViewModel;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,12 +21,17 @@ public class MainActivity extends AppCompatActivity {
     String e_pass = "";
     UserRepository ur;
 
+    public static final String MyPREFERENCES = "Session" ;
+    public static final String UserId = "userKey";
+    SharedPreferences sharedpreferences;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(getString(R.string.app_name));
         setContentView(R.layout.login);
         ur = UserRepository.getInstance();
 
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
     }
 
     public void tryLogin(View view) {
@@ -39,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         ur.validateLogin(e_email,e_pass, view.getContext()).observe(this, userData -> {
             if(userData != null)
-                login();
+                login(userData);
             else
                 invalidLogin();
         });
@@ -50,7 +54,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void login(){
+    private void login(User userData){
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putInt(UserId, userData.getId());
+        editor.apply();
         Intent intent = new Intent(this, CarListActivity.class);
         intent.putExtra("action", "all_cars");
         startActivity(intent);

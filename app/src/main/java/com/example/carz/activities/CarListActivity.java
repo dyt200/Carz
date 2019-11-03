@@ -1,6 +1,8 @@
 package com.example.carz.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,6 +33,8 @@ public class CarListActivity  extends AppCompatActivity {
     private CarListViewModel viewModel;
     private CarRepository cr;
     private ArrayList cars;
+    private int userId;
+    SharedPreferences sharedpreferences;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -39,6 +43,10 @@ public class CarListActivity  extends AppCompatActivity {
         ListView carList = findViewById(R.id.carList);
         final Intent detailIntent = new Intent(this, CarDetailActivity.class);
 
+        // get user id from shared preferences
+        sharedpreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        userId = sharedpreferences.getInt("userKey", 0);
+
         //receives data from any source (eg. main or search activities)
         Intent i = getIntent();
         final String action = (String)i.getSerializableExtra("action");
@@ -46,7 +54,6 @@ public class CarListActivity  extends AppCompatActivity {
         //handles different types of car lists (i.e. my cars and all cars)
         switch(action) {
             case "my_cars":
-                int userId = (int)i.getSerializableExtra("user_id");
                 CarListViewModel.MyCarsFactory myCarsFactory = new CarListViewModel.MyCarsFactory(userId, getApplication());
                     viewModel = ViewModelProviders.of(this, myCarsFactory).get(CarListViewModel.class);
                     viewModel.getCars().observe(this, carEntities -> {
@@ -137,14 +144,14 @@ public class CarListActivity  extends AppCompatActivity {
                 myCarsButton.setOnClickListener(v -> {
                     Intent myCarsIntent = new Intent(v.getContext(), CarListActivity.class);
                     myCarsIntent.putExtra("action", "my_cars");
-                    //TODO replace the int 1 below with the user_id of the current session!
-                    //right now we only show user_id 1's cars
-                    myCarsIntent.putExtra("user_id", 1);
                     startActivity(myCarsIntent);
                 });
 
                 TextView logOutButton = dialogView.findViewById(R.id.log_out);
                 logOutButton.setOnClickListener(v -> {
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.clear();
+                    editor.apply();
                     Intent intent13 = new Intent(v.getContext(), MainActivity.class);
                     startActivity(intent13);
                 });
