@@ -40,7 +40,7 @@ public class CarAdapter extends ArrayAdapter<Car> {
         String title = car.getTitle();
         String mileage = car.getMileage()+" km";
         String year = String.valueOf(car.getYear());
-        String price = String.valueOf(car.getPrice()+" CHF");
+        String price = car.getPrice() + " CHF";
         String manufacturer = getManufacturer(car.getManufacturer());
 
         titleT.setText(title);

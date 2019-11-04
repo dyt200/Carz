@@ -13,8 +13,6 @@ import com.example.carz.R;
 
 public class CarDetailActivity extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +20,6 @@ public class CarDetailActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         Car car = (Car) i.getSerializableExtra("carObj");
-
 
         String uri = "@drawable/" + car.getImage1();
         int imageResource = getResources().getIdentifier(uri, null, getPackageName());

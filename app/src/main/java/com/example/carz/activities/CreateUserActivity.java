@@ -7,15 +7,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 
 import com.example.carz.Entities.User;
 import com.example.carz.R;
 import com.example.carz.repositories.UserRepository;
 import com.example.carz.util.OnAsyncEventListener;
-
-import java.util.List;
-
 
 public class CreateUserActivity extends AppCompatActivity {
 

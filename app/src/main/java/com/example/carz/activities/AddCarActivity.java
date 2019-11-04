@@ -17,6 +17,9 @@ import com.example.carz.R;
 import com.example.carz.repositories.CarRepository;
 import com.example.carz.util.OnAsyncEventListener;
 
+/**
+ * Add a new car!
+ */
 public class AddCarActivity extends AppCompatActivity {
 
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,10 @@ public class AddCarActivity extends AppCompatActivity {
         makeSpinner.setAdapter(makeAdapter);
     }
 
+    /**
+     * Add a car via the submit button at the bottom of AddCar
+     * @param view The current view (passed automatically by button)
+     */
     public void addCar(View view) {
         int pos;
 
@@ -108,15 +115,17 @@ public class AddCarActivity extends AppCompatActivity {
             );
     }
 
-    //process to insert a car
+    /**
+     * Process to insert a car
+     * @param car Car to be inserted
+     * @param view Context
+     */
     private void insertCar(Car car, View view) {
         CarRepository cr = CarRepository.getInstance();
         cr.insert(car, new OnAsyncEventListener() {
 
             @Override
-            public void onSuccess() {
-                setResponse(true);
-            }
+            public void onSuccess() { setResponse(true); }
 
             @Override
             public void onFailure(Exception e) { setResponse(false); }
@@ -124,7 +133,10 @@ public class AddCarActivity extends AppCompatActivity {
         }, view.getContext());
     }
 
-    //manages responses for insertion of cars
+    /**
+     * Manages the response after inserting a car
+     * @param response boolean returned from OnAsyncEventListener
+     */
     private void setResponse(boolean response) {
         if(response) {
             Intent intent = new Intent(this, CarListActivity.class);
@@ -135,6 +147,10 @@ public class AddCarActivity extends AppCompatActivity {
             createToast("Failed to create this car !");
     }
 
+    /**
+     * Creates a short toast
+     * @param text The toast message
+     */
     private void createToast(String text) {
         Toast toast = Toast.makeText(getApplicationContext(),
                 text,

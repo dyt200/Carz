@@ -15,6 +15,8 @@ import com.example.carz.Entities.CarSearchParameters;
 import com.example.carz.repositories.CarRepository;
 
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public class CarListViewModel extends AndroidViewModel {
@@ -26,48 +28,37 @@ public class CarListViewModel extends AndroidViewModel {
 
     private CarListViewModel(@NonNull Application application, CarRepository carRepository){
         super(application);
-
         repository = carRepository;
-
         applicationContext = application.getApplicationContext();
 
         observableCars = new MediatorLiveData<>();
         observableCars.setValue(null);
 
         LiveData<List<Car>> cars = repository.getAllCars(application);
-
         observableCars.addSource(cars, observableCars::setValue);
     }
 
     private CarListViewModel(@NonNull int userId, Application application, CarRepository carRepository){
         super(application);
-
         repository = carRepository;
-
         applicationContext = application.getApplicationContext();
 
         observableCars = new MediatorLiveData<>();
         observableCars.setValue(null);
 
         LiveData<List<Car>> cars = repository.getMyCars(userId, application);
-
         observableCars.addSource(cars, observableCars::setValue);
     }
 
     private CarListViewModel(@NonNull CarSearchParameters searchParameters, Application application, CarRepository carRepository){
         super(application);
-
         repository = carRepository;
-
         applicationContext = application.getApplicationContext();
 
         observableCars = new MediatorLiveData<>();
         observableCars.setValue(null);
 
-        System.out.println("==============================");
-        System.out.println(searchParameters.getDatabaseQuery());
         LiveData<List<Car>> cars = repository.getSearchResults(searchParameters.getDatabaseQuery(), application);
-
         observableCars.addSource(cars, observableCars::setValue);
     }
 
@@ -75,7 +66,6 @@ public class CarListViewModel extends AndroidViewModel {
 
         @NonNull
         private final Application application;
-
         private final CarRepository carRepository;
 
         public AllCarsFactory(@NonNull Application application) {
@@ -83,8 +73,9 @@ public class CarListViewModel extends AndroidViewModel {
             carRepository = CarRepository.getInstance();
         }
 
+        @NotNull
         @Override
-        public <T extends ViewModel> T create(Class<T> modelClass) {
+        public <T extends ViewModel> T create(@NotNull Class<T> modelClass) {
             //noinspection unchecked
             return (T) new CarListViewModel(application, carRepository);
         }
@@ -103,8 +94,9 @@ public class CarListViewModel extends AndroidViewModel {
             carRepository = CarRepository.getInstance();
         }
 
+        @NotNull
         @Override
-        public <T extends ViewModel> T create(Class<T> modelClass) {
+        public <T extends ViewModel> T create(@NotNull Class<T> modelClass) {
             //noinspection unchecked
             return (T) new CarListViewModel(userId, application, carRepository);
         }
@@ -123,8 +115,9 @@ public class CarListViewModel extends AndroidViewModel {
             carRepository = CarRepository.getInstance();
         }
 
+        @NotNull
         @Override
-        public <T extends ViewModel> T create(Class<T> modelClass) {
+        public <T extends ViewModel> T create(@NotNull Class<T> modelClass) {
             //noinspection unchecked
             return (T) new CarListViewModel(searchParameters, application, carRepository);
         }

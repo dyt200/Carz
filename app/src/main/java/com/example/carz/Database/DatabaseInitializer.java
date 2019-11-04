@@ -6,10 +6,11 @@ import android.util.Log;
 import com.example.carz.Entities.Car;
 import com.example.carz.Entities.User;
 
-public class DatabaseInitializer {
-    public static final String TAG = "DatabaseInitializer";
+class DatabaseInitializer {
 
-    public static void populateDatabase(final AppDatabase db) {
+    private static final String TAG = "DatabaseInitializer";
+
+    static void populateDatabase(final AppDatabase db) {
         Log.i(TAG, "Inserting demo data...");
         PopulateDbAsync task = new PopulateDbAsync(db);
         task.execute();
@@ -65,6 +66,10 @@ public class DatabaseInitializer {
         db.userDao().insert(user);
     }
 
+    /**
+     * Insert test data into the database
+     * @param db the database
+     */
     private static void populateWithTestData(AppDatabase db) {
         db.carDao().deleteAll();
         addCar(db, 1, 1, 1,15000, 2015, 85000,  "6 Series","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.","","car_example_1","");

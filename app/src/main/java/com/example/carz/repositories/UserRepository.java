@@ -20,6 +20,7 @@ public class UserRepository {
     private UserRepository() {}
 
     public static UserRepository getInstance() {
+        //singleton
         if (instance == null) {
             synchronized (UserRepository.class) {
                 if (instance == null) {

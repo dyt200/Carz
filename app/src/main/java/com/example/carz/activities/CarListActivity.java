@@ -41,6 +41,7 @@ public class CarListActivity  extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.car_list);
+
         ListView carList = findViewById(R.id.carList);
         final Intent detailIntent = new Intent(this, CarDetailActivity.class);
 
@@ -123,6 +124,7 @@ public class CarListActivity  extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        //actions for each menu button
         switch(item.getItemId()) {
 
             case R.id.listActionSearch:

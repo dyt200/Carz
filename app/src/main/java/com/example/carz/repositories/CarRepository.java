@@ -21,6 +21,7 @@ public class CarRepository {
     private CarRepository() {}
 
     public static CarRepository getInstance() {
+        //singleton
         if (instance == null) {
             synchronized (CarRepository.class) {
                 if (instance == null) {

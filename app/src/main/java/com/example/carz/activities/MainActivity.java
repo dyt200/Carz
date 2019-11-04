@@ -14,7 +14,6 @@ import com.example.carz.Entities.User;
 import com.example.carz.R;
 import com.example.carz.repositories.UserRepository;
 
-
 public class MainActivity extends AppCompatActivity {
 
     String e_email = "";
