@@ -97,8 +97,10 @@ public class CarListActivity  extends AppCompatActivity {
 
         //Onclick listener for each car
         carList.setOnItemClickListener((parent, view, position, id) -> {
+            Car clicked_car = (Car) parent.getItemAtPosition(position);
+            int clicked_car_id = clicked_car.getId();
             cr = CarRepository.getInstance();
-            cr.getCarById(position+1, getApplicationContext()).observe(CarListActivity.this, car -> {
+            cr.getCarById(clicked_car_id, getApplicationContext()).observe(CarListActivity.this, car -> {
                 detailIntent.putExtra("carObj", car);
                 startActivity(detailIntent);
             });
