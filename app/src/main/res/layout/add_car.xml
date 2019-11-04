@@ -73,10 +73,23 @@
             android:inputType="number"
             android:layout_below="@id/mileageT"/>
         <TextView
-            android:id="@+id/descriptionT"
+            android:id="@+id/conditionT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/mileage"
+            android:textSize="18sp"
+            android:text="@string/conditionField"/>
+        <EditText
+            android:id="@+id/condition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/conditionT"
+            android:inputType="textMultiLine"/>
+        <TextView
+            android:id="@+id/descriptionT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/condition"
             android:textSize="18sp"
             android:text="@string/descriptionField"/>
         <EditText
@@ -85,12 +98,26 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/descriptionT"
             android:inputType="textMultiLine"/>
+        <TextView
+            android:id="@+id/priceT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/description"
+            android:textSize="18sp"
+            android:text="@string/priceField"/>
+        <EditText
+            android:id="@+id/price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/priceT"
+            android:inputType="textMultiLine"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="20dp"
-            android:layout_below="@id/description"
+            android:layout_below="@id/price"
+            android:onClick="addCar"
             android:text="@string/add"/>
     </RelativeLayout>
 </ScrollView>

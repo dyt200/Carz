@@ -27,7 +27,7 @@ public class CreateUserActivity extends AppCompatActivity {
         ur = UserRepository.getInstance();
     }
 
-    public void create_user(View view) {
+    public void createUser(View view) {
         //get all text from all the fields
 
         EditText emailT = findViewById(R.id.email);
@@ -59,15 +59,15 @@ public class CreateUserActivity extends AppCompatActivity {
                 || pass2.equals("")
                 || address1.equals("")
                 || telephone.equals("")
-        ) {
-            createToast("Please complete all of the fields!");
-        } else {
+        ) createToast("Please complete all of the fields!");
+        else {
 
             //check if both password fields are the same
             if (pass1.equals(pass2)) {
 
                 //check to see if we find a User with the same email
                 ur.doesEmailExist(email, view.getContext()).observe(this, doesEmailExist -> {
+                    //TODO This always triggers both on success... Fix plz
                     if(doesEmailExist == null) {
                         User user = new User(firstName, lastName, email, pass1, telephone, address1);
                         insertUser(user, view);
@@ -75,7 +75,7 @@ public class CreateUserActivity extends AppCompatActivity {
                         createToast("An account with that email already exists!");
                 });
             } else
-                createToast("Password verification incorrect!");
+                createToast("Your passwords do not match!");
         }
     }
 

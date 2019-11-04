@@ -5,6 +5,7 @@
     <string name="app_name">Carz</string>
     <string name="appSettings">App Settings</string>
     <string name="carImage">Image of the car</string>
+    <string name="conditionField">Condition :</string>
     <string name="contact">Contact</string>
     <string name="createAccount">Create an account</string>
     <string name="description">Description</string>
@@ -29,6 +30,7 @@
     <string name="password">Password</string>
     <string name="passwordCreate">Password :</string>
     <string name="passwordCreate2">Re-type password :</string>
+    <string name="priceField">Price :</string>
     <string name="search">Search</string>
     <string name="submit">Submit</string>
     <string name="telephoneCreate">Telephone :</string>
