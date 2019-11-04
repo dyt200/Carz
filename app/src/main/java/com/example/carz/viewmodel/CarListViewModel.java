@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.carz.Entities.Car;
+import com.example.carz.Entities.CarSearchParameters;
 import com.example.carz.repositories.CarRepository;
 
 
@@ -53,6 +54,23 @@ public class CarListViewModel extends AndroidViewModel {
         observableCars.addSource(cars, observableCars::setValue);
     }
 
+    private CarListViewModel(@NonNull CarSearchParameters searchParameters, Application application, CarRepository carRepository){
+        super(application);
+
+        repository = carRepository;
+
+        applicationContext = application.getApplicationContext();
+
+        observableCars = new MediatorLiveData<>();
+        observableCars.setValue(null);
+
+        System.out.println("==============================");
+        System.out.println(searchParameters.getDatabaseQuery());
+        LiveData<List<Car>> cars = repository.getSearchResults(searchParameters.getDatabaseQuery(), application);
+
+        observableCars.addSource(cars, observableCars::setValue);
+    }
+
     public static class AllCarsFactory extends ViewModelProvider.NewInstanceFactory {
 
         @NonNull
@@ -89,6 +107,26 @@ public class CarListViewModel extends AndroidViewModel {
         public <T extends ViewModel> T create(Class<T> modelClass) {
             //noinspection unchecked
             return (T) new CarListViewModel(userId, application, carRepository);
+        }
+    }
+
+    public static class CarSearchFactory extends ViewModelProvider.NewInstanceFactory {
+
+        @NonNull
+        private final Application application;
+        private final CarRepository carRepository;
+        private final CarSearchParameters searchParameters;
+
+        public CarSearchFactory(CarSearchParameters searchParameters, @NonNull Application application) {
+            this.application = application;
+            this.searchParameters = searchParameters;
+            carRepository = CarRepository.getInstance();
+        }
+
+        @Override
+        public <T extends ViewModel> T create(Class<T> modelClass) {
+            //noinspection unchecked
+            return (T) new CarListViewModel(searchParameters, application, carRepository);
         }
     }
 

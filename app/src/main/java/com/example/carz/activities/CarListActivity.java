@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.carz.Entities.Car;
 import com.example.carz.Entities.CarAdapter;
+import com.example.carz.Entities.CarSearchParameters;
 import com.example.carz.R;
 import com.example.carz.repositories.CarRepository;
 import com.example.carz.viewmodel.CarListViewModel;
@@ -52,29 +53,45 @@ public class CarListActivity  extends AppCompatActivity {
         final String action = (String)i.getSerializableExtra("action");
 
         //handles different types of car lists (i.e. my cars and all cars)
-        switch(action) {
-            case "my_cars":
-                CarListViewModel.MyCarsFactory myCarsFactory = new CarListViewModel.MyCarsFactory(userId, getApplication());
-                viewModel = ViewModelProviders.of(this, myCarsFactory).get(CarListViewModel.class);
-                viewModel.getCars().observe(this, carEntities -> {
-                    if(carEntities != null) {
-                        cars = new ArrayList<>(carEntities);
-                        ArrayAdapter<Car> adapter = new CarAdapter(this,0,cars);
-                        carList.setAdapter(adapter);
-                    }
-                });
-                break;
+        if(action != null) {
+            switch (action) {
+                case "my_cars":
+                    CarListViewModel.MyCarsFactory myCarsFactory = new CarListViewModel.MyCarsFactory(userId, getApplication());
+                    viewModel = ViewModelProviders.of(this, myCarsFactory).get(CarListViewModel.class);
+                    viewModel.getCars().observe(this, carEntities -> {
+                        if (carEntities != null) {
+                            cars = new ArrayList<>(carEntities);
+                            ArrayAdapter<Car> adapter = new CarAdapter(this, 0, cars);
+                            carList.setAdapter(adapter);
+                        }
+                    });
+                    break;
 
-            default:
-                CarListViewModel.AllCarsFactory allCarsFactory = new CarListViewModel.AllCarsFactory(getApplication());
-                viewModel = ViewModelProviders.of(this, allCarsFactory).get(CarListViewModel.class);
-                viewModel.getCars().observe(this, carEntities -> {
-                    if(carEntities != null) {
-                        cars = new ArrayList<>(carEntities);
-                        ArrayAdapter<Car> adapter = new CarAdapter(this,0,cars);
-                        carList.setAdapter(adapter);
-                    }
-                });
+                case "search":
+                    CarSearchParameters search = (CarSearchParameters) i.getSerializableExtra("search_parameters");
+                    CarListViewModel.CarSearchFactory mySearchFactory = new CarListViewModel.CarSearchFactory(search, getApplication());
+                    viewModel = ViewModelProviders.of(this, mySearchFactory).get(CarListViewModel.class);
+                    viewModel.getCars().observe(this, carEntities -> {
+                        if (carEntities != null) {
+                            cars = new ArrayList<>(carEntities);
+                            ArrayAdapter<Car> adapter = new CarAdapter(this, 0, cars);
+                            carList.setAdapter(adapter);
+                        }
+                    });
+                    break;
+
+
+                default:
+                    CarListViewModel.AllCarsFactory allCarsFactory = new CarListViewModel.AllCarsFactory(getApplication());
+                    viewModel = ViewModelProviders.of(this, allCarsFactory).get(CarListViewModel.class);
+                    viewModel.getCars().observe(this, carEntities -> {
+                        if (carEntities != null) {
+                            cars = new ArrayList<>(carEntities);
+                            ArrayAdapter<Car> adapter = new CarAdapter(this, 0, cars);
+                            carList.setAdapter(adapter);
+                        }
+                    });
+            }
         }
 
         //Onclick listener for each car

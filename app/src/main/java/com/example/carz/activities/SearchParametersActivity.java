@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.carz.Entities.CarList;
+import com.example.carz.Entities.CarSearchParameters;
 import com.example.carz.R;
 
 public class SearchParametersActivity extends AppCompatActivity {
@@ -86,20 +86,20 @@ public class SearchParametersActivity extends AppCompatActivity {
         else
             maxMileage = Integer.parseInt(maxMileageT.getText().toString());
 
-        //get test data
-        CarList cars = new CarList();
-        cars.filter(
+        //create search object
+        CarSearchParameters search = new CarSearchParameters(
                 type,
                 make,
-                minYear,
-                maxYear,
                 minMileage,
-                maxMileage
+                maxMileage,
+                minYear,
+                maxYear
         );
 
         //pass search results into CarListActivity
         Intent intent = new Intent(this, CarListActivity.class);
-        intent.putExtra("carList", cars.getList());
+        intent.putExtra("action", "search");
+        intent.putExtra("search_parameters", search);
         startActivity(intent);
     }
 }

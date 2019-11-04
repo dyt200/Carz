@@ -3,7 +3,9 @@ package com.example.carz.repositories;
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
+import androidx.sqlite.db.SimpleSQLiteQuery;
 
+import com.example.carz.Entities.CarSearchParameters;
 import com.example.carz.async.CreateCar;
 import com.example.carz.async.DeleteCar;
 import com.example.carz.async.UpdateCar;
@@ -40,6 +42,11 @@ public class CarRepository {
     public LiveData<List<Car>> getMyCars(int userId, Context context) {
         return AppDatabase.getInstance(context).carDao().getMyCars(userId);
     }
+
+    public LiveData<List<Car>> getSearchResults(SimpleSQLiteQuery query, Context context) {
+        return AppDatabase.getInstance(context).carDao().getSearchResults(query);
+    }
+
 
     public void insert(final Car car, OnAsyncEventListener callback, Context context) {
         new CreateCar(context, callback).execute(car);
