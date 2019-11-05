@@ -1,22 +1,32 @@
 package com.example.carz.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.carz.Entities.Car;
 import com.example.carz.R;
 import com.example.carz.repositories.CarRepository;
 import com.example.carz.util.OnAsyncEventListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -25,9 +35,16 @@ import java.util.Calendar;
  */
 public class AddCarActivity extends AppCompatActivity {
 
+    public static final int GALLERY_REQUEST_CODE = 44;
+    private StorageReference mStorageRef;
+    private Uri carUri;
+
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_car);
+
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         //Building spinners
         Spinner typeSpinner = findViewById(R.id.type_spinner);
@@ -57,6 +74,7 @@ public class AddCarActivity extends AppCompatActivity {
 
         Spinner spinYear = findViewById(R.id.year_spinner);
         spinYear.setAdapter(adapter);
+
     }
 
     /**
@@ -126,6 +144,67 @@ public class AddCarActivity extends AppCompatActivity {
                     ),
                     view
             );
+    }
+
+    public void chooseImage(View view){
+        pickFromGallery();
+    }
+
+    private void pickFromGallery(){
+        //Create an Intent with action as ACTION_PICK
+        Intent intent=new Intent(Intent.ACTION_PICK);
+        // Sets the type as image/*. This ensures only components of type image are selected
+        intent.setType("image/*");
+        //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
+        String[] mimeTypes = {"image/jpeg", "image/png"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
+        // Launching the Intent
+        startActivityForResult(intent,GALLERY_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+
+            if (requestCode == GALLERY_REQUEST_CODE  && resultCode  == RESULT_OK) {
+                Uri file =  data.getData();
+                StorageReference riversRef = mStorageRef.child("images/rivers.jpg");
+
+
+                riversRef.putFile(file)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                // Get a URL to the uploaded content
+                              /*  Uri downloadUrl =  taskSnapshot;*/
+                                riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        Uri downloadUrl = uri;
+                                        carUri = uri;
+                                        System.out.println(downloadUrl);
+                                        Toast.makeText(getBaseContext(), "Upload success! URL - " + downloadUrl.toString() , Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle unsuccessful uploads
+                                // ...
+                            }
+                        });
+                ImageView c_image = findViewById(R.id.choosenImage);
+                c_image.setImageURI(file);
+            }
+        } catch (Exception ex) {
+            Toast.makeText(this, ex.toString(),
+                    Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     /**
