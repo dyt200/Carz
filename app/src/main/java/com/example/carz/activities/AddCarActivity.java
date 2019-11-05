@@ -17,6 +17,9 @@ import com.example.carz.R;
 import com.example.carz.repositories.CarRepository;
 import com.example.carz.util.OnAsyncEventListener;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+
 /**
  * Add a new car!
  */
@@ -44,6 +47,16 @@ public class AddCarActivity extends AppCompatActivity {
         );
         makeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         makeSpinner.setAdapter(makeAdapter);
+
+        ArrayList<String> years = new ArrayList<>();
+        int thisYear = Calendar.getInstance().get(Calendar.YEAR);
+        for (int i = 1990; i <= thisYear; i++) {
+            years.add(Integer.toString(i));
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, years);
+
+        Spinner spinYear = findViewById(R.id.year_spinner);
+        spinYear.setAdapter(adapter);
     }
 
     /**
@@ -73,8 +86,8 @@ public class AddCarActivity extends AppCompatActivity {
         EditText mileageT = findViewById(R.id.mileage);
         int mileage = Integer.parseInt(mileageT.getText().toString());
 
-        EditText yearT = findViewById(R.id.year);
-        int year = Integer.parseInt(yearT.getText().toString());
+        Spinner yearSpinner = findViewById(R.id.year_spinner);
+        int year =  Integer.parseInt(yearSpinner.getSelectedItem().toString());
 
         EditText descT = findViewById(R.id.description);
         String desc = descT.getText().toString();

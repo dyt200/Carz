@@ -2,13 +2,11 @@ package com.example.carz.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -24,17 +22,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.carz.Entities.Car;
-import com.example.carz.Entities.CarAdapter;
 import com.example.carz.Entities.User;
 import com.example.carz.R;
-import com.example.carz.repositories.CarRepository;
 import com.example.carz.util.OnAsyncEventListener;
-import com.example.carz.viewmodel.CarListViewModel;
 import com.example.carz.viewmodel.CarViewModel;
 import com.example.carz.viewmodel.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class CarDetailActivity extends AppCompatActivity {
 
@@ -75,6 +71,17 @@ public class CarDetailActivity extends AppCompatActivity {
         );
         makeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         makeSpinner.setAdapter(makeAdapter);
+
+        //populate year spinner with years from 1950 -> present
+        ArrayList<String> years = new ArrayList<>();
+        int thisYear = Calendar.getInstance().get(Calendar.YEAR);
+        for (int i = 1990; i <= thisYear; i++) {
+            years.add(Integer.toString(i));
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, years);
+
+        Spinner spinYear = findViewById(R.id.year_spinner);
+        spinYear.setAdapter(adapter);
 
         Intent i = getIntent();
         final int carId = (int) i.getSerializableExtra("car_id");
@@ -131,6 +138,9 @@ public class CarDetailActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Initialises the display version of CarDetails
+     */
     private void displayMode() {
 
         RelativeLayout displayMode = findViewById(R.id.displayMode);
@@ -183,6 +193,9 @@ public class CarDetailActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Initialises the editable version of CarDetails
+     */
     private void editMode() {
 
         RelativeLayout displayMode = findViewById(R.id.displayMode);
@@ -201,9 +214,9 @@ public class CarDetailActivity extends AppCompatActivity {
         Spinner makeSpinner = findViewById(R.id.make_spinner);
         makeSpinner.setSelection(car.getManufacturer());
 
-        TextView carYearE = findViewById(R.id.carYearE);
-        String year = Integer.toString(car.getYear());
-        carYearE.setText(year);
+        Spinner yearSpinner = findViewById(R.id.year_spinner);
+        ArrayAdapter adapter = (ArrayAdapter)yearSpinner.getAdapter();
+        yearSpinner.setSelection(adapter.getPosition(car.getYear()));
 
         TextView carMileageE = findViewById(R.id.carMileageE);
         String mileage = Integer.toString(car.getMileage());
@@ -231,6 +244,10 @@ public class CarDetailActivity extends AppCompatActivity {
         saveCar.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Rebuilds and updates the current car object to the DB
+     * @param view the current view
+     */
     public void saveCar(View view) {
         int pos;
 
@@ -245,8 +262,8 @@ public class CarDetailActivity extends AppCompatActivity {
         int[] makeValues = getResources().getIntArray(R.array.make_values);
         car.setManufacturer(makeValues[pos]);
 
-        TextView carYearE = findViewById(R.id.carYearE);
-        car.setYear(Integer.parseInt(carYearE.getText().toString()));
+        Spinner yearSpinner = findViewById(R.id.year_spinner);
+        car.setYear(Integer.parseInt(yearSpinner.getSelectedItem().toString()));
 
         TextView carMileageE = findViewById(R.id.carMileageE);
         car.setMileage(Integer.parseInt(carMileageE.getText().toString()));
@@ -286,10 +303,15 @@ public class CarDetailActivity extends AppCompatActivity {
         toast.show();
     }
 
+    /**
+     * Force hides the keyboard in certain instances where we do not change page
+     * @param activity the current activity
+     */
     public void hideKeyboard(Activity activity) {
         View view = activity.getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            assert imm != null;
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }

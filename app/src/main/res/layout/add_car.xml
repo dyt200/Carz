@@ -35,10 +35,23 @@
             android:layout_marginBottom="20dp"
             android:layout_below="@id/typeT"/>
         <TextView
+            android:id="@+id/yearT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_below="@id/type_spinner"
+            android:text="@string/yearField"/>
+        <Spinner
+            android:id="@+id/year_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_below="@id/yearT" />
+        <TextView
             android:id="@+id/modelT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/type_spinner"
+            android:layout_below="@id/year_spinner"
             android:textSize="18sp"
             android:text="@string/modelField"/>
         <EditText
@@ -47,24 +60,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/modelT"/>
         <TextView
-            android:id="@+id/yearT"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_below="@id/model"
-            android:text="@string/yearField"/>
-        <EditText
-            android:id="@+id/year"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/yearT"
-            android:inputType="number"/>
-        <TextView
             android:id="@+id/mileageT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:layout_below="@id/year"
+            android:layout_below="@id/model"
             android:text="@string/mileageField"/>
         <EditText
             android:id="@+id/mileage"

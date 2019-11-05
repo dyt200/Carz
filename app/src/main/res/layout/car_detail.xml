@@ -196,7 +196,8 @@
                         android:id="@+id/type_spinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/align_2"/>
+                        android:layout_toEndOf="@id/align_2"
+                        android:layout_alignBottom="@id/carTypeT_2"/>
                     <TextView
                         android:id="@+id/carManufacturerT_2"
                         android:layout_width="wrap_content"
@@ -209,23 +210,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/align_2"
-                        android:layout_below="@id/carTypeT_2"/>
+                        android:layout_below="@id/carTypeT_2"
+                        android:layout_alignBottom="@id/carManufacturerT_2"/>
                     <TextView
                         android:id="@+id/carYearT_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20sp"
-                        android:layout_marginTop="10dp"
                         android:layout_below="@id/carManufacturerT_2"
-                        android:layout_alignBottom="@id/carYearE"
                         android:text="@string/yearField"/>
-                    <EditText
-                        android:id="@+id/carYearE"
+                    <Spinner
+                        android:id="@+id/year_spinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/align_2"
                         android:layout_below="@id/make_spinner"
-                        android:text="@string/test"/>
+                        android:layout_alignBottom="@id/carYearT_2"/>
                     <TextView
                         android:id="@+id/carMileageT_2"
                         android:layout_width="wrap_content"
@@ -239,7 +239,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/align_2"
-                        android:layout_below="@id/carYearE"
+                        android:layout_below="@id/year_spinner"
                         android:text="@string/test"/>
                     <TextView
                         android:id="@+id/carModelT_2"
