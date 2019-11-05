@@ -5,7 +5,9 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -128,12 +130,17 @@ public class CarDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.editCar && !editMode){
-            editMode = true;
-            editMode();
-        } else {
-            editMode = false;
-            displayMode();
+        int id = item.getItemId();
+
+        switch(id) {
+            case R.id.editCar:
+                editMode = true;
+                editMode();
+                break;
+
+            case R.id.deleteCar:
+                deleteConfirmation();
+                break;
         }
         return true;
     }
@@ -301,6 +308,20 @@ public class CarDetailActivity extends AppCompatActivity {
                 Toast.LENGTH_SHORT
         );
         toast.show();
+    }
+
+    public void deleteConfirmation() {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+
+        alertBuilder.setMessage(R.string.delete_car_message)
+        .setTitle(R.string.delete_car_title)
+        .setPositiveButton(R.string.yes, (dialog, id) -> {
+            //delete the car
+        })
+        .setNegativeButton(R.string.cancel, (dialog, id) -> {
+            //don't delete the car
+        });
+        alertBuilder.show();
     }
 
     /**
