@@ -107,8 +107,8 @@ public class CarListActivity  extends AppCompatActivity {
         });
 
         //add car button listener
-        FloatingActionButton myFab = findViewById(R.id.addCar);
-        myFab.setOnClickListener(v -> {
+        FloatingActionButton fab = findViewById(R.id.addCar);
+        fab.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), AddCarActivity.class);
             startActivity(intent);
         });

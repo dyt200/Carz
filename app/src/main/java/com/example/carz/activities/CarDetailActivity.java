@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.carz.Entities.Car;
@@ -72,17 +73,21 @@ public class CarDetailActivity extends AppCompatActivity {
     }
 
     private void normalMode() {
+
+        RelativeLayout displayMode = findViewById(R.id.displayMode);
+        RelativeLayout editMode = findViewById(R.id.editMode);
+
+        //manages visibility of the two layouts
+        editMode.setVisibility(View.GONE);
+        displayMode.setVisibility(View.VISIBLE);
+
         TextView carTitleTextView = findViewById(R.id.carTitle);
         carTitleTextView.setText(car.getTitle());
         carTitleTextView.setVisibility(View.VISIBLE);
 
-        TextView editCarTitleTextView = findViewById(R.id.editCarTitle);
-        editCarTitleTextView.setVisibility(View.GONE);
-
         TextView carTypeTextView = findViewById(R.id.carType);
         String type = car.getTypeString(car.getType());
         carTypeTextView.setText(type);
-        carTitleTextView.setVisibility(View.VISIBLE);
 
         TextView carManufacturerTextView = findViewById(R.id.carManufacturer);
         String manufacturer = car.getManufacturerString(car.getManufacturer());
@@ -100,57 +105,50 @@ public class CarDetailActivity extends AppCompatActivity {
         carDescriptionTextView.setText(car.getDescription());
 
         TextView userPhoneTextView = findViewById(R.id.phone);
-        String phone = "Phone of user: " + car.getUser();
+        String phone = "Contact number : " + car.getUser();
         userPhoneTextView.setText(phone);
 
         TextView userMailTextView = findViewById(R.id.mail);
-        String mail = "Mail of user: " + car.getUser();
+        String mail = "Contact email : " + car.getUser();
         userMailTextView.setText(mail);
 
     }
 
     private void editMode() {
 
-        // remove all the existing XML, not very pretty
+        RelativeLayout displayMode = findViewById(R.id.displayMode);
+        RelativeLayout editMode = findViewById(R.id.editMode);
 
-        TextView carTitleTextView = findViewById(R.id.carTitle);
-        carTitleTextView.setVisibility(View.GONE);
+        //manages visibility of the two layouts
+        displayMode.setVisibility(View.GONE);
+        editMode.setVisibility(View.VISIBLE);
 
-        TextView carTypeT = findViewById(R.id.carTypeT);
-        carTypeT.setVisibility(View.GONE);
-        TextView carTypeTextView = findViewById(R.id.carType);
-        carTypeTextView.setVisibility(View.GONE);
+        TextView carTitleE = findViewById(R.id.carTitleE);
+        carTitleE.setText(car.getTitle());
 
-        TextView carManufacturerT = findViewById(R.id.carManufacturerT);
-        carManufacturerT.setVisibility(View.GONE);
-        TextView carManufacturerTextView = findViewById(R.id.carManufacturer);
-        carManufacturerTextView.setVisibility(View.GONE);
+        TextView carTypeE = findViewById(R.id.carTypeE);
+        carTypeE.setText(car.getTypeString(car.getType()));
 
-        TextView carYearT = findViewById(R.id.carYearT);
-        carYearT.setVisibility(View.GONE);
-        TextView carYearTextView = findViewById(R.id.carYear);
-        carYearTextView.setVisibility(View.GONE);
+        TextView carManufacturerE = findViewById(R.id.carManufacturerE);
+        carManufacturerE.setText(car.getManufacturerString(car.getManufacturer()));
 
-        TextView carMileageT = findViewById(R.id.carMileageT);
-        carMileageT.setVisibility(View.GONE);
-        TextView carMileageTextView = findViewById(R.id.carMileage);
-        carMileageTextView.setVisibility(View.GONE);
+        TextView carYearE = findViewById(R.id.carYearE);
+        String year = Integer.toString(car.getYear());
+        carYearE.setText(year);
 
-        TextView descriptionLabel = findViewById(R.id.descriptionLabel);
-        descriptionLabel.setVisibility(View.GONE);
-        TextView carDescriptionTextView = findViewById(R.id.description);
-        carDescriptionTextView.setVisibility(View.GONE);
+        TextView carMileageE = findViewById(R.id.carMileageE);
+        String mileage = Integer.toString(car.getMileage());
+        carMileageE.setText(mileage);
 
-        TextView contactLabel = findViewById(R.id.contactLabel);
-        contactLabel.setVisibility(View.GONE);
-        TextView userPhoneTextView = findViewById(R.id.phone);
-        userPhoneTextView.setVisibility(View.GONE);
-        TextView userMailTextView = findViewById(R.id.mail);
-        userMailTextView.setVisibility(View.GONE);
+        TextView descriptionE = findViewById(R.id.descriptionE);
+        descriptionE.setText(car.getDescription());
 
-        // Display the form in the edit mode
-        TextView editCarTitleTextView = findViewById(R.id.editCarTitle);
-        editCarTitleTextView.setVisibility(View.VISIBLE);
-        editCarTitleTextView.setText(car.getTitle());
+        TextView userPhoneTextView = findViewById(R.id.phone_2);
+        String phone = "Contact number : " + car.getUser();
+        userPhoneTextView.setText(phone);
+
+        TextView userMailTextView = findViewById(R.id.mail_2);
+        String mail = "Contact email : " + car.getUser();
+        userMailTextView.setText(mail);
     }
 }
