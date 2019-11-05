@@ -1,7 +1,11 @@
 package com.example.carz.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProviders;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -11,19 +15,38 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.carz.Entities.Car;
+import com.example.carz.Entities.CarAdapter;
+import com.example.carz.Entities.User;
 import com.example.carz.R;
+import com.example.carz.repositories.CarRepository;
+import com.example.carz.util.OnAsyncEventListener;
+import com.example.carz.viewmodel.CarListViewModel;
+import com.example.carz.viewmodel.CarViewModel;
+import com.example.carz.viewmodel.UserViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 public class CarDetailActivity extends AppCompatActivity {
 
     SharedPreferences sharedpreferences;
+
+    CarViewModel carViewModel;
+    UserViewModel userViewModel;
+
     boolean isCarOwner = false;
     boolean editMode = false;
+
     Car car;
+    User carUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,20 +57,36 @@ public class CarDetailActivity extends AppCompatActivity {
         int userId = sharedpreferences.getInt("userKey", 0);
 
         Intent i = getIntent();
-        car = (Car) i.getSerializableExtra("carObj");
+        final int carId = (int) i.getSerializableExtra("car_id");
 
-        if (car.getUser() ==  userId){
-            isCarOwner = true;
-        }
+        CarViewModel.Factory carFactory = new CarViewModel.Factory(getApplication(), carId);
+        carViewModel = ViewModelProviders.of(this, carFactory).get(CarViewModel.class);
+        carViewModel.getCar().observe(this, carData -> {
+            if (carData != null) {
 
-        String uri = "@drawable/" + car.getImage1();
-        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
-        ImageView carImageView = findViewById(R.id.carImage);
-        Drawable res = getResources().getDrawable(imageResource);
-        carImageView.setImageDrawable(res);
+                car = carData;
+                final int carOwner = car.getUser();
 
-        normalMode();
+                UserViewModel.UserFromIdFactory userFactory = new UserViewModel.UserFromIdFactory(getApplication(), carOwner);
+                userViewModel = ViewModelProviders.of(this, userFactory).get(UserViewModel.class);
+                userViewModel.getUser().observe(this, user -> {
+                    if (car != null) {
+                        this.carUser = user;
 
+                        if (carOwner == userId) isCarOwner = true;
+
+                        String uri = "@drawable/" + car.getImage1();
+                        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+
+                        ImageView carImageView = findViewById(R.id.carImage);
+                        Drawable res = ContextCompat.getDrawable(this, imageResource);
+                        carImageView.setImageDrawable(res);
+
+                        displayMode();
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -67,12 +106,12 @@ public class CarDetailActivity extends AppCompatActivity {
             editMode();
         } else {
             editMode = false;
-            normalMode();
+            displayMode();
         }
         return true;
     }
 
-    private void normalMode() {
+    private void displayMode() {
 
         RelativeLayout displayMode = findViewById(R.id.displayMode);
         RelativeLayout editMode = findViewById(R.id.editMode);
@@ -104,6 +143,9 @@ public class CarDetailActivity extends AppCompatActivity {
         TextView carDescriptionTextView = findViewById(R.id.description);
         carDescriptionTextView.setText(car.getDescription());
 
+        TextView carConditionTextView = findViewById(R.id.condition);
+        carConditionTextView.setText(car.getCondition());
+
         TextView userPhoneTextView = findViewById(R.id.phone);
         String phone = "Contact number : " + car.getUser();
         userPhoneTextView.setText(phone);
@@ -111,6 +153,10 @@ public class CarDetailActivity extends AppCompatActivity {
         TextView userMailTextView = findViewById(R.id.mail);
         String mail = "Contact email : " + car.getUser();
         userMailTextView.setText(mail);
+
+        //Makes FAB invisible (just in case)
+        FloatingActionButton saveCar = findViewById(R.id.saveCar);
+        saveCar.setVisibility(View.INVISIBLE);
 
     }
 
@@ -123,7 +169,7 @@ public class CarDetailActivity extends AppCompatActivity {
         displayMode.setVisibility(View.GONE);
         editMode.setVisibility(View.VISIBLE);
 
-        TextView carTitleE = findViewById(R.id.carTitleE);
+        TextView carTitleE = findViewById(R.id.carTitle_2);
         carTitleE.setText(car.getTitle());
 
         TextView carTypeE = findViewById(R.id.carTypeE);
@@ -143,6 +189,9 @@ public class CarDetailActivity extends AppCompatActivity {
         TextView descriptionE = findViewById(R.id.descriptionE);
         descriptionE.setText(car.getDescription());
 
+        TextView conditionE = findViewById(R.id.conditionE);
+        conditionE.setText(car.getCondition());
+
         TextView userPhoneTextView = findViewById(R.id.phone_2);
         String phone = "Contact number : " + car.getUser();
         userPhoneTextView.setText(phone);
@@ -150,5 +199,56 @@ public class CarDetailActivity extends AppCompatActivity {
         TextView userMailTextView = findViewById(R.id.mail_2);
         String mail = "Contact email : " + car.getUser();
         userMailTextView.setText(mail);
+
+        //Makes FAB visible
+        FloatingActionButton saveCar = findViewById(R.id.saveCar);
+        saveCar.setVisibility(View.VISIBLE);
+    }
+
+    public void saveCar(View view) {
+        TextView carYearE = findViewById(R.id.carYearE);
+        car.setYear(Integer.parseInt(carYearE.getText().toString()));
+
+        TextView carMileageE = findViewById(R.id.carMileageE);
+        car.setMileage(Integer.parseInt(carMileageE.getText().toString()));
+
+        TextView descriptionE = findViewById(R.id.descriptionE);
+        car.setDescription(descriptionE.getText().toString());
+
+        TextView conditionE = findViewById(R.id.conditionE);
+        car.setCondition(conditionE.getText().toString());
+
+        carViewModel.updateCar(car, new OnAsyncEventListener() {
+            @Override
+            public void onSuccess() { setResponse(true); }
+
+            @Override
+            public void onFailure(Exception e) { setResponse(false); }
+        });
+    }
+
+    private void setResponse(boolean response) {
+        if (response) {
+            createToast("Car has been saved");
+            hideKeyboard(this);
+            displayMode();
+        } else
+            createToast("Error saving car");
+    }
+
+    private void createToast(String text) {
+        Toast toast = Toast.makeText(getApplicationContext(),
+                text,
+                Toast.LENGTH_SHORT
+        );
+        toast.show();
+    }
+
+    public void hideKeyboard(Activity activity) {
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

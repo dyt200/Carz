@@ -30,8 +30,11 @@ public class CarSearchParameters implements Serializable {
     }
 
     public SimpleSQLiteQuery getDatabaseQuery() {
-        String query = "SELECT * FROM car WHERE ";
+        String query = "SELECT * FROM car ";
         boolean firstParam = true;
+
+        if(type > 0 || manufacturer > 0 || minMileage > 0|| maxMileage > 0|| minYear > 0|| maxYear > 0)
+            query += "WHERE ";
 
         if(type > 0) {
             query += "type = "+type+" ";

@@ -1,306 +1,351 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    android:layout_height="match_parent"
+<RelativeLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/carImage"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/carImage"/>
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ScrollView android:layout_height="match_parent"
+        android:layout_width="match_parent">
         <RelativeLayout
-            android:visibility="gone"
-            android:id="@+id/displayMode"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="15dp"
-            android:layout_below="@id/carImage">
-            <TextView
-                android:id="@+id/carTitle"
-                android:layout_width="fill_parent"
-                android:layout_height="30dp"
-                android:textColor="@color/textDark"
-                android:textSize="25sp"/>
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/carImage"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/carImage"/>
             <RelativeLayout
+                android:id="@+id/displayMode"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="15dp"
-                android:layout_below="@id/carTitle">
-                <RelativeLayout
-                    android:id="@+id/line1"
-                    android:layout_width = "fill_parent"
-                    android:layout_height = "wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum = "2">
-                    <Space
-                        android:id="@+id/center1"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_centerHorizontal="true"/>
-                    <TextView
-                        android:id="@+id/carTypeT"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/textLight"
-                        android:textSize="20sp"
-                        android:text="@string/typeField"/>
-                    <TextView
-                        android:id="@+id/carType"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/textLight"
-                        android:textSize="20sp"
-                        android:layout_toEndOf="@id/carTypeT"
-                        android:text="@string/test"/>
-                    <TextView
-                        android:id="@+id/carManufacturerT"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/textLight"
-                        android:textSize="20sp"
-                        android:layout_toEndOf="@id/center1"
-                        android:text="@string/makeField"/>
-                    <TextView
-                        android:id="@+id/carManufacturer"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/textLight"
-                        android:textSize="20sp"
-                        android:layout_toEndOf="@id/carManufacturerT"
-                        android:text="@string/test"/>
-                </RelativeLayout>
-                <RelativeLayout
-                    android:id="@+id/line2"
-                    android:layout_width = "fill_parent"
-                    android:layout_height = "wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_below="@+id/line1"
-                    android:weightSum = "2">
-                    <Space
-                        android:id="@+id/center2"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_centerHorizontal="true"/>
-                    <TextView
-                        android:id="@+id/carYearT"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/textLight"
-                        android:textSize="20sp"
-                        android:text="@string/yearField"/>
-                    <TextView
-                        android:id="@+id/carYear"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/textLight"
-                        android:textSize="20sp"
-                        android:layout_toEndOf="@id/carYearT"
-                        android:text="@string/test"/>
-                    <TextView
-                        android:id="@+id/carMileageT"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/textLight"
-                        android:textSize="20sp"
-                        android:layout_toEndOf="@id/center2"
-                        android:text="@string/mileageField"/>
-                    <TextView
-                        android:id="@+id/carMileage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/textLight"
-                        android:textSize="20sp"
-                        android:layout_toEndOf="@id/carMileageT"
-                        android:text="@string/test"/>
-                </RelativeLayout>
+                android:padding="15dp"
+                android:layout_below="@id/carImage">
                 <TextView
-                    android:id="@+id/descriptionLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:textSize="20sp"
+                    android:id="@+id/carTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
                     android:textColor="@color/textDark"
-                    android:text="@string/description"
-                    android:layout_below="@+id/line2"/>
-                <TextView
-                    android:id="@+id/description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/descriptionLabel"/>
-                <TextView
-                    android:id="@+id/contactLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:textSize="20sp"
-                    android:textColor="@color/textDark"
-                    android:text="@string/contact"
-                    android:layout_below="@+id/description"/>
-                <TextView
-                    android:id="@+id/phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/contactLabel"/>
-                <TextView
-                    android:id="@+id/mail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/phone"/>
-            </RelativeLayout>
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/editMode"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="15dp"
-            android:layout_below="@id/carImage">
-            <EditText
-                android:id="@+id/carTitleE"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textDark"
-                android:textSize="25sp"/>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="15dp"
-                android:layout_below="@id/carTitleE">
+                    android:textSize="25sp"/>
                 <RelativeLayout
-                    android:id="@+id/line1_2"
-                    android:layout_width = "fill_parent"
-                    android:layout_height = "wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum = "2">
-                    <Space
-                        android:id="@+id/center1_2"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_centerHorizontal="true"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="15dp"
+                    android:layout_below="@id/carTitle">
+                    <RelativeLayout
+                        android:id="@+id/line1"
+                        android:layout_width = "fill_parent"
+                        android:layout_height = "wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum = "2">
+                        <Space
+                            android:id="@+id/center1"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_centerHorizontal="true"/>
+                        <TextView
+                            android:id="@+id/carTypeT"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textLight"
+                            android:textSize="20sp"
+                            android:text="@string/typeField"/>
+                        <TextView
+                            android:id="@+id/carType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textLight"
+                            android:textSize="20sp"
+                            android:layout_toEndOf="@id/carTypeT"
+                            android:text="@string/test"/>
+                        <TextView
+                            android:id="@+id/carManufacturerT"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textLight"
+                            android:textSize="20sp"
+                            android:layout_toEndOf="@id/center1"
+                            android:text="@string/makeField"/>
+                        <TextView
+                            android:id="@+id/carManufacturer"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textLight"
+                            android:textSize="20sp"
+                            android:layout_toEndOf="@id/carManufacturerT"
+                            android:text="@string/test"/>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/line2"
+                        android:layout_width = "fill_parent"
+                        android:layout_height = "wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_below="@+id/line1"
+                        android:weightSum = "2">
+                        <Space
+                            android:id="@+id/center2"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_centerHorizontal="true"/>
+                        <TextView
+                            android:id="@+id/carYearT"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textLight"
+                            android:textSize="20sp"
+                            android:text="@string/yearField"/>
+                        <TextView
+                            android:id="@+id/carYear"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textLight"
+                            android:textSize="20sp"
+                            android:layout_toEndOf="@id/carYearT"
+                            android:text="@string/test"/>
+                        <TextView
+                            android:id="@+id/carMileageT"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textLight"
+                            android:textSize="20sp"
+                            android:layout_toEndOf="@id/center2"
+                            android:text="@string/mileageField"/>
+                        <TextView
+                            android:id="@+id/carMileage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textLight"
+                            android:textSize="20sp"
+                            android:layout_toEndOf="@id/carMileageT"
+                            android:text="@string/test"/>
+                    </RelativeLayout>
                     <TextView
-                        android:id="@+id/carTypeT_2"
+                        android:id="@+id/descriptionLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/textLight"
+                        android:layout_marginTop="15dp"
                         android:textSize="20sp"
-                        android:text="@string/typeField"/>
+                        android:textColor="@color/textDark"
+                        android:text="@string/description"
+                        android:layout_below="@+id/line2"/>
                     <TextView
-                        android:id="@+id/carTypeE"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/textLight"
-                        android:textSize="20sp"
-                        android:layout_toEndOf="@id/carTypeT_2"
-                        android:text="@string/test"/>
-                    <TextView
-                        android:id="@+id/carManufacturerT_2"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/textLight"
-                        android:textSize="20sp"
-                        android:layout_toEndOf="@id/center1_2"
-                        android:text="@string/makeField"/>
-                    <TextView
-                        android:id="@+id/carManufacturerE"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/textLight"
-                        android:textSize="20sp"
-                        android:layout_toEndOf="@id/carManufacturerT_2"
-                        android:text="@string/test"/>
-                </RelativeLayout>
-                <RelativeLayout
-                    android:id="@+id/line2_2"
-                    android:layout_width = "fill_parent"
-                    android:layout_height = "wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_below="@+id/line1_2"
-                    android:weightSum = "2">
-                    <Space
-                        android:id="@+id/center2_2"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_centerHorizontal="true"/>
-                    <TextView
-                        android:id="@+id/carYearT_2"
+                        android:id="@+id/description"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:textColor="@color/textLight"
-                        android:textSize="20sp"
-                        android:text="@string/yearField"/>
-                    <EditText
-                        android:id="@+id/carYearE"
+                        android:layout_below="@+id/descriptionLabel"/>
+                    <TextView
+                        android:id="@+id/conditionLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:textColor="@color/textLight"
+                        android:layout_marginTop="15dp"
                         android:textSize="20sp"
-                        android:layout_toEndOf="@id/carYearT_2"
-                        android:text="@string/test"/>
+                        android:textColor="@color/textDark"
+                        android:text="@string/condition"
+                        android:layout_below="@+id/description"/>
                     <TextView
-                        android:id="@+id/carMileageT_2"
+                        android:id="@+id/condition"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:textColor="@color/textLight"
-                        android:textSize="20sp"
-                        android:layout_toEndOf="@id/center2_2"
-                        android:text="@string/mileageField"/>
-                    <EditText
-                        android:id="@+id/carMileageE"
+                        android:layout_below="@+id/conditionLabel"/>
+                    <TextView
+                        android:id="@+id/contactLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:textColor="@color/textLight"
+                        android:layout_marginTop="15dp"
                         android:textSize="20sp"
-                        android:layout_toEndOf="@id/carMileageT_2"
-                        android:text="@string/test"/>
+                        android:textColor="@color/textDark"
+                        android:text="@string/contact"
+                        android:layout_below="@+id/condition"/>
+                    <TextView
+                        android:id="@+id/phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/contactLabel"/>
+                    <TextView
+                        android:id="@+id/mail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/phone"/>
                 </RelativeLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/editMode"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="15dp"
+                android:layout_below="@id/carImage">
                 <TextView
-                    android:id="@+id/descriptionLabel_2"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/carTitle_2"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:textSize="20sp"
                     android:textColor="@color/textDark"
-                    android:text="@string/description"
-                    android:layout_below="@+id/line2_2"/>
-                <EditText
-                    android:id="@+id/descriptionE"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/descriptionLabel_2"/>
-                <TextView
-                    android:id="@+id/contactLabel_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:textSize="20sp"
-                    android:textColor="@color/textDark"
-                    android:text="@string/contact"
-                    android:layout_below="@+id/descriptionE"/>
-                <TextView
-                    android:id="@+id/phone_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/contactLabel_2"/>
-                <TextView
-                    android:id="@+id/mail_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/phone_2"/>
+                    android:textSize="25sp"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="15dp"
+                    android:layout_below="@id/carTitle_2">
+                    <RelativeLayout
+                        android:id="@+id/line1_2"
+                        android:layout_width = "fill_parent"
+                        android:layout_height = "wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum = "2">
+                        <Space
+                            android:id="@+id/center1_2"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_centerHorizontal="true"/>
+                        <TextView
+                            android:id="@+id/carTypeT_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textLight"
+                            android:textSize="20sp"
+                            android:text="@string/typeField"/>
+                        <TextView
+                            android:id="@+id/carTypeE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textLight"
+                            android:textSize="20sp"
+                            android:layout_toEndOf="@id/carTypeT_2"
+                            android:text="@string/test"/>
+                        <TextView
+                            android:id="@+id/carManufacturerT_2"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textLight"
+                            android:textSize="20sp"
+                            android:layout_toEndOf="@id/center1_2"
+                            android:text="@string/makeField"/>
+                        <TextView
+                            android:id="@+id/carManufacturerE"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textLight"
+                            android:textSize="20sp"
+                            android:layout_toEndOf="@id/carManufacturerT_2"
+                            android:text="@string/test"/>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/line2_2"
+                        android:layout_width = "fill_parent"
+                        android:layout_height = "wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_below="@+id/line1_2"
+                        android:weightSum = "2">
+                        <Space
+                            android:id="@+id/center2_2"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_centerHorizontal="true"/>
+                        <TextView
+                            android:id="@+id/carYearT_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/textLight"
+                            android:textSize="20sp"
+                            android:text="@string/yearField"/>
+                        <EditText
+                            android:id="@+id/carYearE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:textColor="@color/textLight"
+                            android:textSize="20sp"
+                            android:layout_toEndOf="@id/carYearT_2"
+                            android:text="@string/test"/>
+                        <TextView
+                            android:id="@+id/carMileageT_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/textLight"
+                            android:textSize="20sp"
+                            android:layout_toEndOf="@id/center2_2"
+                            android:text="@string/mileageField"/>
+                        <EditText
+                            android:id="@+id/carMileageE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:textColor="@color/textLight"
+                            android:textSize="20sp"
+                            android:layout_toEndOf="@id/carMileageT_2"
+                            android:text="@string/test"/>
+                    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/descriptionLabel_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:textSize="20sp"
+                        android:textColor="@color/textDark"
+                        android:text="@string/description"
+                        android:layout_below="@+id/line2_2"/>
+                    <EditText
+                        android:id="@+id/descriptionE"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/descriptionLabel_2"/>
+                    <TextView
+                        android:id="@+id/conditionLabel_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:textSize="20sp"
+                        android:textColor="@color/textDark"
+                        android:text="@string/condition"
+                        android:layout_below="@+id/descriptionE"/>
+                    <EditText
+                        android:id="@+id/conditionE"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/conditionLabel_2"/>
+                    <TextView
+                        android:id="@+id/contactLabel_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:textSize="20sp"
+                        android:textColor="@color/textDark"
+                        android:text="@string/contact"
+                        android:layout_below="@+id/conditionE"/>
+                    <TextView
+                        android:id="@+id/phone_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/contactLabel_2"/>
+                    <TextView
+                        android:id="@+id/mail_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/phone_2"/>
+                </RelativeLayout>
             </RelativeLayout>
         </RelativeLayout>
-    </RelativeLayout>
-</ScrollView>
+    </ScrollView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:visibility="invisible"
+        android:id="@+id/saveCar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/save_icon"
+        android:onClick="saveCar"
+        app:maxImageSize="40dp"/>
+</RelativeLayout>

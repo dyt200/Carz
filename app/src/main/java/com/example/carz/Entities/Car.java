@@ -9,6 +9,7 @@ import java.io.Serializable;
 @Entity(tableName = "car")
 public class Car implements Serializable {
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     private int id;
 
     @ColumnInfo(name = "manufacturer")
