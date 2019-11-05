@@ -24,9 +24,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.carz.Entities.Car;
+import com.example.carz.Entities.CarAdapter;
 import com.example.carz.Entities.User;
 import com.example.carz.R;
 import com.example.carz.util.OnAsyncEventListener;
+import com.example.carz.viewmodel.CarListViewModel;
 import com.example.carz.viewmodel.CarViewModel;
 import com.example.carz.viewmodel.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -316,12 +318,30 @@ public class CarDetailActivity extends AppCompatActivity {
         alertBuilder.setMessage(R.string.delete_car_message)
         .setTitle(R.string.delete_car_title)
         .setPositiveButton(R.string.yes, (dialog, id) -> {
-            //delete the car
+            carViewModel.deleteCar(car, new OnAsyncEventListener() {
+                @Override
+                public void onSuccess() {
+                    onBackPressed();
+                    setDeleteResponse(true);
+                }
+
+                @Override
+                public void onFailure(Exception e) { setDeleteResponse(false); }
+            });
         })
         .setNegativeButton(R.string.cancel, (dialog, id) -> {
-            //don't delete the car
+            createToast("Car deletion cancelled");
         });
         alertBuilder.show();
+    }
+
+    private void setDeleteResponse(boolean response) {
+        if (response) {
+            createToast("Car has been has ben successfully deleted");
+            hideKeyboard(this);
+            displayMode();
+        } else
+            createToast("Error deleting car");
     }
 
     /**
