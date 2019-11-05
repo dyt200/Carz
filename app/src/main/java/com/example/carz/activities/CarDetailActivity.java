@@ -19,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +56,25 @@ public class CarDetailActivity extends AppCompatActivity {
 
         sharedpreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
         int userId = sharedpreferences.getInt("userKey", 0);
+
+        //Building spinners
+        Spinner typeSpinner = findViewById(R.id.type_spinner);
+        ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.type_array,
+                android.R.layout.simple_spinner_item
+        );
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeSpinner.setAdapter(typeAdapter);
+
+        Spinner makeSpinner = findViewById(R.id.make_spinner);
+        ArrayAdapter<CharSequence> makeAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.make_array,
+                android.R.layout.simple_spinner_item
+        );
+        makeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        makeSpinner.setAdapter(makeAdapter);
 
         Intent i = getIntent();
         final int carId = (int) i.getSerializableExtra("car_id");
@@ -140,6 +160,9 @@ public class CarDetailActivity extends AppCompatActivity {
         String mileage = car.getMileage()+" km";
         carMileageTextView.setText(mileage);
 
+        TextView carModelTextView = findViewById(R.id.carModel);
+        carModelTextView.setText(car.getModel());
+
         TextView carDescriptionTextView = findViewById(R.id.description);
         carDescriptionTextView.setText(car.getDescription());
 
@@ -172,11 +195,11 @@ public class CarDetailActivity extends AppCompatActivity {
         TextView carTitleE = findViewById(R.id.carTitle_2);
         carTitleE.setText(car.getTitle());
 
-        TextView carTypeE = findViewById(R.id.carTypeE);
-        carTypeE.setText(car.getTypeString(car.getType()));
+        Spinner typeSpinner = findViewById(R.id.type_spinner);
+        typeSpinner.setSelection(car.getType());
 
-        TextView carManufacturerE = findViewById(R.id.carManufacturerE);
-        carManufacturerE.setText(car.getManufacturerString(car.getManufacturer()));
+        Spinner makeSpinner = findViewById(R.id.make_spinner);
+        makeSpinner.setSelection(car.getManufacturer());
 
         TextView carYearE = findViewById(R.id.carYearE);
         String year = Integer.toString(car.getYear());
@@ -185,6 +208,9 @@ public class CarDetailActivity extends AppCompatActivity {
         TextView carMileageE = findViewById(R.id.carMileageE);
         String mileage = Integer.toString(car.getMileage());
         carMileageE.setText(mileage);
+
+        TextView carModelE = findViewById(R.id.carModelE);
+        carModelE.setText(car.getModel());
 
         TextView descriptionE = findViewById(R.id.descriptionE);
         descriptionE.setText(car.getDescription());
@@ -206,11 +232,27 @@ public class CarDetailActivity extends AppCompatActivity {
     }
 
     public void saveCar(View view) {
+        int pos;
+
+        //update car attribute with new details
+        Spinner typeT = findViewById(R.id.type_spinner);
+        pos = typeT.getSelectedItemPosition();
+        int[] typeValues = getResources().getIntArray(R.array.make_values);
+        car.setType(typeValues[pos]);
+
+        Spinner makeT = findViewById(R.id.make_spinner);
+        pos = makeT.getSelectedItemPosition();
+        int[] makeValues = getResources().getIntArray(R.array.make_values);
+        car.setManufacturer(makeValues[pos]);
+
         TextView carYearE = findViewById(R.id.carYearE);
         car.setYear(Integer.parseInt(carYearE.getText().toString()));
 
         TextView carMileageE = findViewById(R.id.carMileageE);
         car.setMileage(Integer.parseInt(carMileageE.getText().toString()));
+
+        TextView carModelE = findViewById(R.id.carModelE);
+        car.setModel(carModelE.getText().toString());
 
         TextView descriptionE = findViewById(R.id.descriptionE);
         car.setDescription(descriptionE.getText().toString());
