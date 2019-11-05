@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "840178288793",
+    "firebase_url": "https://carz-c49b0.firebaseio.com",
+    "project_id": "carz-c49b0",
+    "storage_bucket": "carz-c49b0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:840178288793:android:dbe8512d9850c494bfd008",
+        "android_client_info": {
+          "package_name": "com.example.carz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "840178288793-g52kp7d0ho512b9khapmfoqnjn5sqc1b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.carz",
+            "certificate_hash": "098adcc8e446f1fb6eccce622f175beba06b994f"
+          }
+        },
+        {
+          "client_id": "840178288793-2f6cavkv9q817247b6i95evk4jjkb9m7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_Y52HYJVr4WLmmQFQ0utj7JzGGELFymc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "840178288793-2f6cavkv9q817247b6i95evk4jjkb9m7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
