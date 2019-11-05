@@ -46,6 +46,7 @@
     <string name="year">Year</string>
     <string name="yearField">Year : </string>
     <string name="yes">Yes</string>
+    <string name="addCarimages">Add image</string>
 
     <string-array name="type_array">
         <item>Any</item>
