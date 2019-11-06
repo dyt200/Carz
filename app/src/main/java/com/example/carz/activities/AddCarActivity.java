@@ -16,7 +16,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.carz.Entities.Car;
+import com.example.carz.GlideApp;
 import com.example.carz.R;
 import com.example.carz.repositories.CarRepository;
 import com.example.carz.util.OnAsyncEventListener;
@@ -29,6 +31,8 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.UUID;
+
 
 /**
  * Add a new car!
@@ -37,7 +41,10 @@ public class AddCarActivity extends AppCompatActivity {
 
     public static final int GALLERY_REQUEST_CODE = 44;
     private StorageReference mStorageRef;
-    private Uri carUri;
+    private String carUri;
+    private Context context = AddCarActivity.this;
+    private ImageView c_image;
+    private int userId;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -75,10 +82,15 @@ public class AddCarActivity extends AppCompatActivity {
         Spinner spinYear = findViewById(R.id.year_spinner);
         spinYear.setAdapter(adapter);
 
+        c_image = (ImageView) findViewById(R.id.choosenImage);
+
+        loadImage();
+
     }
 
     /**
      * Add a car via the submit button at the bottom of AddCar
+     *
      * @param view The current view (passed automatically by button)
      */
     public void addCar(View view) {
@@ -86,7 +98,7 @@ public class AddCarActivity extends AppCompatActivity {
 
         // get user id from shared preferences
         SharedPreferences sharedpreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-        int userId = sharedpreferences.getInt("userKey", 0);
+        userId = sharedpreferences.getInt("userKey", 0);
 
         Spinner manufacturerT = findViewById(R.id.make_spinner);
         pos = manufacturerT.getSelectedItemPosition();
@@ -105,7 +117,7 @@ public class AddCarActivity extends AppCompatActivity {
         int mileage = Integer.parseInt(mileageT.getText().toString());
 
         Spinner yearSpinner = findViewById(R.id.year_spinner);
-        int year =  Integer.parseInt(yearSpinner.getSelectedItem().toString());
+        int year = Integer.parseInt(yearSpinner.getSelectedItem().toString());
 
         EditText descT = findViewById(R.id.description);
         String desc = descT.getText().toString();
@@ -116,8 +128,10 @@ public class AddCarActivity extends AppCompatActivity {
         EditText priceT = findViewById(R.id.price);
         int price = Integer.parseInt(priceT.getText().toString());
 
+
+
         //check that all fields have been completed
-        if(     manufacturer == 0
+        if (manufacturer == 0
                 || type == 0
                 || model.equals("")
                 || mileage == 0
@@ -139,27 +153,27 @@ public class AddCarActivity extends AppCompatActivity {
                             model,
                             desc,
                             condition,
-                            "car_example_2",
+                            carUri,
                             ""
                     ),
                     view
             );
     }
 
-    public void chooseImage(View view){
+    public void chooseImage(View view) {
         pickFromGallery();
     }
 
-    private void pickFromGallery(){
+    private void pickFromGallery() {
         //Create an Intent with action as ACTION_PICK
-        Intent intent=new Intent(Intent.ACTION_PICK);
+        Intent intent = new Intent(Intent.ACTION_PICK);
         // Sets the type as image/*. This ensures only components of type image are selected
         intent.setType("image/*");
         //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
         String[] mimeTypes = {"image/jpeg", "image/png"};
-        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
         // Launching the Intent
-        startActivityForResult(intent,GALLERY_REQUEST_CODE);
+        startActivityForResult(intent, GALLERY_REQUEST_CODE);
     }
 
     @Override
@@ -167,9 +181,9 @@ public class AddCarActivity extends AppCompatActivity {
         try {
             super.onActivityResult(requestCode, resultCode, data);
 
-            if (requestCode == GALLERY_REQUEST_CODE  && resultCode  == RESULT_OK) {
-                Uri file =  data.getData();
-                StorageReference riversRef = mStorageRef.child("images/rivers.jpg");
+            if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK) {
+                Uri file = data.getData();
+                StorageReference riversRef = mStorageRef.child("users/" + userId + "/" + UUID.randomUUID().toString() + ".jpg");
 
 
                 riversRef.putFile(file)
@@ -177,14 +191,15 @@ public class AddCarActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 // Get a URL to the uploaded content
-                              /*  Uri downloadUrl =  taskSnapshot;*/
+                                /*  Uri downloadUrl =  taskSnapshot;*/
                                 riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
                                         Uri downloadUrl = uri;
-                                        carUri = uri;
+                                        carUri = downloadUrl.toString();
                                         System.out.println(downloadUrl);
-                                        Toast.makeText(getBaseContext(), "Upload success! URL - " + downloadUrl.toString() , Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getBaseContext(), "Upload success! URL - " + downloadUrl.toString(), Toast.LENGTH_SHORT).show();
+                                        loadImage();
                                     }
                                 });
 
@@ -197,8 +212,8 @@ public class AddCarActivity extends AppCompatActivity {
                                 // ...
                             }
                         });
-                ImageView c_image = findViewById(R.id.choosenImage);
-                c_image.setImageURI(file);
+
+
             }
         } catch (Exception ex) {
             Toast.makeText(this, ex.toString(),
@@ -207,9 +222,16 @@ public class AddCarActivity extends AppCompatActivity {
 
     }
 
+    public void loadImage() {
+        Glide.with(context)
+                .load(carUri)
+                .into(c_image);
+    }
+
     /**
      * Process to insert a car
-     * @param car Car to be inserted
+     *
+     * @param car  Car to be inserted
      * @param view Context
      */
     private void insertCar(Car car, View view) {
@@ -217,20 +239,25 @@ public class AddCarActivity extends AppCompatActivity {
         cr.insert(car, new OnAsyncEventListener() {
 
             @Override
-            public void onSuccess() { setResponse(true); }
+            public void onSuccess() {
+                setResponse(true);
+            }
 
             @Override
-            public void onFailure(Exception e) { setResponse(false); }
+            public void onFailure(Exception e) {
+                setResponse(false);
+            }
 
         }, view.getContext());
     }
 
     /**
      * Manages the response after inserting a car
+     *
      * @param response boolean returned from OnAsyncEventListener
      */
     private void setResponse(boolean response) {
-        if(response) {
+        if (response) {
             Intent intent = new Intent(this, CarListActivity.class);
             intent.putExtra("action", "my_cars");
             startActivity(intent);
@@ -241,6 +268,7 @@ public class AddCarActivity extends AppCompatActivity {
 
     /**
      * Creates a short toast
+     *
      * @param text The toast message
      */
     private void createToast(String text) {
