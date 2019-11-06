@@ -35,10 +35,23 @@
             android:layout_marginBottom="20dp"
             android:layout_below="@id/typeT"/>
         <TextView
+            android:id="@+id/yearT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_below="@id/type_spinner"
+            android:text="@string/yearField"/>
+        <Spinner
+            android:id="@+id/year_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_below="@id/yearT" />
+        <TextView
             android:id="@+id/modelT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/type_spinner"
+            android:layout_below="@id/year_spinner"
             android:textSize="18sp"
             android:text="@string/modelField"/>
         <EditText
@@ -47,24 +60,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/modelT"/>
         <TextView
-            android:id="@+id/yearT"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_below="@id/model"
-            android:text="@string/yearField"/>
-        <EditText
-            android:id="@+id/year"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/yearT"
-            android:inputType="number"/>
-        <TextView
             android:id="@+id/mileageT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:layout_below="@id/year"
+            android:layout_below="@id/model"
             android:text="@string/mileageField"/>
         <EditText
             android:id="@+id/mileage"
@@ -73,10 +73,23 @@
             android:inputType="number"
             android:layout_below="@id/mileageT"/>
         <TextView
-            android:id="@+id/descriptionT"
+            android:id="@+id/conditionT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/mileage"
+            android:textSize="18sp"
+            android:text="@string/conditionField"/>
+        <EditText
+            android:id="@+id/condition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/conditionT"
+            android:inputType="textMultiLine"/>
+        <TextView
+            android:id="@+id/descriptionT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/condition"
             android:textSize="18sp"
             android:text="@string/descriptionField"/>
         <EditText
@@ -85,12 +98,43 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/descriptionT"
             android:inputType="textMultiLine"/>
+        <TextView
+            android:id="@+id/priceT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/description"
+            android:textSize="18sp"
+            android:text="@string/priceField"/>
+        <EditText
+            android:id="@+id/price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/priceT"
+            android:inputType="textMultiLine"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/chooseImage"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_below="@id/price"
+            android:onClick="chooseImage"
+            android:text="@string/addCarimages"/>
+        <ImageView
+            android:id="@+id/choosenImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/chooseImage"
+            android:contentDescription="@string/carImage"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="20dp"
-            android:layout_below="@id/description"
+            android:layout_marginBottom="40dp"
+            android:layout_below="@id/choosenImage"
+            android:onClick="addCar"
             android:text="@string/add"/>
     </RelativeLayout>
 </ScrollView>

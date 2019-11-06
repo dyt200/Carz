@@ -3,6 +3,7 @@ package com.example.carz.repositories;
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.carz.async.CreateUser;
 import com.example.carz.async.DeleteUser;
@@ -19,6 +20,7 @@ public class UserRepository {
     private UserRepository() {}
 
     public static UserRepository getInstance() {
+        //singleton
         if (instance == null) {
             synchronized (UserRepository.class) {
                 if (instance == null) {
@@ -39,6 +41,10 @@ public class UserRepository {
 
     public LiveData<User> validateLogin(String email, String pass, Context context) {
         return AppDatabase.getInstance(context).userDao().validateLogin(email, pass);
+    }
+
+    public LiveData<User> doesEmailExist(String email, Context context) {
+        return AppDatabase.getInstance(context).userDao().doesEmailExist(email);
     }
 
     public void insert(final User user, OnAsyncEventListener callback, Context context) {

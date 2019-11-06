@@ -14,27 +14,29 @@ import com.example.carz.Entities.Car;
 import com.example.carz.repositories.CarRepository;
 import com.example.carz.util.OnAsyncEventListener;
 
-public class CarViewModel extends AndroidViewModel {
-    private CarRepository repository;
+import org.jetbrains.annotations.NotNull;
 
+public class CarViewModel extends AndroidViewModel {
+
+    private CarRepository repository;
     private Application application;
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
     private final MediatorLiveData<Car> observableCar;
 
-    public CarViewModel(@NonNull Application application,
-                         final int userId, CarRepository carRepository) {
+    public CarViewModel(
+            @NonNull Application application,
+            final int carId,
+            CarRepository carRepository
+    ) {
         super(application);
-
         this.application = application;
-
         repository = carRepository;
-
         observableCar = new MediatorLiveData<>();
+
         // set by default null, until we get data from the database.
         observableCar.setValue(null);
-
-        LiveData<Car> car = repository.getCarById(userId, application);
+        LiveData<Car> car = repository.getCarById(carId, application);
 
         // observe the changes of the client entity from the database and forward them
         observableCar.addSource(car, observableCar::setValue);
@@ -48,27 +50,28 @@ public class CarViewModel extends AndroidViewModel {
         @NonNull
         private final Application application;
 
-        private final int userId;
+        private final int carId;
 
         private final CarRepository repository;
 
-        public Factory(@NonNull Application application, int userId) {
+        public Factory(@NonNull Application application, int carId) {
             this.application = application;
-            this.userId = userId;
-            repository = ((BaseApp) application).getCarRepository();
+            this.carId = carId;
+            repository = CarRepository.getInstance();
         }
 
+        @NotNull
         @Override
-        public <T extends ViewModel> T create(Class<T> modelClass) {
+        public <T extends ViewModel> T create(@NotNull Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new CarViewModel(application, userId, repository);
+            return (T) new CarViewModel(application, carId, repository);
         }
     }
 
     /**
      * Expose the LiveData ClientEntity query so the UI can observe it.
      */
-    public LiveData<Car> getClient() {
+    public LiveData<Car> getCar() {
         return observableCar;
     }
 

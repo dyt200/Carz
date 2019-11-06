@@ -2,6 +2,7 @@ package com.example.carz.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,16 +10,25 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.carz.Entities.CarList;
+import com.example.carz.Entities.CarSearchParameters;
 import com.example.carz.R;
+
 
 public class SearchParametersActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //set title and layout
+        setTitle(R.string.search);
         setContentView(R.layout.search_parameters);
 
+        //add back button
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //create spinners
         Spinner typeSpinner = findViewById(R.id.type_spinner);
         ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(
                 this,
@@ -86,20 +96,26 @@ public class SearchParametersActivity extends AppCompatActivity {
         else
             maxMileage = Integer.parseInt(maxMileageT.getText().toString());
 
-        //get test data
-        CarList cars = new CarList();
-        cars.filter(
+        //create search object
+        CarSearchParameters search = new CarSearchParameters(
                 type,
                 make,
-                minYear,
-                maxYear,
                 minMileage,
-                maxMileage
+                maxMileage,
+                minYear,
+                maxYear
         );
 
         //pass search results into CarListActivity
         Intent intent = new Intent(this, CarListActivity.class);
-        intent.putExtra("carList", cars.getList());
+        intent.putExtra("action", "search");
+        intent.putExtra("search_parameters", search);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 }

@@ -9,6 +9,7 @@ import java.io.Serializable;
 @Entity(tableName = "car")
 public class Car implements Serializable {
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     private int id;
 
     @ColumnInfo(name = "manufacturer")
@@ -109,7 +110,7 @@ public class Car implements Serializable {
     public void setModel(String model) { this.model = model; }
 
     public String getTitle() {
-        return getManufacturerString(manufacturer)+" "+getTypeString(type)+" "+model;
+        return getManufacturerString()+" "+getTypeString()+" "+model;
     }
 
     public String getDescription() {
@@ -146,7 +147,7 @@ public class Car implements Serializable {
         System.out.println(", Type : "+type+", Make : "+manufacturer+", Year : "+year+", Mileage : "+mileage);
     }
 
-    public String getManufacturerString(int id) {
+    public String getManufacturerString() {
         String string;
         switch(id) {
             case 1:     string = "Skoda";   break;
@@ -157,7 +158,7 @@ public class Car implements Serializable {
         return string;
     }
 
-    public String getTypeString(int id) {
+    public String getTypeString() {
         String string;
         switch(id) {
             case 1:     string = "Family";   break;

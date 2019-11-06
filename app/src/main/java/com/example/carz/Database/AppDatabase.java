@@ -23,7 +23,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private static final String TAG = "AppDatabase";
     private static AppDatabase instance;
-    private static final String DATABASE_NAME = "SEEEE2";
+    private static final String DATABASE_NAME = "carz_test2";
 
     public abstract CarDao carDao();
     public abstract UserDao userDao();
@@ -31,6 +31,7 @@ public abstract class AppDatabase extends RoomDatabase {
     private final MutableLiveData<Boolean> isDatabaseCreated = new MutableLiveData<>();
 
     public static AppDatabase getInstance(final Context context) {
+        // singleton
         if (instance == null) {
             synchronized (AppDatabase.class) {
                 if (instance == null) {
@@ -60,7 +61,7 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     /**
-     * Check whether the database already exists and expose it via {@link #getDatabaseCreated()}
+     * Check whether database already exists and expose it via {@link #getDatabaseCreated()}
      */
     private void updateDatabaseCreated(final Context context) {
         if (context.getDatabasePath(DATABASE_NAME).exists()) {

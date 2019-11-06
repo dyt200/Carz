@@ -1,6 +1,7 @@
 package com.example.carz.DAO;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -20,6 +21,9 @@ public interface UserDao {
 
     @Query("SELECT * FROM user WHERE email = (:email) AND password = (:password)")
     LiveData<User> validateLogin(String email, String password);
+
+    @Query("SELECT * FROM user WHERE email = (:email)")
+    LiveData<User> doesEmailExist(String email);
 
     @Insert
     void insert(User user);

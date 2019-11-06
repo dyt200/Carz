@@ -7,16 +7,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.carz.Entities.User;
 import com.example.carz.R;
 import com.example.carz.repositories.UserRepository;
 import com.example.carz.util.OnAsyncEventListener;
 
-
 public class CreateUserActivity extends AppCompatActivity {
 
     private UserRepository ur;
-    private Toast toast;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +23,8 @@ public class CreateUserActivity extends AppCompatActivity {
         ur = UserRepository.getInstance();
     }
 
-    public void create_user(View view) {
+    public void createUser(View view) {
+        //get all text from all the fields
 
         EditText emailT = findViewById(R.id.email);
         String email = emailT.getText().toString();
@@ -44,49 +44,66 @@ public class CreateUserActivity extends AppCompatActivity {
         EditText address1T = findViewById(R.id.address1);
         String address1 = address1T.getText().toString();
 
-
         EditText telephoneT = findViewById(R.id.telephone);
         String telephone = telephoneT.getText().toString();
 
-        if (pass1.equals(pass2)){
-            User user = new User(firstName, lastName, email, pass1, telephone, address1);
-            ur.insert(user, new OnAsyncEventListener() {
-                @Override
-                public void onSuccess() {
-                    setResponse(true);
-                }
+        //make sure no fields are empty
+        if(     email.equals("")
+                || firstName.equals("")
+                || lastName.equals("")
+                || pass1.equals("")
+                || pass2.equals("")
+                || address1.equals("")
+                || telephone.equals("")
+        ) createToast("Please complete all of the fields!");
+        else {
 
-                @Override
-                public void onFailure(Exception e) {
-                    setResponse(false);
-                }
-            }, view.getContext() );
-        } else {
-            toast = Toast.makeText(getApplicationContext(),
-                    "Password verification incorrect!",
-                    Toast.LENGTH_SHORT
-            );
-            toast.show();
+            //check if both password fields are the same
+            if (pass1.equals(pass2)) {
+
+                //check to see if we find a User with the same email
+                ur.doesEmailExist(email, view.getContext()).observe(this, doesEmailExist -> {
+                    //TODO This always triggers both on success... Fix plz
+                    if(doesEmailExist == null) {
+                        User user = new User(firstName, lastName, email, pass1, telephone, address1);
+                        insertUser(user, view);
+                    } else
+                        createToast("An account with that email already exists!");
+                });
+            } else
+                createToast("Your passwords do not match!");
         }
+    }
 
+    private void createToast(String text) {
+        Toast toast = Toast.makeText(getApplicationContext(),
+                text,
+                Toast.LENGTH_SHORT
+        );
+        toast.show();
+    }
 
+    private void insertUser(User user, View view) {
+        ur.insert(user, new OnAsyncEventListener() {
+            @Override
+            public void onSuccess() {
+                setResponse(true);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                setResponse(false);
+            }
+        }, view.getContext());
     }
 
     private void setResponse(Boolean response) {
         if (response) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-            toast = Toast.makeText(getApplicationContext(),
-                    "Account created successfully !",
-                    Toast.LENGTH_SHORT
-            );
-        } else {
-            toast = Toast.makeText(getApplicationContext(),
-                    "Creation errror",
-                    Toast.LENGTH_SHORT
-            );
-        }
-        toast.show();
+            createToast("Account created successfully!");
+        } else
+            createToast("Error while creating user...");
     }
 
 }

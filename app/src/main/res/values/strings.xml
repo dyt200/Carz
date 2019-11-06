@@ -1,22 +1,32 @@
 <resources>
     <string name="add">Add</string>
-    <string name="addressCreate">Address :</string>
+    <string name="addressCreate">Address : </string>
     <string name="addCar">Add A Car</string>
     <string name="app_name">Carz</string>
     <string name="appSettings">App Settings</string>
     <string name="carImage">Image of the car</string>
+    <string name="cancel">Cancel</string>
+    <string name="condition">Condition</string>
+    <string name="conditionField">Condition : </string>
     <string name="contact">Contact</string>
     <string name="createAccount">Create an account</string>
+    <string name="delete">Delete</string>
+    <string name="delete_car_message">Are you sure you want to delete this car?</string>
+    <string name="delete_car_title">Delete this car?</string>
+    <string name="delete_user_message">Are you sure that you want to delete your account?</string>
+    <string name="delete_user_title">Delete your account?</string>
     <string name="description">Description</string>
     <string name="descriptionField">Description : </string>
+    <string name="edit">Edit</string>
     <string name="email">Email</string>
     <string name="emailCreate">Email : </string>
     <string name="firstNameCreate">First name : </string>
-    <string name="lastNameCreate">Surname :</string>
+    <string name="lastNameCreate">Surname : </string>
     <string name="login">Login</string>
     <string name="logOut">Log out</string>
-    <string name="max">Max :</string>
-    <string name="min">Min :</string>
+    <string name="log_out_message">Logged-out successfully</string>
+    <string name="max">Max : </string>
+    <string name="min">Min : </string>
     <string name="makeField">Make : </string>
     <string name="manufacturer_1">BMW</string>
     <string name="manufacturer_2">Opal</string>
@@ -24,19 +34,23 @@
     <string name="mileage">Mileage</string>
     <string name="mileageField">Mileage : </string>
     <string name="modelField">Model : </string>
+    <string name="my_account">My Account</string>
     <string name="myCars">My Cars</string>
     <string name="or">- OR -</string>
     <string name="password">Password</string>
     <string name="passwordCreate">Password :</string>
     <string name="passwordCreate2">Re-type password :</string>
+    <string name="priceField">Price :</string>
     <string name="search">Search</string>
     <string name="submit">Submit</string>
-    <string name="telephoneCreate">Telephone :</string>
+    <string name="telephoneCreate">Telephone : </string>
     <string name="typeField">Type : </string>
     <string name="test">Test</string>
     <string name="user">User</string>
     <string name="year">Year</string>
     <string name="yearField">Year : </string>
+    <string name="yes">Yes</string>
+    <string name="addCarimages">Add image</string>
 
     <string-array name="type_array">
         <item>Any</item>
@@ -63,5 +77,12 @@
         <item>2</item>
         <item>3</item>
     </integer-array>
+
+    <string-array name="drawer_menu_items">
+        <item>My Account</item>
+        <item>My Cars</item>
+        <item>Settings</item>
+        <item>Log-out</item>
+    </string-array>
 
 </resources>
