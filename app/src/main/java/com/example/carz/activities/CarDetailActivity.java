@@ -22,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.carz.Entities.Car;
 import com.example.carz.Entities.User;
 import com.example.carz.R;
@@ -45,6 +46,8 @@ public class CarDetailActivity extends AppCompatActivity {
 
     Car car;
     User carUser;
+
+    private ImageView carImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,19 +110,19 @@ public class CarDetailActivity extends AppCompatActivity {
                         this.carUser = user;
 
                         if (carOwner == userId) isCarOwner = true;
-
-                        String uri = "@drawable/" + car.getImage1();
-                        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
-
-                        ImageView carImageView = findViewById(R.id.carImage);
-                        Drawable res = ContextCompat.getDrawable(this, imageResource);
-                        carImageView.setImageDrawable(res);
-
+                        carImageView = findViewById(R.id.carImage);
+                        loadImage(car.getImage1());
                         displayMode();
                     }
                 });
             }
         });
+    }
+
+    public void loadImage(String imgUrl) {
+        Glide.with(getApplicationContext())
+                .load(imgUrl)
+                .into(carImageView);
     }
 
     @Override
