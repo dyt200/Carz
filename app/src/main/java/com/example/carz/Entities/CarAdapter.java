@@ -1,6 +1,5 @@
 package com.example.carz.Entities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.carz.R;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -19,16 +20,20 @@ public class CarAdapter extends ArrayAdapter<Car> {
 
     public CarAdapter(Context context, int resource, ArrayList<Car> cars) {
         super(context, resource, cars);
-
         this.context = context;
         this.cars = cars;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    @NotNull
+    public View getView(int position, View convertView, @NotNull ViewGroup parent) {
         Car car = cars.get(position);
+        View view;
 
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.car_list_item,null);
+        if (convertView == null) {
+            LayoutInflater inflater = LayoutInflater.from(context);
+            view = inflater.inflate(R.layout.car_list_item, parent, false);
+        } else
+            view = convertView;
 
         TextView titleT = view.findViewById(R.id.listTitle);
         TextView mileageT = view.findViewById(R.id.listMileage);
