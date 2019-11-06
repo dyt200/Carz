@@ -11,14 +11,14 @@ import com.example.carz.R;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class CarAdapter extends ArrayAdapter<Car> {
 
     private Context context;
-    private ArrayList<Car> cars;
+    private List<Car> cars;
 
-    public CarAdapter(Context context, int resource, ArrayList<Car> cars) {
+    public CarAdapter(Context context, int resource, List<Car> cars) {
         super(context, resource, cars);
         this.context = context;
         this.cars = cars;

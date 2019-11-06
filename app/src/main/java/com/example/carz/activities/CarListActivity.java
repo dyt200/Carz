@@ -28,13 +28,14 @@ import com.example.carz.viewmodel.CarListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
+/**
+ *  Main display for all lists of Cars!
+ */
 public class CarListActivity  extends AppCompatActivity {
 
-    private CarListViewModel viewModel;
-    private CarRepository cr;
-    private ArrayList cars;
-    private int userId;
+    private List cars;
     SharedPreferences sharedpreferences;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class CarListActivity  extends AppCompatActivity {
 
         // get user id from shared preferences
         sharedpreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-        userId = sharedpreferences.getInt("userKey", 0);
+        int userId = sharedpreferences.getInt("userKey", 0);
 
         //receives data from any source (eg. main or search activities)
         Intent i = getIntent();
@@ -58,10 +59,10 @@ public class CarListActivity  extends AppCompatActivity {
             switch (action) {
                 case "my_cars":
                     CarListViewModel.MyCarsFactory myCarsFactory = new CarListViewModel.MyCarsFactory(userId, getApplication());
-                    viewModel = ViewModelProviders.of(this, myCarsFactory).get(CarListViewModel.class);
+                    CarListViewModel viewModel = ViewModelProviders.of(this, myCarsFactory).get(CarListViewModel.class);
                     viewModel.getCars().observe(this, carEntities -> {
                         if (carEntities != null) {
-                            cars = new ArrayList<>(carEntities);
+                            cars = carEntities;
                             ArrayAdapter<Car> adapter = new CarAdapter(this, 0, cars);
                             carList.setAdapter(adapter);
                         }
@@ -87,7 +88,7 @@ public class CarListActivity  extends AppCompatActivity {
                     viewModel = ViewModelProviders.of(this, allCarsFactory).get(CarListViewModel.class);
                     viewModel.getCars().observe(this, carEntities -> {
                         if (carEntities != null) {
-                            cars = new ArrayList<>(carEntities);
+                            cars = carEntities;
                             ArrayAdapter<Car> adapter = new CarAdapter(this, 0, cars);
                             carList.setAdapter(adapter);
                         }

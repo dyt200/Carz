@@ -164,11 +164,11 @@ public class CarDetailActivity extends AppCompatActivity {
         carTitleTextView.setVisibility(View.VISIBLE);
 
         TextView carTypeTextView = findViewById(R.id.carType);
-        String type = car.getTypeString(car.getType());
+        String type = car.getTypeString();
         carTypeTextView.setText(type);
 
         TextView carManufacturerTextView = findViewById(R.id.carManufacturer);
-        String manufacturer = car.getManufacturerString(car.getManufacturer());
+        String manufacturer = car.getManufacturerString();
         carManufacturerTextView.setText(manufacturer);
 
         TextView carYearTextView = findViewById(R.id.carYear);
