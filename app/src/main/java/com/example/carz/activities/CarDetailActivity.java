@@ -51,6 +51,11 @@ public class CarDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.car_detail);
 
+        //add back button
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //get user session
         sharedpreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
         int userId = sharedpreferences.getInt("userKey", 0);
 
@@ -132,6 +137,10 @@ public class CarDetailActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch(id) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+
             case R.id.editCar:
                 editMode = true;
                 editMode();
@@ -348,5 +357,11 @@ public class CarDetailActivity extends AppCompatActivity {
             assert imm != null;
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 }
