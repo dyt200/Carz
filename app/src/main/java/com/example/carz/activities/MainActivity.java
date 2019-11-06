@@ -72,5 +72,21 @@ public class MainActivity extends AppCompatActivity {
         toast.setGravity(Gravity.CENTER, 0, 200);
         toast.show();
     }
+
+    @Override
+    public void onBackPressed() {
+        int userId = sharedpreferences.getInt("userKey", 0);
+
+        if (userId == 0) {
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "You must be logged in to go back!",
+                    Toast.LENGTH_SHORT
+            );
+            toast.setGravity(Gravity.CENTER, 0, 200);
+            toast.show();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }
 

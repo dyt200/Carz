@@ -31,6 +31,7 @@
     <string name="mileage">Mileage</string>
     <string name="mileageField">Mileage : </string>
     <string name="modelField">Model : </string>
+    <string name="my_account">My Account</string>
     <string name="myCars">My Cars</string>
     <string name="or">- OR -</string>
     <string name="password">Password</string>
@@ -74,6 +75,7 @@
     </integer-array>
 
     <string-array name="drawer_menu_items">
+        <item>My Account</item>
         <item>My Cars</item>
         <item>Settings</item>
         <item>Log-out</item>

@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  Main display for all lists of Cars!
+ *  Main display for all lists of Cars
  */
 public class CarListActivity  extends AppCompatActivity {
 
@@ -165,17 +165,22 @@ public class CarListActivity  extends AppCompatActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             switch (position) {
                 case 0:
+                    Intent myAccountIntent = new Intent(view.getContext(), AccountActivity.class);
+                    startActivity(myAccountIntent);
+                    break;
+
+                case 1:
                     Intent myCarsIntent = new Intent(view.getContext(), CarListActivity.class);
                     myCarsIntent.putExtra("action", "my_cars");
                     startActivity(myCarsIntent);
                     break;
 
-                case 1:
+                case 2:
                     Intent intent1 = new Intent(view.getContext(), AppSettingsActivity.class);
                     startActivity(intent1);
                     break;
 
-                case 2:
+                case 3:
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.clear();
                     editor.apply();

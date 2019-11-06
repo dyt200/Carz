@@ -28,6 +28,7 @@
         <activity android:name=".activities.CreateUserActivity"/>
         <activity android:name=".activities.AppSettingsActivity" />
         <activity android:name=".activities.AddCarActivity" />
+        <activity android:name=".activities.AccountActivity" />
     </application>
 
 </manifest>
