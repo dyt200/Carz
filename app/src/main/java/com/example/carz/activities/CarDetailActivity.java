@@ -141,12 +141,12 @@ public class CarDetailActivity extends AppCompatActivity {
                 onBackPressed();
                 return true;
 
-            case R.id.editCar:
+            case R.id.edit:
                 editMode = true;
                 editMode();
                 break;
 
-            case R.id.deleteCar:
+            case R.id.delete:
                 deleteConfirmation();
                 break;
         }

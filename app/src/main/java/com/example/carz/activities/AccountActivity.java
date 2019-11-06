@@ -1,5 +1,6 @@
 package com.example.carz.activities;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +9,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +29,7 @@ public class AccountActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     UserViewModel userViewModel;
+    boolean displayModeActive = true;
     User user;
 
     @Override
@@ -38,9 +42,7 @@ public class AccountActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        sharedPreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-        final int userId = sharedPreferences.getInt("userKey", 0);
-
+        //listener for My Cars button
         Button myCarsBtn = findViewById(R.id.my_cars_btn);
         myCarsBtn.setOnClickListener(view -> {
             Intent myCarsIntent = new Intent(view.getContext(), CarListActivity.class);
@@ -48,6 +50,22 @@ public class AccountActivity extends AppCompatActivity {
             startActivity(myCarsIntent);
         });
 
+        //listener for Logout button (destroys session)
+        Button logoutBtn = findViewById(R.id.logout_btn);
+        logoutBtn.setOnClickListener(view -> {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
+            Intent logoutIntent = new Intent(view.getContext(), MainActivity.class);
+            startActivity(logoutIntent);
+            createToast("Logged-out successfully");
+        });
+
+        //get user session
+        sharedPreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        final int userId = sharedPreferences.getInt("userKey", 0);
+
+        //builds current user from sharedPreferences and displays it
         UserViewModel.UserFromIdFactory userFactory = new UserViewModel.UserFromIdFactory(getApplication(), userId);
         userViewModel = ViewModelProviders.of(this, userFactory).get(UserViewModel.class);
         userViewModel.getUser().observe(this, userData -> {
@@ -58,6 +76,9 @@ public class AccountActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Enters display mode
+     */
     private void displayMode() {
         RelativeLayout displayMode = findViewById(R.id.display_mode);
         RelativeLayout editMode = findViewById(R.id.edit_mode);
@@ -74,8 +95,15 @@ public class AccountActivity extends AppCompatActivity {
 
         TextView lastNameView = findViewById(R.id.last_name_edit);
         lastNameView.setText(user.getLastName());
+
+        //Makes FAB invisible
+        FloatingActionButton saveUser = findViewById(R.id.save_user);
+        saveUser.setVisibility(View.GONE);
     }
 
+    /**
+     * Enters edit mode
+     */
     private void editMode() {
 
         RelativeLayout displayMode = findViewById(R.id.display_mode);
@@ -99,21 +127,114 @@ public class AccountActivity extends AppCompatActivity {
         saveUser.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Manages the confirmation to delete an account
+     */
     private void deleteConfirmation() {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 
         alertBuilder.setMessage(R.string.delete_user_message)
                 .setTitle(R.string.delete_user_title)
-                .setPositiveButton(R.string.yes, (dialog, id) -> createToast("deleted account (not really lol)"))
+                .setPositiveButton(R.string.yes, (dialog, id) -> userViewModel.deleteUser(user, new OnAsyncEventListener() {
+                            @Override
+                            public void onSuccess() { setDeleteResponse(true); }
+
+                            @Override
+                            public void onFailure(Exception e) { setDeleteResponse(false); }
+                }))
                 .setNegativeButton(R.string.cancel, (dialog, id) -> createToast("Account was not deleted"));
         alertBuilder.show();
     }
 
-    public void saveUser(View view) {
-        System.out.println("SAVING USER");
+    /**
+     * Manages response from deleting an account
+     * @param response the response from the database update
+     */
+    private void setDeleteResponse(boolean response) {
+        if(response) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
+            Intent logoutIntent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(logoutIntent);
+            createToast("Account deleted successfully");
+        } else
+            createToast("Error deleting account");
     }
 
-    private void createToast(String text) {
+    /**
+     * Manages onclick for save_user_btn
+     * @param view the current view
+     */
+    public void saveUser(View view) {
+
+        EditText firstNameT = findViewById(R.id.first_name_edit_2);
+        String firstName = firstNameT.getText().toString();
+
+        EditText lastNameT = findViewById(R.id.last_name_edit_2);
+        String lastName = lastNameT.getText().toString();
+
+        EditText pass1T = findViewById(R.id.password_1_edit);
+        String pass1 = pass1T.getText().toString();
+
+        EditText pass2T = findViewById(R.id.password_2_edit);
+        String pass2 = pass2T.getText().toString();
+
+        //tests for names and password and update
+        if(firstName.equals("") || lastName.equals(""))
+            createToast("Your name / surname cannot be empty");
+
+        else if(testPasswords(pass1, pass2)){
+
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+
+            userViewModel.updateUser(user, new OnAsyncEventListener() {
+                @Override
+                public void onSuccess() { setResponse(true); }
+
+                @Override
+                public void onFailure(Exception e) { setResponse(false); }
+            });
+        }
+    }
+
+    /**
+     * Tests the state of modified passwords
+     * @param pass1 first password
+     * @param pass2 second password
+     * @return update the user or not
+     */
+    private boolean testPasswords(String pass1, String pass2) {
+        if(pass1.equals("") && pass2.equals(""))
+            return true;
+        if(pass1.equals(pass2)){
+            user.setPassword(pass1);
+            return true;
+        } else {
+            createToast("Your passwords do not match");
+            return false;
+        }
+    }
+
+    /**
+     * Manages response from save_user_btn
+     * @param response response from user update
+     */
+    private void setResponse(boolean response) {
+        if (response) {
+            createToast("Your details have been saved");
+            hideKeyboard(this);
+            displayMode();
+        } else
+            createToast("Error saving details");
+    }
+
+    /**
+     * Create a short toast
+     * @param text toast message
+     */
+    public void createToast(String text) {
         Toast toast = Toast.makeText(getApplicationContext(),
                 text,
                 Toast.LENGTH_SHORT
@@ -137,7 +258,12 @@ public class AccountActivity extends AppCompatActivity {
                 return true;
 
             case R.id.edit:
-                editMode();
+                if(displayModeActive)
+                    editMode();
+                else
+                    displayMode();
+
+                displayModeActive = !displayModeActive;
                 break;
 
             case R.id.delete:
@@ -151,5 +277,18 @@ public class AccountActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp(){
         finish();
         return true;
+    }
+
+    /**
+     * Force hides the keyboard in certain instances where we do not change page
+     * @param activity the current activity
+     */
+    public void hideKeyboard(Activity activity) {
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            assert imm != null;
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

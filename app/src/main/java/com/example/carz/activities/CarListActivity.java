@@ -32,7 +32,7 @@ import java.util.List;
 public class CarListActivity  extends AppCompatActivity {
 
     private List cars;
-    SharedPreferences sharedpreferences;
+    SharedPreferences sharedPreferences;
     private DrawerLayout drawerLayout;
     private ListView drawerList;
     private boolean isDrawerOpen;
@@ -60,8 +60,8 @@ public class CarListActivity  extends AppCompatActivity {
         final Intent detailIntent = new Intent(this, CarDetailActivity.class);
 
         // get user id from shared preferences
-        sharedpreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-        int userId = sharedpreferences.getInt("userKey", 0);
+        sharedPreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("userKey", 0);
 
         //receives data from any source (eg. main or search activities)
         Intent i = getIntent();
@@ -181,7 +181,7 @@ public class CarListActivity  extends AppCompatActivity {
                     break;
 
                 case 3:
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.clear();
                     editor.apply();
                     Intent intent13 = new Intent(view.getContext(), MainActivity.class);

@@ -4,13 +4,13 @@
     android:layout_height="100dp"
     android:layout_width="match_parent">
     <item
-        android:id="@+id/editCar"
+        android:id="@+id/edit"
         android:icon="@drawable/edit"
         android:title="@string/edit"
         app:showAsAction="ifRoom">
     </item>
     <item
-        android:id="@+id/deleteCar"
+        android:id="@+id/delete"
         android:icon="@drawable/delete"
         android:title="@string/delete"
         app:showAsAction="ifRoom">
