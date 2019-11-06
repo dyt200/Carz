@@ -35,6 +35,7 @@ public class CarAdapter extends ArrayAdapter<Car> {
         } else
             view = convertView;
 
+        //get TextView ids
         TextView titleT = view.findViewById(R.id.listTitle);
         TextView mileageT = view.findViewById(R.id.listMileage);
         TextView manufacturerT = view.findViewById(R.id.listManufacturer);
@@ -42,35 +43,21 @@ public class CarAdapter extends ArrayAdapter<Car> {
         TextView priceT = view.findViewById(R.id.listPrice);
         ImageView imageT = view.findViewById(R.id.listImage);
 
-        String title = car.getTitle();
+        //treat strings
         String mileage = car.getMileage()+" km";
-        String year = String.valueOf(car.getYear());
         String price = car.getPrice() + " CHF";
-        String manufacturer = getManufacturer(car.getManufacturer());
 
-        titleT.setText(title);
+        //set TextView text
+        titleT.setText(car.getTitle());
         mileageT.setText(mileage);
-        manufacturerT.setText(manufacturer);
-        yearT.setText(year);
+        manufacturerT.setText(car.getManufacturerString());
+        yearT.setText(String.valueOf(car.getYear()));
         priceT.setText(price);
 
+        //draw images
         int imageID = context.getResources().getIdentifier(car.getImage1(), "drawable", context.getPackageName());
         imageT.setImageResource(imageID);
 
         return view;
-    }
-
-    //TODO : temp, replace with something else!
-    private String getManufacturer(int id) {
-
-        String string;
-
-        switch(id) {
-            case 1:     string = "Skoda";   break;
-            case 2:     string = "BMW";     break;
-            case 3:     string = "Opel";    break;
-            default:    string = "ERROR";
-        }
-        return string;
     }
 }
