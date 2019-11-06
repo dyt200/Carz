@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProviders;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -24,11 +23,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.carz.Entities.Car;
-import com.example.carz.Entities.CarAdapter;
 import com.example.carz.Entities.User;
 import com.example.carz.R;
 import com.example.carz.util.OnAsyncEventListener;
-import com.example.carz.viewmodel.CarListViewModel;
 import com.example.carz.viewmodel.CarViewModel;
 import com.example.carz.viewmodel.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -317,21 +314,17 @@ public class CarDetailActivity extends AppCompatActivity {
 
         alertBuilder.setMessage(R.string.delete_car_message)
         .setTitle(R.string.delete_car_title)
-        .setPositiveButton(R.string.yes, (dialog, id) -> {
-            carViewModel.deleteCar(car, new OnAsyncEventListener() {
-                @Override
-                public void onSuccess() {
-                    onBackPressed();
-                    setDeleteResponse(true);
-                }
+        .setPositiveButton(R.string.yes, (dialog, id) -> carViewModel.deleteCar(car, new OnAsyncEventListener() {
+            @Override
+            public void onSuccess() {
+                onBackPressed();
+                setDeleteResponse(true);
+            }
 
-                @Override
-                public void onFailure(Exception e) { setDeleteResponse(false); }
-            });
-        })
-        .setNegativeButton(R.string.cancel, (dialog, id) -> {
-            createToast("Car deletion cancelled");
-        });
+            @Override
+            public void onFailure(Exception e) { setDeleteResponse(false); }
+        }))
+        .setNegativeButton(R.string.cancel, (dialog, id) -> createToast("Car deletion cancelled"));
         alertBuilder.show();
     }
 

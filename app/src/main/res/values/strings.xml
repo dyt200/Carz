@@ -73,4 +73,10 @@
         <item>3</item>
     </integer-array>
 
+    <string-array name="drawer_menu_items">
+        <item>My Cars</item>
+        <item>Settings</item>
+        <item>Log-out</item>
+    </string-array>
+
 </resources>

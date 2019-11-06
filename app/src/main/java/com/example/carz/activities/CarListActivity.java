@@ -4,26 +4,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.carz.Entities.Car;
 import com.example.carz.Entities.CarAdapter;
 import com.example.carz.Entities.CarSearchParameters;
 import com.example.carz.R;
-import com.example.carz.repositories.CarRepository;
 import com.example.carz.viewmodel.CarListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -37,11 +33,28 @@ public class CarListActivity  extends AppCompatActivity {
 
     private List cars;
     SharedPreferences sharedpreferences;
+    private DrawerLayout drawerLayout;
+    private ListView drawerList;
+    private boolean isDrawerOpen;
 
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.car_list);
+
+        // Get ActionBar
+        getSupportActionBar();
+
+        //Drawer menu items come from a string array and we get the Views
+        String[] menuItems = getResources().getStringArray(R.array.drawer_menu_items);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        drawerList = findViewById(R.id.drawer_list);
+
+        // Set the adapter for the list view
+        drawerList.setAdapter(new ArrayAdapter<>(this, R.layout.drawer_list_item, menuItems));
+
+        // Set the custom listener which handles all menu items (switch(pos))
+        drawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         ListView carList = findViewById(R.id.carList);
         final Intent detailIntent = new Intent(this, CarDetailActivity.class);
@@ -110,9 +123,6 @@ public class CarListActivity  extends AppCompatActivity {
             Intent intent = new Intent(v.getContext(), AddCarActivity.class);
             startActivity(intent);
         });
-
-        // Get ActionBar
-        getSupportActionBar();
     }
 
     @Override
@@ -133,51 +143,48 @@ public class CarListActivity  extends AppCompatActivity {
                 return true;
 
             case R.id.listActionUser:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                if(isDrawerOpen)
+                    drawerLayout.closeDrawer(GravityCompat.END);
+                else
+                    drawerLayout.openDrawer(GravityCompat.END);
 
-                LayoutInflater inflater = getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.user_menu_dialog,null);
-                builder.setView(dialogView);
-
-                AlertDialog userMenu = builder.create();
-                userMenu.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                userMenu.show();
-
-                WindowManager.LayoutParams wmlp = userMenu.getWindow().getAttributes();
-                wmlp.gravity = Gravity.TOP | Gravity.END;
-                wmlp.width = 550;
-                wmlp.x = 50;   //x position
-                wmlp.y = 0;   //y position
-
-                userMenu.getWindow().setAttributes(wmlp);
-
-
-                TextView appSettingsButton = dialogView.findViewById(R.id.app_settings);
-                appSettingsButton.setOnClickListener(v -> {
-                    Intent intent1 = new Intent(v.getContext(), AppSettingsActivity.class);
-                    startActivity(intent1);
-                });
-
-                TextView myCarsButton = dialogView.findViewById(R.id.my_cars);
-                myCarsButton.setOnClickListener(v -> {
-                    Intent myCarsIntent = new Intent(v.getContext(), CarListActivity.class);
-                    myCarsIntent.putExtra("action", "my_cars");
-                    startActivity(myCarsIntent);
-                });
-
-                TextView logOutButton = dialogView.findViewById(R.id.log_out);
-                logOutButton.setOnClickListener(v -> {
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.clear();
-                    editor.apply();
-                    Intent intent13 = new Intent(v.getContext(), MainActivity.class);
-                    startActivity(intent13);
-                });
+                isDrawerOpen = !isDrawerOpen;
 
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
+     * Click listener for Drawer menu that passes its position to a switch
+     */
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            switch (position) {
+                case 0:
+                    Intent myCarsIntent = new Intent(view.getContext(), CarListActivity.class);
+                    myCarsIntent.putExtra("action", "my_cars");
+                    startActivity(myCarsIntent);
+                    break;
+
+                case 1:
+                    Intent intent1 = new Intent(view.getContext(), AppSettingsActivity.class);
+                    startActivity(intent1);
+                    break;
+
+                case 2:
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.clear();
+                    editor.apply();
+                    Intent intent13 = new Intent(view.getContext(), MainActivity.class);
+                    startActivity(intent13);
+                    break;
+            }
+            drawerList.setItemChecked(position, true);
+            drawerLayout.closeDrawer(drawerList);
         }
     }
 }
