@@ -149,7 +149,7 @@ public class Car implements Serializable {
 
     public String getManufacturerString() {
         String string;
-        switch(id) {
+        switch(this.manufacturer) {
             case 1:     string = "Skoda";   break;
             case 2:     string = "BMW";     break;
             case 3:     string = "Opel";    break;
@@ -160,7 +160,7 @@ public class Car implements Serializable {
 
     public String getTypeString() {
         String string;
-        switch(id) {
+        switch(this.type) {
             case 1:     string = "Family";   break;
             case 2:     string = "Coupé";     break;
             case 3:     string = "Cabriolet";    break;
