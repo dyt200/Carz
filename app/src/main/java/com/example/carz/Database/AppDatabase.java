@@ -12,6 +12,7 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.carz.DAO.CarDao;
+import com.example.carz.DAO.ImageDao;
 import com.example.carz.DAO.UserDao;
 import com.example.carz.Entities.Car;
 import com.example.carz.Entities.User;
@@ -27,6 +28,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract CarDao carDao();
     public abstract UserDao userDao();
+    public abstract ImageDao imageDao();
 
     private final MutableLiveData<Boolean> isDatabaseCreated = new MutableLiveData<>();
 
@@ -74,7 +76,7 @@ public abstract class AppDatabase extends RoomDatabase {
         isDatabaseCreated.postValue(true);
     }
 
-    public LiveData<Boolean> getDatabaseCreated() {
+    private LiveData<Boolean> getDatabaseCreated() {
         return isDatabaseCreated;
     }
 }

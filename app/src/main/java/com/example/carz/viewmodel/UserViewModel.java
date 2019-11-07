@@ -67,10 +67,8 @@ public class UserViewModel extends AndroidViewModel {
 
         @NonNull
         private final Application application;
-
         private final String email;
         private final String pass;
-
         private final UserRepository repository;
 
         public Factory(@NonNull Application application, String email, String pass){
