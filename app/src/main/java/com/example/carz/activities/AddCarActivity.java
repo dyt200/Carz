@@ -51,6 +51,9 @@ public class AddCarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_car);
 
+        SharedPreferences sharedpreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        userId = sharedpreferences.getInt("userKey", 0);
+
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
         //Building spinners
@@ -97,8 +100,7 @@ public class AddCarActivity extends AppCompatActivity {
         int pos;
 
         // get user id from shared preferences
-        SharedPreferences sharedpreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-        userId = sharedpreferences.getInt("userKey", 0);
+
 
         Spinner manufacturerT = findViewById(R.id.make_spinner);
         pos = manufacturerT.getSelectedItemPosition();
