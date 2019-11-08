@@ -106,10 +106,12 @@ public class CarDetailActivity extends AppCompatActivity {
                 UserViewModel.UserFromIdFactory userFactory = new UserViewModel.UserFromIdFactory(getApplication(), carOwner);
                 userViewModel = ViewModelProviders.of(this, userFactory).get(UserViewModel.class);
                 userViewModel.getUser().observe(this, user -> {
-                    if (car != null) {
+                    if (user != null) {
                         this.carUser = user;
 
-                        if (carOwner == userId) isCarOwner = true;
+                        if (carOwner == userId)
+                            isCarOwner = true;
+
                         carImageView = findViewById(R.id.carImage);
                         loadImage(car.getImage1());
                         displayMode();

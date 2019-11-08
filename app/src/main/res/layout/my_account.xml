@@ -11,6 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/display_mode"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -58,11 +59,41 @@
                     android:layout_toEndOf="@+id/align"
                     android:textSize="20sp"
                     android:text="@string/test"/>
+                <TextView
+                    android:id="@+id/phone_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/last_name_label"
+                    android:textSize="20sp"
+                    android:text="@string/telephoneCreate"/>
+                <TextView
+                    android:id="@+id/phone_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/last_name_edit"
+                    android:layout_toEndOf="@+id/align"
+                    android:textSize="20sp"
+                    android:text="@string/test"/>
+                <TextView
+                    android:id="@+id/email_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/phone_label"
+                    android:textSize="20sp"
+                    android:text="@string/emailCreate"/>
+                <TextView
+                    android:id="@+id/email_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/phone_edit"
+                    android:layout_toEndOf="@+id/align"
+                    android:textSize="20sp"
+                    android:text="@string/test"/>
                 <Button
                     android:id="@+id/my_cars_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/last_name_edit"
+                    android:layout_below="@id/email_label"
                     android:text="@string/myCars"
                     android:layout_marginTop="20pt"
                     android:gravity="center" />
@@ -75,7 +106,7 @@
                     android:gravity="center" />
             </RelativeLayout>
             <RelativeLayout
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/edit_mode"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -123,16 +154,56 @@
                     android:layout_marginEnd="20sp"
                     android:text="@string/test"/>
                 <Space
-                    android:id="@+id/middle"
+                    android:id="@+id/middle1"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginBottom="20pt"
                     android:layout_below="@id/last_name_label_2"/>
                 <TextView
+                    android:id="@+id/phone_label_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/middle1"
+                    android:textSize="20sp"
+                    android:text="@string/telephoneCreate"/>
+                <EditText
+                    android:id="@+id/phone_edit_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/align_2"
+                    android:layout_alignBottom="@id/phone_label_2"
+                    android:layout_marginEnd="20sp"
+                    android:textSize="20sp"
+                    android:inputType="phone"
+                    android:text="@string/test"/>
+                <TextView
+                    android:id="@+id/email_label_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/phone_label_2"
+                    android:textSize="20sp"
+                    android:text="@string/emailCreate"/>
+                <EditText
+                    android:id="@+id/email_edit_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/align_2"
+                    android:layout_alignBottom="@id/email_label_2"
+                    android:layout_marginEnd="20sp"
+                    android:textSize="20sp"
+                    android:inputType="textEmailAddress"
+                    android:text="@string/test"/>
+                <Space
+                    android:id="@+id/middle2"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="20pt"
+                    android:layout_below="@id/email_edit_2"/>
+                <TextView
                     android:id="@+id/password_1_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/middle"
+                    android:layout_below="@id/middle2"
                     android:text="@string/passwordCreate"
                     android:textSize="20sp"
                     android:labelFor="@id/password_1_edit"/>
