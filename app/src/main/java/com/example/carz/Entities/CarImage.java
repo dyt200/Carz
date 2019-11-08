@@ -2,9 +2,18 @@ package com.example.carz.Entities;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "image")
+@Entity(
+    tableName = "image",
+    foreignKeys = @ForeignKey(
+        entity = Car.class,
+        parentColumns = "id",
+        childColumns = "car",
+        onDelete = ForeignKey.CASCADE
+    )
+)
 public class CarImage {
 
     @PrimaryKey(autoGenerate = true)

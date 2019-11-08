@@ -2,11 +2,20 @@ package com.example.carz.Entities;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(tableName = "car")
+@Entity(
+    tableName = "car",
+    foreignKeys = @ForeignKey(
+        entity = User.class,
+        parentColumns = "id",
+        childColumns = "user",
+        onDelete = ForeignKey.CASCADE
+    )
+)
 public class Car {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
