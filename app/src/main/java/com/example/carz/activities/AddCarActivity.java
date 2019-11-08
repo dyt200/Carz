@@ -17,15 +17,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.carz.Database.AppDatabase;
 import com.example.carz.Entities.Car;
+import com.example.carz.Entities.CarImage;
 import com.example.carz.R;
 import com.example.carz.repositories.CarRepository;
+import com.example.carz.repositories.ImageRepository;
 import com.example.carz.util.OnAsyncEventListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import java.util.List;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,6 +47,8 @@ public class AddCarActivity extends AppCompatActivity {
     private Context context = AddCarActivity.this;
     private ImageView c_image;
     private int userId;
+    private List<String> addedImageUrls = new ArrayList<>();
+    private Boolean successImageUpload = false;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -152,9 +158,7 @@ public class AddCarActivity extends AppCompatActivity {
                             mileage,
                             model,
                             desc,
-                            condition,
-                            carUri,
-                            ""
+                            condition
                     ),
                     view
             );
@@ -195,11 +199,12 @@ public class AddCarActivity extends AppCompatActivity {
                                 riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
-                                        Uri downloadUrl = uri;
-                                        carUri = downloadUrl.toString();
-                                        System.out.println(downloadUrl);
-                                        Toast.makeText(getBaseContext(), "Upload success! URL - " + downloadUrl.toString(), Toast.LENGTH_SHORT).show();
-                                        loadImage();
+                                            carUri = uri.toString();
+                                            addedImageUrls.add(carUri);
+                                            System.out.println(uri.toString());
+                                            Toast.makeText(getBaseContext(), "Upload success! URL - " + uri.toString(), Toast.LENGTH_SHORT).show();
+                                            loadImage();
+
                                     }
                                 });
 
@@ -240,7 +245,8 @@ public class AddCarActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess() {
-                setResponse(true);
+                // THIS RETRUNS 0 EVERY FUCKING TIME
+                insertImages(car.getId(), addedImageUrls, view);
             }
 
             @Override
@@ -249,6 +255,33 @@ public class AddCarActivity extends AppCompatActivity {
             }
 
         }, view.getContext());
+    }
+
+
+    private void insertImages(int carId, List<String> addedImageUrls, View view) {
+        ImageRepository ir = ImageRepository.getInstance();
+        for (String imageUrl: addedImageUrls){
+            CarImage ci = new CarImage(carId, imageUrl);
+            ir.insert(ci, new OnAsyncEventListener() {
+
+                @Override
+                public void onSuccess() {
+                    successImageUpload = true;
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    successImageUpload = false;
+                }
+
+
+            }, view.getContext());
+        }
+        if (successImageUpload = true){
+            setResponse(true);
+        } else {
+            setResponse(false);
+        }
     }
 
     /**

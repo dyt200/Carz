@@ -22,6 +22,7 @@ public class CreateCar extends AsyncTask<Car, Void, Void> {
         try {
             for (Car car : params)
                 database.carDao().insert(car);
+
         } catch (Exception e) {
             exception = e;
         }

@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.carz.Entities.Car;
+import com.example.carz.Entities.CarImage;
 import com.example.carz.pojo.CarWithImages;
 import com.example.carz.Entities.User;
 import com.example.carz.R;
@@ -29,6 +30,7 @@ import com.example.carz.util.OnAsyncEventListener;
 import com.example.carz.viewmodel.CarViewModel;
 import com.example.carz.viewmodel.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import java.util.List;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,6 +48,7 @@ public class CarDetailActivity extends AppCompatActivity {
     CarWithImages carI;
     Car car;
     User carUser;
+    List<CarImage> carImages;
 
     private ImageView carImageView;
 
@@ -101,6 +104,7 @@ public class CarDetailActivity extends AppCompatActivity {
             if (carData != null) {
                 carI = carData;
                 car = carI.getCar();
+                carImages = carI.getImages();
                 final int carOwner = car.getUser();
 
                 UserViewModel.UserFromIdFactory userFactory = new UserViewModel.UserFromIdFactory(getApplication(), carOwner);
@@ -113,7 +117,7 @@ public class CarDetailActivity extends AppCompatActivity {
                             isCarOwner = true;
 
                         carImageView = findViewById(R.id.carImage);
-                        loadImage(car.getImage1());
+                        loadImage(carImages.get(0).getUrl());
                         displayMode();
                     }
                 });

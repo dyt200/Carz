@@ -2,16 +2,16 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "dd9d43007b666c064c4f44978d000bc1",
+    "identityHash": "01f0150ad8138d62679b1c99c2d06fc0",
     "entities": [
       {
         "tableName": "car",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `manufacturer` INTEGER NOT NULL, `type` INTEGER NOT NULL, `user` INTEGER NOT NULL, `price` INTEGER NOT NULL, `year` INTEGER NOT NULL, `mileage` INTEGER NOT NULL, `model` TEXT, `description` TEXT, `condition` TEXT, `image1` TEXT, `image2` TEXT, FOREIGN KEY(`user`) REFERENCES `user`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `manufacturer` INTEGER NOT NULL, `type` INTEGER NOT NULL, `user` INTEGER NOT NULL, `price` INTEGER NOT NULL, `year` INTEGER NOT NULL, `mileage` INTEGER NOT NULL, `model` TEXT, `description` TEXT, `condition` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`user`) REFERENCES `user`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -67,25 +67,13 @@
             "columnName": "condition",
             "affinity": "TEXT",
             "notNull": false
-          },
-          {
-            "fieldPath": "image1",
-            "columnName": "image1",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "image2",
-            "columnName": "image2",
-            "affinity": "TEXT",
-            "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
             "id"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [
           {
@@ -224,7 +212,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dd9d43007b666c064c4f44978d000bc1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '01f0150ad8138d62679b1c99c2d06fc0')"
     ]
   }
 }

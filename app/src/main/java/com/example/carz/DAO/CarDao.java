@@ -34,7 +34,7 @@ public interface CarDao {
     LiveData<List<CarWithImages>> getSearchResults(SimpleSQLiteQuery query);
 
     @Insert
-    void insert(Car car);
+    long insert(Car car);
 
     @Update
     void update(Car car);
