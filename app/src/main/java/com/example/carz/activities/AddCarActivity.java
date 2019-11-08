@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.carz.Entities.Car;
-import com.example.carz.GlideApp;
 import com.example.carz.R;
 import com.example.carz.repositories.CarRepository;
 import com.example.carz.util.OnAsyncEventListener;
@@ -28,7 +27,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.UUID;

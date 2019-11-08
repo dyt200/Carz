@@ -15,16 +15,17 @@ import com.example.carz.DAO.CarDao;
 import com.example.carz.DAO.ImageDao;
 import com.example.carz.DAO.UserDao;
 import com.example.carz.Entities.Car;
+import com.example.carz.Entities.CarImage;
 import com.example.carz.Entities.User;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {Car.class, User.class}, version = 1)
+@Database(entities = {Car.class, User.class, CarImage.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String TAG = "AppDatabase";
     private static AppDatabase instance;
-    private static final String DATABASE_NAME = "carz_test2";
+    private static final String DATABASE_NAME = "carz_test8";
 
     public abstract CarDao carDao();
     public abstract UserDao userDao();

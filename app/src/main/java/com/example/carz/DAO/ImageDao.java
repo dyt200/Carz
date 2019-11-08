@@ -6,7 +6,6 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
-import com.example.carz.Entities.Car;
 import com.example.carz.Entities.CarImage;
 
 import java.util.List;

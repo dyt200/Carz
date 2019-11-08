@@ -3,6 +3,7 @@ package com.example.carz.Entities;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
@@ -14,7 +15,8 @@ import java.io.Serializable;
         parentColumns = "id",
         childColumns = "user",
         onDelete = ForeignKey.CASCADE
-    )
+    ),
+    indices = {@Index("user")}
 )
 public class Car {
     @PrimaryKey(autoGenerate = true)

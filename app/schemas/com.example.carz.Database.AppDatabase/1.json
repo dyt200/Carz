@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "fc1b81dde70debccefc66b821ff0ccf6",
+    "identityHash": "dd9d43007b666c064c4f44978d000bc1",
     "entities": [
       {
         "tableName": "car",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `manufacturer` INTEGER NOT NULL, `type` INTEGER NOT NULL, `user` INTEGER NOT NULL, `price` INTEGER NOT NULL, `year` INTEGER NOT NULL, `mileage` INTEGER NOT NULL, `model` TEXT, `description` TEXT, `condition` TEXT, `image1` TEXT, `image2` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `manufacturer` INTEGER NOT NULL, `type` INTEGER NOT NULL, `user` INTEGER NOT NULL, `price` INTEGER NOT NULL, `year` INTEGER NOT NULL, `mileage` INTEGER NOT NULL, `model` TEXT, `description` TEXT, `condition` TEXT, `image1` TEXT, `image2` TEXT, FOREIGN KEY(`user`) REFERENCES `user`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -87,8 +87,29 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
-        "foreignKeys": []
+        "indices": [
+          {
+            "name": "index_car_user",
+            "unique": false,
+            "columnNames": [
+              "user"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_car_user` ON `${TABLE_NAME}` (`user`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "user",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "user"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       },
       {
         "tableName": "user",
@@ -145,12 +166,65 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "image",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `car` INTEGER NOT NULL, `url` TEXT, FOREIGN KEY(`car`) REFERENCES `car`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "car",
+            "columnName": "car",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_image_car",
+            "unique": false,
+            "columnNames": [
+              "car"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_image_car` ON `${TABLE_NAME}` (`car`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "car",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "car"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fc1b81dde70debccefc66b821ff0ccf6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dd9d43007b666c064c4f44978d000bc1')"
     ]
   }
 }

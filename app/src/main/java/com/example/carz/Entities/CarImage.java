@@ -3,6 +3,7 @@ package com.example.carz.Entities;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(
@@ -12,7 +13,8 @@ import androidx.room.PrimaryKey;
         parentColumns = "id",
         childColumns = "car",
         onDelete = ForeignKey.CASCADE
-    )
+    ),
+    indices = {@Index("car")}
 )
 public class CarImage {
 
@@ -26,13 +28,8 @@ public class CarImage {
     @ColumnInfo(name = "url")
     private String url;
 
-    public CarImage(int carId, String url) {
-        this.car = carId;
-        this.url = url;
-    }
-
-    public CarImage(int id, int carId, String url) {
-        this.car = carId;
+    public CarImage(int car, String url) {
+        this.car = car;
         this.url = url;
     }
 
@@ -40,9 +37,9 @@ public class CarImage {
 
     public void setId(int id) { this.id = id; }
 
-    public int getCarId() { return car; }
+    public int getCar() { return car; }
 
-    public void setCarId(int carId) { this.car = carId; }
+    public void setCar(int carId) { this.car = carId; }
 
     public String getUrl() { return url; }
 
