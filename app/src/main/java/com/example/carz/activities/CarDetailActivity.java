@@ -198,11 +198,11 @@ public class CarDetailActivity extends AppCompatActivity {
         carConditionTextView.setText(car.getCondition());
 
         TextView userPhoneTextView = findViewById(R.id.phone);
-        String phone = "Contact number : " + car.getUser();
+        String phone = "Contact number : " + carUser.getTelephone();
         userPhoneTextView.setText(phone);
 
         TextView userMailTextView = findViewById(R.id.mail);
-        String mail = "Contact email : " + car.getUser();
+        String mail = "Contact email : " + carUser.getEmail();
         userMailTextView.setText(mail);
 
         //Makes FAB invisible (just in case)
