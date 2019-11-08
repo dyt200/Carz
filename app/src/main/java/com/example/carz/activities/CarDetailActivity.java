@@ -1,7 +1,6 @@
 package com.example.carz.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.Activity;
@@ -9,7 +8,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +22,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.carz.Entities.Car;
+import com.example.carz.pojo.CarWithImages;
 import com.example.carz.Entities.User;
 import com.example.carz.R;
 import com.example.carz.util.OnAsyncEventListener;
@@ -44,6 +43,7 @@ public class CarDetailActivity extends AppCompatActivity {
     boolean isCarOwner = false;
     boolean editMode = false;
 
+    CarWithImages carI;
     Car car;
     User carUser;
 
@@ -99,8 +99,8 @@ public class CarDetailActivity extends AppCompatActivity {
         carViewModel = ViewModelProviders.of(this, carFactory).get(CarViewModel.class);
         carViewModel.getCar().observe(this, carData -> {
             if (carData != null) {
-
-                car = carData;
+                carI = carData;
+                car = carI.getCar();
                 final int carOwner = car.getUser();
 
                 UserViewModel.UserFromIdFactory userFactory = new UserViewModel.UserFromIdFactory(getApplication(), carOwner);

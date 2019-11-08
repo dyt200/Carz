@@ -6,25 +6,32 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.RawQuery;
+import androidx.room.Transaction;
 import androidx.room.Update;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import com.example.carz.Entities.Car;
+import com.example.carz.pojo.CarWithImages;
+
 import java.util.List;
 
 @Dao
 public interface CarDao {
+    @Transaction
     @Query("SELECT * FROM car")
-    LiveData<List<Car>> getAll();
+    LiveData<List<CarWithImages>> getAll();
 
+    @Transaction
     @Query("SELECT * FROM car WHERE id = (:id)")
-    LiveData<Car> getCarById(int id);
+    LiveData<CarWithImages> getCarById(int id);
 
+    @Transaction
     @Query("SELECT * FROM car WHERE user = (:userId)")
-    LiveData<List<Car>> getMyCars(int userId);
+    LiveData<List<CarWithImages>> getMyCars(int userId);
 
+    @Transaction
     @RawQuery(observedEntities = Car.class)
-    LiveData<List<Car>> getSearchResults(SimpleSQLiteQuery query);
+    LiveData<List<CarWithImages>> getSearchResults(SimpleSQLiteQuery query);
 
     @Insert
     void insert(Car car);

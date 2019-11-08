@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.carz.Entities.Car;
 import com.example.carz.Entities.CarAdapter;
 import com.example.carz.Entities.CarSearchParameters;
+import com.example.carz.pojo.CarWithImages;
 import com.example.carz.R;
 import com.example.carz.viewmodel.CarListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,7 +32,7 @@ import java.util.List;
  */
 public class CarListActivity  extends AppCompatActivity {
 
-    private List cars;
+    private List<CarWithImages> cars;
     SharedPreferences sharedPreferences;
     private DrawerLayout drawerLayout;
     private ListView drawerList;
@@ -76,7 +77,7 @@ public class CarListActivity  extends AppCompatActivity {
                     viewModel.getCars().observe(this, carEntities -> {
                         if (carEntities != null) {
                             cars = carEntities;
-                            ArrayAdapter<Car> adapter = new CarAdapter(this, 0, cars);
+                            ArrayAdapter<CarWithImages> adapter = new CarAdapter(this, 0, cars);
                             carList.setAdapter(adapter);
                         }
                     });
@@ -89,7 +90,7 @@ public class CarListActivity  extends AppCompatActivity {
                     viewModel.getCars().observe(this, carEntities -> {
                         if (carEntities != null) {
                             cars = new ArrayList<>(carEntities);
-                            ArrayAdapter<Car> adapter = new CarAdapter(this, 0, cars);
+                            ArrayAdapter<CarWithImages> adapter = new CarAdapter(this, 0, cars);
                             carList.setAdapter(adapter);
                         }
                     });
@@ -102,7 +103,7 @@ public class CarListActivity  extends AppCompatActivity {
                     viewModel.getCars().observe(this, carEntities -> {
                         if (carEntities != null) {
                             cars = carEntities;
-                            ArrayAdapter<Car> adapter = new CarAdapter(this, 0, cars);
+                            ArrayAdapter<CarWithImages> adapter = new CarAdapter(this, 0, cars);
                             carList.setAdapter(adapter);
                         }
                     });
@@ -111,8 +112,8 @@ public class CarListActivity  extends AppCompatActivity {
 
         //Onclick listener for each car
         carList.setOnItemClickListener((parent, view, position, id) -> {
-            Car clickedCar = (Car) parent.getItemAtPosition(position);
-            int clickedCarId = clickedCar.getId();
+            CarWithImages carWithImages = (CarWithImages) parent.getItemAtPosition(position);
+            int clickedCarId = carWithImages.getCar().getId();
             detailIntent.putExtra("car_id", clickedCarId);
             startActivity(detailIntent);
         });

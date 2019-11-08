@@ -10,18 +10,19 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.carz.R;
+import com.example.carz.pojo.CarWithImages;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class CarAdapter extends ArrayAdapter<Car> {
+public class CarAdapter extends ArrayAdapter<CarWithImages> {
 
     private Context context;
-    private List<Car> cars;
+    private List<CarWithImages> cars;
     private ImageView imageT;
 
-    public CarAdapter(Context context, int resource, List<Car> cars) {
+    public CarAdapter(Context context, int resource, List<CarWithImages> cars) {
         super(context, resource, cars);
         this.context = context;
         this.cars = cars;
@@ -29,7 +30,8 @@ public class CarAdapter extends ArrayAdapter<Car> {
 
     @NotNull
     public View getView(int position, View convertView, @NotNull ViewGroup parent) {
-        Car car = cars.get(position);
+        CarWithImages carWithImages = cars.get(position);
+        Car car = carWithImages.getCar();
         View view;
 
         if (convertView == null) {
@@ -62,14 +64,14 @@ public class CarAdapter extends ArrayAdapter<Car> {
 /*        int imageID = context.getResources().getIdentifier(car.getImage1(), "drawable", context.getPackageName());
         imageT.setImageResource(imageID);*/
 
-        loadImage(car.getImage1());
+        loadImage(carWithImages.getImages().get(0));
 
         return view;
     }
 
-    public void loadImage(String imgUrl) {
+    public void loadImage(CarImage img) {
         Glide.with(context)
-                .load(imgUrl)
+                .load(img.getUrl())
                 .into(imageT);
     }
 
