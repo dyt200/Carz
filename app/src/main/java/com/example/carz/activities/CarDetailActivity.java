@@ -21,7 +21,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.carz.Entities.Car;
 import com.example.carz.Entities.CarImage;
 import com.example.carz.Entities.ImageSliderAdapter;
@@ -30,11 +29,9 @@ import com.example.carz.Entities.User;
 import com.example.carz.R;
 import com.example.carz.util.OnAsyncEventListener;
 import com.example.carz.viewmodel.CarViewModel;
-import com.example.carz.viewmodel.ImageListViewModel;
 import com.example.carz.viewmodel.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.smarteist.autoimageslider.IndicatorAnimations;
-import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
@@ -57,6 +54,7 @@ public class CarDetailActivity extends AppCompatActivity {
     CarWithImages carI;
     Car car;
     User carUser;
+    int userId;
     List<CarImage> carImages;
 
     private ImageView carImageView;
@@ -72,7 +70,7 @@ public class CarDetailActivity extends AppCompatActivity {
 
         //get user session
         sharedpreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-        int userId = sharedpreferences.getInt("userKey", 0);
+        userId = sharedpreferences.getInt("userKey", 0);
 
         //Building spinners
         Spinner typeSpinner = findViewById(R.id.type_spinner);
@@ -110,11 +108,12 @@ public class CarDetailActivity extends AppCompatActivity {
         CarViewModel.Factory carFactory = new CarViewModel.Factory(getApplication(), carId);
         carViewModel = ViewModelProviders.of(this, carFactory).get(CarViewModel.class);
         carViewModel.getCar().observe(this, carData -> {
+
             if (carData != null) {
                 carI = carData;
                 car = carI.getCar();
                 carImages = carI.getImages();
-                final int carOwner = car.getUser();
+                int carOwner = car.getUser();
 
                 UserViewModel.UserFromIdFactory userFactory = new UserViewModel.UserFromIdFactory(getApplication(), carOwner);
                 userViewModel = ViewModelProviders.of(this, userFactory).get(UserViewModel.class);
@@ -122,12 +121,14 @@ public class CarDetailActivity extends AppCompatActivity {
                     if (user != null) {
                         this.carUser = user;
 
+                        System.out.println("My user id = "+userId+" AND the car user Id = "+carOwner);
                         if (carOwner == userId)
                             isCarOwner = true;
 
-                      /*  carImageView = findViewById(R.id.carImage);
-                        loadImage(carImages.get(0).getUrl());*/
-                      setSliderAdapter(carImages);
+                        //refresh menu in case where request is too slow for onCreateOptionsMenu()
+                        refreshMenu(this);
+
+                        setSliderAdapter(carImages);
                         displayMode();
                     }
                 });
@@ -150,19 +151,7 @@ public class CarDetailActivity extends AppCompatActivity {
         sliderView.setIndicatorUnselectedColor(Color.GRAY);
         sliderView.setAutoCycle(false);
 
-        sliderView.setOnIndicatorClickListener(new DrawController.ClickListener() {
-            @Override
-            public void onIndicatorClicked(int position) {
-                sliderView.setCurrentPagePosition(position);
-            }
-        });
-
-    }
-
-    public void loadImage(String imgUrl) {
-        Glide.with(getApplicationContext())
-                .load(imgUrl)
-                .into(carImageView);
+        sliderView.setOnIndicatorClickListener(position -> sliderView.setCurrentPagePosition(position));
     }
 
     @Override
@@ -400,6 +389,10 @@ public class CarDetailActivity extends AppCompatActivity {
             assert imm != null;
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    public static void refreshMenu(Activity activity) {
+        activity.invalidateOptionsMenu();
     }
 
     @Override
