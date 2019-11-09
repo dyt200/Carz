@@ -3,6 +3,14 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary_L">#025AB9</color>
+    <color name="colorPrimaryDark_L">#023B79</color>
+    <color name="colorAccent_L">#FD4E17</color>
+    <color name="colorPrimary_D">#353535</color>
+    <color name="colorPrimaryDark_D">#202020</color>
+    <color name="colorAccent_D">#0F0F0F</color>
+    <color name="buttonTextLight">#ffffff</color>
+    <color name="buttonTextDark">#5F5F5F</color>
     <color name="textDark">#272727</color>
     <color name="textLight">#94A0B2</color>
 </resources>
