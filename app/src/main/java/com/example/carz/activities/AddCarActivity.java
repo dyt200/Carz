@@ -24,6 +24,7 @@ import com.example.carz.R;
 import com.example.carz.repositories.CarRepository;
 import com.example.carz.repositories.ImageRepository;
 import com.example.carz.util.OnAsyncEventListener;
+import com.example.carz.util.OnAsyncInsertEventListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -241,27 +242,29 @@ public class AddCarActivity extends AppCompatActivity {
      */
     private void insertCar(Car car, View view) {
         CarRepository cr = CarRepository.getInstance();
-        cr.insert(car, new OnAsyncEventListener() {
+        cr.insert(car, new OnAsyncInsertEventListener() {
+            @Override
+            public void onSuccessResult(Long id) {
+                System.out.println("--------------------" + id);
+                insertImages(id, addedImageUrls, view);
+            }
 
             @Override
             public void onSuccess() {
-                // THIS RETRUNS 0 EVERY FUCKING TIME
-                insertImages(car.getId(), addedImageUrls, view);
+
             }
 
             @Override
             public void onFailure(Exception e) {
-                setResponse(false);
-            }
 
+            }
         }, view.getContext());
     }
 
-
-    private void insertImages(int carId, List<String> addedImageUrls, View view) {
+        private void insertImages(long carId, List<String> addedImageUrls, View view) {
         ImageRepository ir = ImageRepository.getInstance();
         for (String imageUrl: addedImageUrls){
-            CarImage ci = new CarImage(carId, imageUrl);
+            CarImage ci = new CarImage((int)carId, imageUrl);
             ir.insert(ci, new OnAsyncEventListener() {
 
                 @Override

@@ -12,6 +12,7 @@ import com.example.carz.async.UpdateCar;
 import com.example.carz.Database.AppDatabase;
 import com.example.carz.Entities.Car;
 import com.example.carz.util.OnAsyncEventListener;
+import com.example.carz.util.OnAsyncInsertEventListener;
 
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class CarRepository {
         return AppDatabase.getInstance(context).carDao().getSearchResults(query);
     }
 
-    public void insert(final Car car, OnAsyncEventListener callback, Context context) {
+    public void insert(final Car car, OnAsyncInsertEventListener callback, Context context) {
         new CreateCar(context, callback).execute(car);
     }
 

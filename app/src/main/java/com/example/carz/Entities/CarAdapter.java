@@ -64,7 +64,7 @@ public class CarAdapter extends ArrayAdapter<CarWithImages> {
 /*        int imageID = context.getResources().getIdentifier(car.getImage1(), "drawable", context.getPackageName());
         imageT.setImageResource(imageID);*/
 
-  /*      loadImage(carWithImages.getImages().get(0));*/
+        loadImage(carWithImages.getImages().get(0));
 
         return view;
     }

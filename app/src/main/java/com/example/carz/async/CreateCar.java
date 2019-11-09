@@ -6,22 +6,22 @@ import android.os.AsyncTask;
 import com.example.carz.Database.AppDatabase;
 import com.example.carz.Entities.Car;
 import com.example.carz.util.OnAsyncEventListener;
+import com.example.carz.util.OnAsyncInsertEventListener;
 
-public class CreateCar extends AsyncTask<Car, Void, Void> {
+public class CreateCar extends AsyncTask<Car, Void, Long> {
     private AppDatabase database;
-    private OnAsyncEventListener callback;
+    private OnAsyncInsertEventListener callback;
     private Exception exception;
 
-    public CreateCar(Context context, OnAsyncEventListener callback) {
+    public CreateCar(Context context, OnAsyncInsertEventListener callback) {
         database = AppDatabase.getInstance(context);
         this.callback = callback;
     }
-
     @Override
-    protected Void doInBackground(Car... params) {
+    protected Long doInBackground(Car... params) {
         try {
             for (Car car : params)
-                database.carDao().insert(car);
+                 return database.carDao().insert(car);
 
         } catch (Exception e) {
             exception = e;
@@ -30,10 +30,10 @@ public class CreateCar extends AsyncTask<Car, Void, Void> {
     }
 
     @Override
-    protected void onPostExecute(Void aVoid) {
+    protected void onPostExecute(Long id) {
         if (callback != null) {
             if (exception == null) {
-                callback.onSuccess();
+                callback.onSuccessResult(id);
             } else {
                 callback.onFailure(exception);
             }

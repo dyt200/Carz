@@ -13,6 +13,7 @@ import com.example.carz.Entities.Car;
 import com.example.carz.pojo.CarWithImages;
 import com.example.carz.repositories.CarRepository;
 import com.example.carz.util.OnAsyncEventListener;
+import com.example.carz.util.OnAsyncInsertEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -75,7 +76,7 @@ public class CarViewModel extends AndroidViewModel {
         return observableCar;
     }
 
-    public void createCar(Car car, OnAsyncEventListener callback) {
+    public void createCar(Car car, OnAsyncInsertEventListener callback) {
         repository.insert(car, callback, application);
     }
 
