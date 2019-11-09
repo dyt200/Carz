@@ -8,11 +8,11 @@
     <color name="colorAccent_L">#FD4E17</color>
     <color name="colorPrimary_D">#353535</color>
     <color name="colorPrimaryDark_D">#000000</color>
-    <color name="colorAccent_D">#000000</color>
+    <color name="colorAccent_D">#696969</color>
     <color name="dark_background">#1F1F1F</color>
     <color name="buttonTextLight">#ffffff</color>
     <color name="buttonTextDark">#5F5F5F</color>
-    <color name="textDark">#272727</color>
+    <color name="textDark">#636363</color>
     <color name="dark_text">#BBBBBB</color>
     <color name="textLight">#94A0B2</color>
     <color name="light_gray">#CCCCCC</color>
