@@ -1,5 +1,6 @@
 package com.example.carz.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -9,6 +10,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,33 +18,44 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.carz.Entities.Car;
 import com.example.carz.Entities.CarImage;
 import com.example.carz.Entities.ImageSliderAdapter;
 import com.example.carz.pojo.CarWithImages;
 import com.example.carz.Entities.User;
 import com.example.carz.R;
+import com.example.carz.repositories.ImageRepository;
+import com.example.carz.repositories.UserRepository;
 import com.example.carz.util.OnAsyncEventListener;
 import com.example.carz.viewmodel.CarViewModel;
 import com.example.carz.viewmodel.UserViewModel;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.UploadTask;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.UUID;
 
 public class CarDetailActivity extends AppCompatActivity {
 
     SharedPreferences sharedpreferences;
+    private StorageReference mStorageRef;
 
     CarViewModel carViewModel;
     UserViewModel userViewModel;
@@ -54,10 +67,12 @@ public class CarDetailActivity extends AppCompatActivity {
     CarWithImages carI;
     Car car;
     User carUser;
+    private Context context = CarDetailActivity.this;
     int userId;
     List<CarImage> carImages;
-
+    LinearLayout imgLl;
     private ImageView carImageView;
+    ImageRepository ir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -240,6 +255,7 @@ public class CarDetailActivity extends AppCompatActivity {
 
     }
 
+
     /**
      * Initialises the editable version of CarDetails
      */
@@ -251,6 +267,9 @@ public class CarDetailActivity extends AppCompatActivity {
         //manages visibility of the two layouts
         displayMode.setVisibility(View.GONE);
         editMode.setVisibility(View.VISIBLE);
+
+        imgLl = findViewById(R.id.imgRl);
+        ir = ImageRepository.getInstance();
 
         TextView carTitleE = findViewById(R.id.carTitle_2);
         carTitleE.setText(car.getTitle());
@@ -289,6 +308,9 @@ public class CarDetailActivity extends AppCompatActivity {
         //Makes FAB visible
         FloatingActionButton saveCar = findViewById(R.id.saveCar);
         saveCar.setVisibility(View.VISIBLE);
+
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        displayImageList();
     }
 
     /**
@@ -400,4 +422,136 @@ public class CarDetailActivity extends AppCompatActivity {
         finish();
         return true;
     }
+
+    private void displayImageList() {
+        imgLl.removeAllViewsInLayout();
+        for (CarImage image: carImages){
+            ImageView iv = new ImageView(getApplicationContext());
+            imgLl.addView(iv);
+            Glide.with(context)
+                    .load(image.getUrl())
+                    .into(iv);
+            iv.setPadding(0,20,0,20);
+            iv.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    dbImagedeleteConfirmation(view, image);
+                    return true;
+                }
+            });
+        }
+    }
+
+    public void dbImagedeleteConfirmation(View view, CarImage carImage) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+
+        alertBuilder.setMessage(R.string.delete_car_message)
+                .setTitle(R.string.delete_car_title)
+                .setPositiveButton("YES", (dialog, id) -> {
+                    carImages.remove(carImage);
+           /*         imgLl.removeView(view);*/
+                    ir.delete(carImage, new OnAsyncEventListener() {
+                        @Override
+                        public void onSuccess() {
+                            System.out.println("image deleted");
+                        }
+
+                        @Override
+                        public void onFailure(Exception e) {
+                            System.out.println("failure");
+                        }
+                    },context);
+                })
+                .setNegativeButton("NO", (dialog, id) -> createToast("Image deletion cancelled"));
+        alertBuilder.show();
+    }
+
+    public void chooseImage(View view) {
+        pickFromGallery();
+    }
+
+    private void pickFromGallery() {
+        //Create an Intent with action as ACTION_PICK
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        // Sets the type as image/*. This ensures only components of type image are selected
+        intent.setType("image/*");
+        //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
+        String[] mimeTypes = {"image/jpeg", "image/png"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+        // Launching the Intent
+        startActivityForResult(intent, 44);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+
+            if (requestCode == 44 && resultCode == RESULT_OK) {
+                Uri file = data.getData();
+                StorageReference riversRef = mStorageRef.child("test/" + UUID.randomUUID().toString() + ".jpg");
+
+                riversRef.putFile(file)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                // Get a URL to the uploaded content
+                                /*  Uri downloadUrl =  taskSnapshot;*/
+                                riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        String carUri = uri.toString();
+                                        CarImage ci = new CarImage(carI.getCar().getId(), carUri);
+                                        carImages.add(ci);
+                                        Toast.makeText(getBaseContext(), "Upload success! URL - " + uri.toString(), Toast.LENGTH_SHORT).show();
+                                        loadImageFromGallery(ci);
+                                    }
+                                });
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle unsuccessful uploads
+                                // ...
+                            }
+                        });
+
+
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            Toast.makeText(this, ex.toString(),
+                    Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void loadImageFromGallery(CarImage carImage) {
+        ir.insert(carImage, new OnAsyncEventListener() {
+            @Override
+            public void onSuccess() {
+                System.out.println("image added to db");
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                System.out.println("failure");
+            }
+        },context);
+/*        ImageView iv = new ImageView(getApplicationContext());
+        imgLl.addView(iv);
+        Glide.with(context)
+                .load(carImage.getUrl())
+                .into(iv);
+        iv.setPadding(0,20,0,20);
+        iv.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                deleteConfirmation(view, carUri);
+                return true;
+            }
+        });*/
+    }
+
 }

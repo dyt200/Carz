@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/CarzDark">
+        android:theme="@style/CarzLight">
         <activity android:name=".activities.CarDetailActivity"></activity>
         <activity android:name=".activities.MainActivity">
             <intent-filter>
