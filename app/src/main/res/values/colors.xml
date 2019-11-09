@@ -13,4 +13,5 @@
     <color name="buttonTextDark">#5F5F5F</color>
     <color name="textDark">#272727</color>
     <color name="textLight">#94A0B2</color>
+    <color name="light_gray">#CCCCCC</color>
 </resources>
