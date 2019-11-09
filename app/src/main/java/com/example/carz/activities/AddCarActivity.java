@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -17,15 +19,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
+import com.example.carz.Database.AppDatabase;
 import com.example.carz.Entities.Car;
+import com.example.carz.Entities.CarImage;
 import com.example.carz.R;
 import com.example.carz.repositories.CarRepository;
+import com.example.carz.repositories.ImageRepository;
 import com.example.carz.util.OnAsyncEventListener;
+import com.example.carz.util.OnAsyncInsertEventListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import java.util.List;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,11 +51,16 @@ public class AddCarActivity extends AppCompatActivity {
     private Context context = AddCarActivity.this;
     private ImageView c_image;
     private int userId;
+    private List<String> addedImageUrls = new ArrayList<>();
+    private Boolean successImageUpload = false;
+    LinearLayout imgLl;
 
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_car);
+
+        imgLl = findViewById(R.id.imgRl);
 
         SharedPreferences sharedpreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
         userId = sharedpreferences.getInt("userKey", 0);
@@ -83,7 +96,7 @@ public class AddCarActivity extends AppCompatActivity {
         Spinner spinYear = findViewById(R.id.year_spinner);
         spinYear.setAdapter(adapter);
 
-        c_image = (ImageView) findViewById(R.id.choosenImage);
+  /*      c_image = (ImageView) findViewById(R.id.choosenImage);*/
 
         loadImage();
 
@@ -152,9 +165,7 @@ public class AddCarActivity extends AppCompatActivity {
                             mileage,
                             model,
                             desc,
-                            condition,
-                            carUri,
-                            ""
+                            condition
                     ),
                     view
             );
@@ -195,11 +206,12 @@ public class AddCarActivity extends AppCompatActivity {
                                 riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
-                                        Uri downloadUrl = uri;
-                                        carUri = downloadUrl.toString();
-                                        System.out.println(downloadUrl);
-                                        Toast.makeText(getBaseContext(), "Upload success! URL - " + downloadUrl.toString(), Toast.LENGTH_SHORT).show();
-                                        loadImage();
+                                            carUri = uri.toString();
+                                            addedImageUrls.add(carUri);
+                                            System.out.println(uri.toString());
+                                            Toast.makeText(getBaseContext(), "Upload success! URL - " + uri.toString(), Toast.LENGTH_SHORT).show();
+                                            loadImage();
+
                                     }
                                 });
 
@@ -223,9 +235,17 @@ public class AddCarActivity extends AppCompatActivity {
     }
 
     public void loadImage() {
+        ImageView iv = new ImageView(getApplicationContext());
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, // Width of TextView
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        iv.setLayoutParams(lp);
+        imgLl.addView(iv);
+
         Glide.with(context)
                 .load(carUri)
-                .into(c_image);
+                .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                .into(iv);
     }
 
     /**
@@ -236,19 +256,49 @@ public class AddCarActivity extends AppCompatActivity {
      */
     private void insertCar(Car car, View view) {
         CarRepository cr = CarRepository.getInstance();
-        cr.insert(car, new OnAsyncEventListener() {
+        cr.insert(car, new OnAsyncInsertEventListener() {
+            @Override
+            public void onSuccessResult(Long id) {
+                System.out.println("--------------------" + id);
+                insertImages(id, addedImageUrls, view);
+            }
 
             @Override
             public void onSuccess() {
-                setResponse(true);
+
             }
 
             @Override
             public void onFailure(Exception e) {
-                setResponse(false);
-            }
 
+            }
         }, view.getContext());
+    }
+
+        private void insertImages(long carId, List<String> addedImageUrls, View view) {
+        ImageRepository ir = ImageRepository.getInstance();
+        for (String imageUrl: addedImageUrls){
+            CarImage ci = new CarImage((int)carId, imageUrl);
+            ir.insert(ci, new OnAsyncEventListener() {
+
+                @Override
+                public void onSuccess() {
+                    successImageUpload = true;
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    successImageUpload = false;
+                }
+
+
+            }, view.getContext());
+        }
+        if (successImageUpload = true){
+            setResponse(true);
+        } else {
+            setResponse(false);
+        }
     }
 
     /**

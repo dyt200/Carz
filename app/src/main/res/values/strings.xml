@@ -1,6 +1,7 @@
 <resources>
     <string name="add">Add</string>
     <string name="addressCreate">Address : </string>
+    <string name="address_hint">1 Example lane \n Your Street</string>
     <string name="addCar">Add A Car</string>
     <string name="app_name">Carz</string>
     <string name="appSettings">App Settings</string>
@@ -20,8 +21,11 @@
     <string name="edit">Edit</string>
     <string name="email">Email</string>
     <string name="emailCreate">Email : </string>
+    <string name="email_hint">example@youremail.com</string>
     <string name="firstNameCreate">First name : </string>
+    <string name="firstName_hint">Your first name</string>
     <string name="lastNameCreate">Surname : </string>
+    <string name="lastName_hint">Your last name</string>
     <string name="login">Login</string>
     <string name="logOut">Log out</string>
     <string name="log_out_message">Logged-out successfully</string>
@@ -37,6 +41,8 @@
     <string name="my_account">My Account</string>
     <string name="myCars">My Cars</string>
     <string name="or">- OR -</string>
+    <string name="pass1_hint">Your password</string>
+    <string name="pass2_hint">Re-type your password</string>
     <string name="password">Password</string>
     <string name="passwordCreate">Password :</string>
     <string name="passwordCreate2">Re-type password :</string>
@@ -44,6 +50,7 @@
     <string name="search">Search</string>
     <string name="submit">Submit</string>
     <string name="telephoneCreate">Telephone : </string>
+    <string name="telephone_hint">+41 079 123 45 67</string>
     <string name="typeField">Type : </string>
     <string name="test">Test</string>
     <string name="user">User</string>

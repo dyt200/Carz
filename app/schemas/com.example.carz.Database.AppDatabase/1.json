@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "dd9d43007b666c064c4f44978d000bc1",
+    "identityHash": "7fe8095b00788fb88b5d1306a3a6bbd4",
     "entities": [
       {
         "tableName": "car",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `manufacturer` INTEGER NOT NULL, `type` INTEGER NOT NULL, `user` INTEGER NOT NULL, `price` INTEGER NOT NULL, `year` INTEGER NOT NULL, `mileage` INTEGER NOT NULL, `model` TEXT, `description` TEXT, `condition` TEXT, `image1` TEXT, `image2` TEXT, FOREIGN KEY(`user`) REFERENCES `user`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `manufacturer` INTEGER NOT NULL, `type` INTEGER NOT NULL, `user` INTEGER NOT NULL, `price` INTEGER NOT NULL, `year` INTEGER NOT NULL, `mileage` INTEGER NOT NULL, `model` TEXT, `description` TEXT, `condition` TEXT, FOREIGN KEY(`user`) REFERENCES `user`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -65,18 +65,6 @@
           {
             "fieldPath": "condition",
             "columnName": "condition",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "image1",
-            "columnName": "image1",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "image2",
-            "columnName": "image2",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -224,7 +212,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dd9d43007b666c064c4f44978d000bc1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7fe8095b00788fb88b5d1306a3a6bbd4')"
     ]
   }
 }

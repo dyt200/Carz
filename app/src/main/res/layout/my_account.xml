@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_marginStart="10pt"
-    android:layout_marginTop="10pt"
+<RelativeLayout
+    android:layout_marginStart="30dp"
+    android:layout_marginTop="30dp"
+    android:layout_marginEnd="30dp"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -25,15 +27,22 @@
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:textColor="@color/textLight"
-                    android:layout_marginBottom="10pt"
                     android:text="@string/test"/>
+                <View
+                    android:id="@+id/lineTop"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/light_gray"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_below="@+id/email"/>
                 <TextView
                     android:id="@+id/first_name_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:text="@string/firstNameCreate"
-                    android:layout_below="@id/email"/>
+                    android:layout_below="@id/lineTop"/>
                 <TextView
                     android:id="@+id/first_name_edit"
                     android:layout_width="wrap_content"
@@ -42,7 +51,7 @@
                     android:layout_alignBottom="@id/first_name_label"
                     android:text="@string/test"
                     android:textSize="20sp"
-                    android:layout_below="@id/email"/>
+                    android:layout_below="@id/lineTop"/>
                 <TextView
                     android:id="@+id/last_name_label"
                     android:layout_width="wrap_content"
@@ -58,17 +67,62 @@
                     android:layout_toEndOf="@+id/align"
                     android:textSize="20sp"
                     android:text="@string/test"/>
-                <Button
-                    android:id="@+id/my_cars_btn"
+                <View
+                    android:id="@+id/middleLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/light_gray"
+                    android:layout_below="@id/last_name_edit"/>
+                <TextView
+                    android:id="@+id/phone_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/last_name_edit"
+                    android:layout_below="@id/middleLine"
+                    android:textSize="20sp"
+                    android:text="@string/telephoneCreate"/>
+                <TextView
+                    android:id="@+id/phone_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/middleLine"
+                    android:layout_toEndOf="@+id/align"
+                    android:textSize="20sp"
+                    android:text="@string/test"/>
+                <TextView
+                    android:id="@+id/email_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/phone_label"
+                    android:textSize="20sp"
+                    android:text="@string/emailCreate"/>
+                <TextView
+                    android:id="@+id/email_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/phone_edit"
+                    android:layout_marginBottom="15dp"
+                    android:layout_toEndOf="@+id/align"
+                    android:textSize="20sp"
+                    android:text="@string/test"/>
+                <View
+                    android:id="@+id/bottomLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@color/light_gray"
+                    android:layout_below="@id/email_edit"/>
+                <Button
+                    android:id="@+id/my_cars_btn"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/bottomLine"
                     android:text="@string/myCars"
-                    android:layout_marginTop="20pt"
                     android:gravity="center" />
                 <Button
                     android:id="@+id/logout_btn"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/my_cars_btn"
                     android:text="@string/logOut"
@@ -83,7 +137,7 @@
                     android:id="@+id/align_2"
                     android:layout_width="50pt"
                     android:layout_height="0dp"
-                    android:layout_marginStart="100dp"/>
+                    android:layout_marginStart="80dp"/>
                 <TextView
                     android:id="@+id/email_2"
                     android:layout_width="wrap_content"
@@ -123,16 +177,56 @@
                     android:layout_marginEnd="20sp"
                     android:text="@string/test"/>
                 <Space
-                    android:id="@+id/middle"
+                    android:id="@+id/middle1"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginBottom="20pt"
                     android:layout_below="@id/last_name_label_2"/>
                 <TextView
+                    android:id="@+id/phone_label_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/middle1"
+                    android:textSize="20sp"
+                    android:text="@string/telephoneCreate"/>
+                <EditText
+                    android:id="@+id/phone_edit_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/align_2"
+                    android:layout_alignBottom="@id/phone_label_2"
+                    android:layout_marginEnd="20sp"
+                    android:textSize="20sp"
+                    android:inputType="phone"
+                    android:text="@string/test"/>
+                <TextView
+                    android:id="@+id/email_label_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/phone_label_2"
+                    android:textSize="20sp"
+                    android:text="@string/emailCreate"/>
+                <EditText
+                    android:id="@+id/email_edit_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/align_2"
+                    android:layout_alignBottom="@id/email_label_2"
+                    android:layout_marginEnd="20sp"
+                    android:textSize="20sp"
+                    android:inputType="textEmailAddress"
+                    android:text="@string/test"/>
+                <Space
+                    android:id="@+id/middle2"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="20pt"
+                    android:layout_below="@id/email_edit_2"/>
+                <TextView
                     android:id="@+id/password_1_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/middle"
+                    android:layout_below="@id/middle2"
                     android:text="@string/passwordCreate"
                     android:textSize="20sp"
                     android:labelFor="@id/password_1_edit"/>

@@ -9,10 +9,11 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.carz.BaseApp;
 import com.example.carz.Entities.Car;
+import com.example.carz.pojo.CarWithImages;
 import com.example.carz.repositories.CarRepository;
 import com.example.carz.util.OnAsyncEventListener;
+import com.example.carz.util.OnAsyncInsertEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -22,7 +23,7 @@ public class CarViewModel extends AndroidViewModel {
     private Application application;
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
-    private final MediatorLiveData<Car> observableCar;
+    private final MediatorLiveData<CarWithImages> observableCar;
 
     public CarViewModel(
             @NonNull Application application,
@@ -36,7 +37,7 @@ public class CarViewModel extends AndroidViewModel {
 
         // set by default null, until we get data from the database.
         observableCar.setValue(null);
-        LiveData<Car> car = repository.getCarById(carId, application);
+        LiveData<CarWithImages> car = repository.getCarById(carId, application);
 
         // observe the changes of the client entity from the database and forward them
         observableCar.addSource(car, observableCar::setValue);
@@ -71,11 +72,11 @@ public class CarViewModel extends AndroidViewModel {
     /**
      * Expose the LiveData ClientEntity query so the UI can observe it.
      */
-    public LiveData<Car> getCar() {
+    public LiveData<CarWithImages> getCar() {
         return observableCar;
     }
 
-    public void createCar(Car car, OnAsyncEventListener callback) {
+    public void createCar(Car car, OnAsyncInsertEventListener callback) {
         repository.insert(car, callback, application);
     }
 

@@ -121,19 +121,29 @@
             android:layout_below="@id/price"
             android:onClick="chooseImage"
             android:text="@string/addCarimages"/>
-        <ImageView
+
+        <LinearLayout
+            android:orientation="vertical"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/imgRl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/chooseImage"
+            tools:context=".activities.AddCarActivity"
+        />
+<!--        <ImageView
             android:id="@+id/choosenImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/chooseImage"
-            android:contentDescription="@string/carImage"/>
+            android:contentDescription="@string/carImage"/>-->
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="40dp"
-            android:layout_below="@id/choosenImage"
+            android:layout_below="@id/imgRl"
             android:onClick="addCar"
             android:text="@string/add"/>
     </RelativeLayout>

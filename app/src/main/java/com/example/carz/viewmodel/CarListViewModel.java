@@ -10,8 +10,8 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.carz.Entities.Car;
 import com.example.carz.Entities.CarSearchParameters;
+import com.example.carz.pojo.CarWithImages;
 import com.example.carz.repositories.CarRepository;
 
 
@@ -24,7 +24,7 @@ public class CarListViewModel extends AndroidViewModel {
 
     private Context applicationContext;
 
-    private final MediatorLiveData<List<Car>> observableCars;
+    private final MediatorLiveData<List<CarWithImages>> observableCars;
 
     private CarListViewModel(@NonNull Application application, CarRepository carRepository){
         super(application);
@@ -34,7 +34,7 @@ public class CarListViewModel extends AndroidViewModel {
         observableCars = new MediatorLiveData<>();
         observableCars.setValue(null);
 
-        LiveData<List<Car>> cars = repository.getAllCars(application);
+        LiveData<List<CarWithImages>> cars = repository.getAllCars(application);
         observableCars.addSource(cars, observableCars::setValue);
     }
 
@@ -46,7 +46,7 @@ public class CarListViewModel extends AndroidViewModel {
         observableCars = new MediatorLiveData<>();
         observableCars.setValue(null);
 
-        LiveData<List<Car>> cars = repository.getMyCars(userId, application);
+        LiveData<List<CarWithImages>> cars = repository.getMyCars(userId, application);
         observableCars.addSource(cars, observableCars::setValue);
     }
 
@@ -58,7 +58,7 @@ public class CarListViewModel extends AndroidViewModel {
         observableCars = new MediatorLiveData<>();
         observableCars.setValue(null);
 
-        LiveData<List<Car>> cars = repository.getSearchResults(searchParameters.getDatabaseQuery(), application);
+        LiveData<List<CarWithImages>> cars = repository.getSearchResults(searchParameters.getDatabaseQuery(), application);
         observableCars.addSource(cars, observableCars::setValue);
     }
 
@@ -123,7 +123,7 @@ public class CarListViewModel extends AndroidViewModel {
         }
     }
 
-    public LiveData<List<Car>> getCars() {
+    public LiveData<List<CarWithImages>> getCars() {
         return observableCars;
     }
 

@@ -1,7 +1,6 @@
 package com.example.carz.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.Activity;
@@ -9,7 +8,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,12 +23,22 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.carz.Entities.Car;
+import com.example.carz.Entities.CarImage;
+import com.example.carz.Entities.ImageSliderAdapter;
+import com.example.carz.pojo.CarWithImages;
 import com.example.carz.Entities.User;
 import com.example.carz.R;
 import com.example.carz.util.OnAsyncEventListener;
 import com.example.carz.viewmodel.CarViewModel;
+import com.example.carz.viewmodel.ImageListViewModel;
 import com.example.carz.viewmodel.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
+
+import java.util.List;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,12 +49,15 @@ public class CarDetailActivity extends AppCompatActivity {
 
     CarViewModel carViewModel;
     UserViewModel userViewModel;
+    SliderView sliderView;
 
     boolean isCarOwner = false;
     boolean editMode = false;
 
+    CarWithImages carI;
     Car car;
     User carUser;
+    List<CarImage> carImages;
 
     private ImageView carImageView;
 
@@ -99,24 +111,52 @@ public class CarDetailActivity extends AppCompatActivity {
         carViewModel = ViewModelProviders.of(this, carFactory).get(CarViewModel.class);
         carViewModel.getCar().observe(this, carData -> {
             if (carData != null) {
-
-                car = carData;
+                carI = carData;
+                car = carI.getCar();
+                carImages = carI.getImages();
                 final int carOwner = car.getUser();
 
                 UserViewModel.UserFromIdFactory userFactory = new UserViewModel.UserFromIdFactory(getApplication(), carOwner);
                 userViewModel = ViewModelProviders.of(this, userFactory).get(UserViewModel.class);
                 userViewModel.getUser().observe(this, user -> {
-                    if (car != null) {
+                    if (user != null) {
                         this.carUser = user;
 
-                        if (carOwner == userId) isCarOwner = true;
-                        carImageView = findViewById(R.id.carImage);
-                        loadImage(car.getImage1());
+                        if (carOwner == userId)
+                            isCarOwner = true;
+
+                      /*  carImageView = findViewById(R.id.carImage);
+                        loadImage(carImages.get(0).getUrl());*/
+                      setSliderAdapter(carImages);
                         displayMode();
                     }
                 });
             }
         });
+
+    }
+
+    private void setSliderAdapter(List<CarImage> carImages) {
+
+        sliderView = findViewById(R.id.imageSlider);
+
+        final ImageSliderAdapter imAdapter = new ImageSliderAdapter(this, carImages);
+
+        sliderView.setSliderAdapter(imAdapter);
+
+        sliderView.setIndicatorAnimation(IndicatorAnimations.SLIDE); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        sliderView.setIndicatorSelectedColor(Color.WHITE);
+        sliderView.setIndicatorUnselectedColor(Color.GRAY);
+        sliderView.setAutoCycle(false);
+
+        sliderView.setOnIndicatorClickListener(new DrawController.ClickListener() {
+            @Override
+            public void onIndicatorClicked(int position) {
+                sliderView.setCurrentPagePosition(position);
+            }
+        });
+
     }
 
     public void loadImage(String imgUrl) {
@@ -198,11 +238,11 @@ public class CarDetailActivity extends AppCompatActivity {
         carConditionTextView.setText(car.getCondition());
 
         TextView userPhoneTextView = findViewById(R.id.phone);
-        String phone = "Contact number : " + car.getUser();
+        String phone = "Contact number : " + carUser.getTelephone();
         userPhoneTextView.setText(phone);
 
         TextView userMailTextView = findViewById(R.id.mail);
-        String mail = "Contact email : " + car.getUser();
+        String mail = "Contact email : " + carUser.getEmail();
         userMailTextView.setText(mail);
 
         //Makes FAB invisible (just in case)

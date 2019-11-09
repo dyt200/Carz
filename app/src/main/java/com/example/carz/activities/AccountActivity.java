@@ -25,6 +25,8 @@ import com.example.carz.util.OnAsyncEventListener;
 import com.example.carz.viewmodel.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.w3c.dom.Text;
+
 public class AccountActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
@@ -96,6 +98,12 @@ public class AccountActivity extends AppCompatActivity {
         TextView lastNameView = findViewById(R.id.last_name_edit);
         lastNameView.setText(user.getLastName());
 
+        TextView phoneView = findViewById(R.id.phone_edit);
+        phoneView.setText(user.getTelephone());
+
+        TextView emailView2 = findViewById(R.id.email_edit);
+        emailView2.setText(user.getEmail());
+
         //Makes FAB invisible
         FloatingActionButton saveUser = findViewById(R.id.save_user);
         saveUser.setVisibility(View.GONE);
@@ -121,6 +129,12 @@ public class AccountActivity extends AppCompatActivity {
 
         TextView lastNameView = findViewById(R.id.last_name_edit_2);
         lastNameView.setText(user.getLastName());
+
+        TextView phoneView = findViewById(R.id.phone_edit_2);
+        phoneView.setText(user.getTelephone());
+
+        TextView emailView2 = findViewById(R.id.email_edit_2);
+        emailView2.setText(user.getEmail());
 
         //Makes FAB visible
         FloatingActionButton saveUser = findViewById(R.id.save_user);
@@ -174,6 +188,12 @@ public class AccountActivity extends AppCompatActivity {
         EditText lastNameT = findViewById(R.id.last_name_edit_2);
         String lastName = lastNameT.getText().toString();
 
+        TextView phoneT = findViewById(R.id.phone_edit_2);
+        String phone = phoneT.getText().toString();
+
+        TextView emailT = findViewById(R.id.email_edit_2);
+        String email = emailT.getText().toString();
+
         EditText pass1T = findViewById(R.id.password_1_edit);
         String pass1 = pass1T.getText().toString();
 
@@ -188,6 +208,8 @@ public class AccountActivity extends AppCompatActivity {
 
             user.setFirstName(firstName);
             user.setLastName(lastName);
+            user.setTelephone(phone);
+            user.setEmail(email);
 
             userViewModel.updateUser(user, new OnAsyncEventListener() {
                 @Override
