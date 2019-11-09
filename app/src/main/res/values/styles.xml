@@ -2,10 +2,32 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="CarzLight" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary_L</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_L</item>
+        <item name="colorAccent">@color/colorAccent_L</item>
+        <item name="android:buttonStyle">@style/ButtonLight</item>
+    </style>
+
+    <style name="CarzDark" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorPrimary">@color/colorPrimary_D</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_D</item>
+        <item name="colorAccent">@color/colorAccent_D</item>
+        <item name="android:buttonStyle">@style/ButtonDark</item>
+    </style>
+
+    <style name="ButtonLight" parent="@android:style/Widget.Button">
+        <item name="android:textColor">@color/buttonTextLight</item>
+        <item name="android:backgroundTint">@color/colorPrimary_L</item>
+    </style>
+    <style name="ButtonDark" parent="@android:style/Widget.Button">
+        <item name="android:textColor">@color/buttonTextDark</item>
+        <item name="android:backgroundTint">@color/colorPrimary_D</item>
     </style>
 
 </resources>

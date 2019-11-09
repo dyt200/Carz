@@ -14,14 +14,16 @@
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_centerHorizontal="true"
         android:inputType="textEmailAddress"
         android:layout_below="@id/emailT"/>
     <TextView
         android:id="@+id/passwordT"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/email"
         android:text="@string/password"/>
@@ -29,14 +31,16 @@
         android:id="@+id/password"
         android:inputType="textPassword"
         android:layout_width="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
         android:layout_height="40dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/passwordT"/>
     <Button
         android:id="@+id/btn_Login"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:backgroundTint="@color/colorPrimary"
+        android:layout_height="50dp"
+        android:layout_marginStart="40dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/password"
         android:layout_marginTop="20dp"
@@ -48,12 +52,14 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_below="@id/btn_Login"
         android:text="@string/or"/>
     <Button
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:backgroundTint="@color/colorPrimary"
+        android:layout_marginStart="40dp"
+        android:layout_height="50dp"
         android:text="@string/createAccount"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/or"
