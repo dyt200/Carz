@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,13 +24,20 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.carz.Entities.Car;
 import com.example.carz.Entities.CarImage;
+import com.example.carz.Entities.ImageSliderAdapter;
 import com.example.carz.pojo.CarWithImages;
 import com.example.carz.Entities.User;
 import com.example.carz.R;
 import com.example.carz.util.OnAsyncEventListener;
 import com.example.carz.viewmodel.CarViewModel;
+import com.example.carz.viewmodel.ImageListViewModel;
 import com.example.carz.viewmodel.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
+
 import java.util.List;
 
 import java.util.ArrayList;
@@ -41,6 +49,7 @@ public class CarDetailActivity extends AppCompatActivity {
 
     CarViewModel carViewModel;
     UserViewModel userViewModel;
+    SliderView sliderView;
 
     boolean isCarOwner = false;
     boolean editMode = false;
@@ -116,13 +125,38 @@ public class CarDetailActivity extends AppCompatActivity {
                         if (carOwner == userId)
                             isCarOwner = true;
 
-                        carImageView = findViewById(R.id.carImage);
-                        loadImage(carImages.get(0).getUrl());
+                      /*  carImageView = findViewById(R.id.carImage);
+                        loadImage(carImages.get(0).getUrl());*/
+                      setSliderAdapter(carImages);
                         displayMode();
                     }
                 });
             }
         });
+
+    }
+
+    private void setSliderAdapter(List<CarImage> carImages) {
+
+        sliderView = findViewById(R.id.imageSlider);
+
+        final ImageSliderAdapter imAdapter = new ImageSliderAdapter(this, carImages);
+
+        sliderView.setSliderAdapter(imAdapter);
+
+        sliderView.setIndicatorAnimation(IndicatorAnimations.SLIDE); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        sliderView.setIndicatorSelectedColor(Color.WHITE);
+        sliderView.setIndicatorUnselectedColor(Color.GRAY);
+        sliderView.setAutoCycle(false);
+
+        sliderView.setOnIndicatorClickListener(new DrawController.ClickListener() {
+            @Override
+            public void onIndicatorClicked(int position) {
+                sliderView.setCurrentPagePosition(position);
+            }
+        });
+
     }
 
     public void loadImage(String imgUrl) {
