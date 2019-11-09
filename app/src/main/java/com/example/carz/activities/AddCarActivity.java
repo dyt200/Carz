@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -17,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.example.carz.Database.AppDatabase;
 import com.example.carz.Entities.Car;
 import com.example.carz.Entities.CarImage;
@@ -50,11 +53,14 @@ public class AddCarActivity extends AppCompatActivity {
     private int userId;
     private List<String> addedImageUrls = new ArrayList<>();
     private Boolean successImageUpload = false;
+    LinearLayout imgLl;
 
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_car);
+
+        imgLl = findViewById(R.id.imgRl);
 
         SharedPreferences sharedpreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
         userId = sharedpreferences.getInt("userKey", 0);
@@ -90,7 +96,7 @@ public class AddCarActivity extends AppCompatActivity {
         Spinner spinYear = findViewById(R.id.year_spinner);
         spinYear.setAdapter(adapter);
 
-        c_image = (ImageView) findViewById(R.id.choosenImage);
+  /*      c_image = (ImageView) findViewById(R.id.choosenImage);*/
 
         loadImage();
 
@@ -229,9 +235,17 @@ public class AddCarActivity extends AppCompatActivity {
     }
 
     public void loadImage() {
+        ImageView iv = new ImageView(getApplicationContext());
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, // Width of TextView
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        iv.setLayoutParams(lp);
+        imgLl.addView(iv);
+
         Glide.with(context)
                 .load(carUri)
-                .into(c_image);
+                .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                .into(iv);
     }
 
     /**
