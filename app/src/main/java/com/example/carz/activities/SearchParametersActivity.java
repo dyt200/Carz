@@ -64,6 +64,11 @@ public class SearchParametersActivity extends AppCompatActivity {
         int[] makeValues = getResources().getIntArray(R.array.make_values);
         int make = makeValues[pos];
 
+        //get model
+        TextView modelT = findViewById(R.id.model_text);
+        String model = "";
+        model = modelT.getText().toString();
+
         //get min year
         TextView minYearT = findViewById(R.id.min_year);
         int minYear;
@@ -103,7 +108,8 @@ public class SearchParametersActivity extends AppCompatActivity {
                 minMileage,
                 maxMileage,
                 minYear,
-                maxYear
+                maxYear,
+                model
         );
 
         //pass search results into CarListActivity
