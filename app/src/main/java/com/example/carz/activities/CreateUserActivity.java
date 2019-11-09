@@ -21,6 +21,10 @@ public class CreateUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_user);
         ur = UserRepository.getInstance();
+
+        //TODO Fix this back button
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void createUser(View view) {
