@@ -25,6 +25,7 @@
         <item name="android:textColor">@color/dark_text</item>
     </style>
 
+
     <style name="ButtonLight" parent="@android:style/Widget.Button">
         <item name="android:textColor">@color/buttonTextLight</item>
         <item name="android:backgroundTint">@color/colorPrimary_L</item>

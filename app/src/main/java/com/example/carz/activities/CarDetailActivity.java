@@ -174,8 +174,13 @@ public class CarDetailActivity extends AppCompatActivity {
                 return true;
 
             case R.id.edit:
-                editMode = true;
-                editMode();
+                if(!editMode) {
+                    editMode = true;
+                    editMode();
+                } else {
+                    editMode = false;
+                    displayMode();
+                }
                 break;
 
             case R.id.delete:
