@@ -49,8 +49,8 @@ public class CarAdapter extends ArrayAdapter<CarWithImages> {
         imageT = view.findViewById(R.id.listImage);
 
         //treat strings
-        String mileage = car.getMileage()+" km";
-        String price = car.getPrice() + " CHF";
+        String mileage = car.getFormattedMileageString();
+        String price = car.getFormattedPriceString();
 
         //set TextView text
         titleT.setText(car.getTitle());
@@ -59,21 +59,14 @@ public class CarAdapter extends ArrayAdapter<CarWithImages> {
         yearT.setText(String.valueOf(car.getYear()));
         priceT.setText(price);
 
-
-        //draw images
-/*        int imageID = context.getResources().getIdentifier(car.getImage1(), "drawable", context.getPackageName());
-        imageT.setImageResource(imageID);*/
-
         loadImage(carWithImages.getImages().get(0));
 
         return view;
     }
 
-    public void loadImage(CarImage img) {
+    private void loadImage(CarImage img) {
         Glide.with(context)
                 .load(img.getUrl())
                 .into(imageT);
     }
-
-
 }

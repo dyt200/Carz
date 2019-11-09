@@ -7,6 +7,8 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 @Entity(
     tableName = "car",
@@ -50,7 +52,6 @@ public class Car {
     @ColumnInfo(name = "condition")
     private String condition;
 
-
     public Car (int type, int manufacturer, int user, int price, int year, int mileage, String model, String description, String condition) {
         this.type = type;
         this.manufacturer = manufacturer;
@@ -85,9 +86,7 @@ public class Car {
 
     public void setType(int type) { this.type = type; }
 
-    public int getUser() {
-        return user;
-    }
+    public int getUser() { return user; }
 
     public void setUser(int user) {
         this.user = user;
@@ -133,10 +132,19 @@ public class Car {
         this.condition = condition;
     }
 
-    public void ToString() {
-        System.out.println(", Type : "+type+", Make : "+manufacturer+", Year : "+year+", Mileage : "+mileage);
+    //Returns the mileage in Swiss style
+    String getFormattedMileageString() {
+        String mileString = NumberFormat.getNumberInstance(Locale.UK).format(mileage) + " km";
+        return mileString.replaceAll(",", "'");
     }
 
+    //Returns the price in Swiss style and in CHF
+    String getFormattedPriceString() {
+        String priceString = NumberFormat.getNumberInstance(Locale.UK).format(price) + ".- CHF";
+        return priceString.replaceAll(",", "'");
+    }
+
+    //returns the name of the manufacturer
     public String getManufacturerString() {
         String string;
         switch(this.manufacturer) {
@@ -148,6 +156,7 @@ public class Car {
         return string;
     }
 
+    //returns the name of the type
     public String getTypeString() {
         String string;
         switch(this.type) {
