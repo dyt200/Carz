@@ -32,11 +32,12 @@ public class ImageSliderAdapter extends SliderViewAdapter<ImageSliderAdapter.Sli
     @Override
     public void onBindViewHolder(SliderAdapterVH viewHolder, int position) {
         viewHolder.textViewDescription.setText("Carz™");
-
         for (CarImage carImage: carImages){
-            Glide.with(viewHolder.itemView)
-                    .load(carImage.getUrl())
-                    .into(viewHolder.imageViewBackground);
+            if (position == carImages.indexOf(carImage)){
+                Glide.with(viewHolder.itemView)
+                        .load(carImage.getUrl())
+                        .into(viewHolder.imageViewBackground);
+            }
         }
     }
 

@@ -1,12 +1,15 @@
 package com.example.carz.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -33,6 +36,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
 import java.util.List;
 
 import java.util.ArrayList;
@@ -47,7 +51,6 @@ public class AddCarActivity extends AppCompatActivity {
 
     public static final int GALLERY_REQUEST_CODE = 44;
     private StorageReference mStorageRef;
-    private String carUri;
     private Context context = AddCarActivity.this;
     private ImageView c_image;
     private int userId;
@@ -96,10 +99,6 @@ public class AddCarActivity extends AppCompatActivity {
         Spinner spinYear = findViewById(R.id.year_spinner);
         spinYear.setAdapter(adapter);
 
-  /*      c_image = (ImageView) findViewById(R.id.choosenImage);*/
-
-        loadImage();
-
     }
 
     /**
@@ -140,7 +139,6 @@ public class AddCarActivity extends AppCompatActivity {
 
         EditText priceT = findViewById(R.id.price);
         int price = Integer.parseInt(priceT.getText().toString());
-
 
 
         //check that all fields have been completed
@@ -206,12 +204,10 @@ public class AddCarActivity extends AppCompatActivity {
                                 riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
-                                            carUri = uri.toString();
-                                            addedImageUrls.add(carUri);
-                                            System.out.println(uri.toString());
-                                            Toast.makeText(getBaseContext(), "Upload success! URL - " + uri.toString(), Toast.LENGTH_SHORT).show();
-                                            loadImage();
-
+                                        String carUri = uri.toString();
+                                        addedImageUrls.add(carUri);
+                                        Toast.makeText(getBaseContext(), "Upload success! URL - " + uri.toString(), Toast.LENGTH_SHORT).show();
+                                        loadImage(carUri);
                                     }
                                 });
 
@@ -234,18 +230,37 @@ public class AddCarActivity extends AppCompatActivity {
 
     }
 
-    public void loadImage() {
+    public void loadImage(String carUri) {
         ImageView iv = new ImageView(getApplicationContext());
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, // Width of TextView
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        iv.setLayoutParams(lp);
         imgLl.addView(iv);
-
         Glide.with(context)
                 .load(carUri)
-                .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                 .into(iv);
+        iv.setPadding(0,20,0,20);
+        iv.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                deleteConfirmation(view, carUri);
+                return true;
+            }
+        });
+    }
+
+    public void deleteConfirmation(View view, String carUri) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+
+        alertBuilder.setMessage(R.string.delete_car_message)
+                .setTitle(R.string.delete_car_title)
+                .setPositiveButton("YES", (dialog, id) -> {
+                    addedImageUrls.remove(carUri);
+                    imgLl.removeView(view);
+                    for (String url: addedImageUrls) {
+                        System.out.println(url);
+                    }
+                })
+                .setNegativeButton("NO", (dialog, id) -> createToast("Car deletion cancelled"));
+        alertBuilder.show();
+
     }
 
     /**
@@ -259,7 +274,6 @@ public class AddCarActivity extends AppCompatActivity {
         cr.insert(car, new OnAsyncInsertEventListener() {
             @Override
             public void onSuccessResult(Long id) {
-                System.out.println("--------------------" + id);
                 insertImages(id, addedImageUrls, view);
             }
 
@@ -275,10 +289,11 @@ public class AddCarActivity extends AppCompatActivity {
         }, view.getContext());
     }
 
-        private void insertImages(long carId, List<String> addedImageUrls, View view) {
+    private void insertImages(long carId, List<String> addedImageUrls, View view) {
         ImageRepository ir = ImageRepository.getInstance();
-        for (String imageUrl: addedImageUrls){
-            CarImage ci = new CarImage((int)carId, imageUrl);
+        for (String imageUrl : addedImageUrls) {
+            System.out.println(imageUrl);
+            CarImage ci = new CarImage((int) carId, imageUrl);
             ir.insert(ci, new OnAsyncEventListener() {
 
                 @Override
@@ -294,7 +309,7 @@ public class AddCarActivity extends AppCompatActivity {
 
             }, view.getContext());
         }
-        if (successImageUpload = true){
+        if (successImageUpload = true) {
             setResponse(true);
         } else {
             setResponse(false);
