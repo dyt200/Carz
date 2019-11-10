@@ -1,5 +1,5 @@
 <resources>
-    <string name="add">Add</string>
+    <string name="add">Add Car</string>
     <string name="addressCreate">Address : </string>
     <string name="address_hint">1 Example lane \n Your Street</string>
     <string name="addCar">Add A Car</string>
