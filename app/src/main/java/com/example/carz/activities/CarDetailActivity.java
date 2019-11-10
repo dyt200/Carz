@@ -237,8 +237,11 @@ public class CarDetailActivity extends AppCompatActivity {
         String year = Integer.toString(car.getYear());
         carYearTextView.setText(year);
 
+        TextView carPriceTextView = findViewById(R.id.carPrice);
+        carPriceTextView.setText(car.getFormattedPriceString());
+
         TextView carMileageTextView = findViewById(R.id.carMileage);
-        String mileage = car.getMileage() + " km";
+        String mileage = car.getFormattedMileageString();
         carMileageTextView.setText(mileage);
 
         TextView carModelTextView = findViewById(R.id.carModel);
@@ -437,6 +440,10 @@ public class CarDetailActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Refresh the menu
+     * @param activity curr activity
+     */
     public static void refreshMenu(Activity activity) {
         activity.invalidateOptionsMenu();
     }
@@ -447,6 +454,9 @@ public class CarDetailActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Display image list
+     */
     private void displayImageList() {
         imgLl.removeAllViewsInLayout();
         for (CarImage image : carImages) {
@@ -456,12 +466,9 @@ public class CarDetailActivity extends AppCompatActivity {
                     .load(image.getUrl())
                     .into(iv);
             iv.setPadding(0, 20, 0, 20);
-            iv.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    dbImageDeleteConfirmation(view, image);
-                    return true;
-                }
+            iv.setOnLongClickListener(view -> {
+                dbImageDeleteConfirmation(view, image);
+                return true;
             });
         }
     }
@@ -483,6 +490,9 @@ public class CarDetailActivity extends AppCompatActivity {
         pickFromGallery();
     }
 
+    /**
+     * Pick from the gallery
+     */
     private void pickFromGallery() {
         //Create an Intent with action as ACTION_PICK
         Intent intent = new Intent(Intent.ACTION_PICK);
