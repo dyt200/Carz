@@ -111,7 +111,13 @@ public class AddCarActivity extends AppCompatActivity {
         String model = modelT.getText().toString();
 
         EditText mileageT = findViewById(R.id.mileage);
-        int mileage = Integer.parseInt(mileageT.getText().toString());
+        String mileString = mileageT.getText().toString();
+        int mileage;
+
+        if (mileString.equals(""))
+            mileage = 0;
+        else
+            mileage = Integer.parseInt(mileString);
 
         Spinner yearSpinner = findViewById(R.id.year_spinner);
         int year = Integer.parseInt(yearSpinner.getSelectedItem().toString());
@@ -123,7 +129,13 @@ public class AddCarActivity extends AppCompatActivity {
         String condition = conditionT.getText().toString();
 
         EditText priceT = findViewById(R.id.price);
-        int price = Integer.parseInt(priceT.getText().toString());
+        int price;
+        String priceString = priceT.getText().toString();
+
+        if(priceString.equals(""))
+            price = 0;
+        else
+            price = Integer.parseInt(priceT.getText().toString());
 
 
         //check that all fields have been completed
@@ -135,7 +147,7 @@ public class AddCarActivity extends AppCompatActivity {
                 || desc.equals("")
                 || condition.equals("")
                 || price == 0
-
+                || addedImageUrls.size() == 0
         ) createToast("Please fill in all of the fields !");
         else
             insertCar(

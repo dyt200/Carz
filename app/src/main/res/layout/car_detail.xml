@@ -334,6 +334,7 @@
                         android:inputType="text"
                         android:layout_toEndOf="@id/align_2"
                         android:layout_below="@id/carMileageE"
+                        android:maxLength="15"
                         android:text="@string/test"/>
                     <View
                         android:id="@+id/line_bot_2"
@@ -350,6 +351,7 @@
                         android:layout_marginTop="15dp"
                         android:textSize="20sp"
                         android:textColor="@color/textDark"
+                        android:maxLength="300"
                         android:text="@string/description"
                         android:layout_below="@+id/line_bot_2"/>
                     <EditText
@@ -373,7 +375,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:inputType="textMultiLine"
-                        android:layout_below="@+id/conditionLabel_2"/>
+                        android:layout_below="@+id/conditionLabel_2"
+                        android:maxLength="300"/>
                     <TextView
                         android:id="@+id/contactLabel_2"
                         android:layout_width="wrap_content"
