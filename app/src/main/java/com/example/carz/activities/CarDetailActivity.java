@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -277,6 +278,11 @@ public class CarDetailActivity extends AppCompatActivity {
         imgLl = findViewById(R.id.imgRl);
         ir = ImageRepository.getInstance();
 
+
+        TextView carPriceEditTextView = findViewById(R.id.carPrice_edit);
+        String price = Integer.toString(car.getPrice());
+        carPriceEditTextView.setText(price);
+
         TextView carTitleE = findViewById(R.id.carTitle_2);
         carTitleE.setText(car.getTitle());
 
@@ -340,30 +346,58 @@ public class CarDetailActivity extends AppCompatActivity {
         Spinner yearSpinner = findViewById(R.id.year_spinner);
         car.setYear(Integer.parseInt(yearSpinner.getSelectedItem().toString()));
 
+        TextView carPriceE = findViewById(R.id.carPrice_edit);
+        String price = carPriceE.getText().toString();
+        if (price.equals("")){
+            price = "0";
+        }
+        car.setPrice(Integer.parseInt(price));
+
         TextView carMileageE = findViewById(R.id.carMileageE);
-        car.setMileage(Integer.parseInt(carMileageE.getText().toString()));
+        String mileage = carMileageE.getText().toString();
+        if (mileage.equals("")){
+            mileage = "0";
+        }
+        car.setMileage(Integer.parseInt(mileage));
 
         TextView carModelE = findViewById(R.id.carModelE);
-        car.setModel(carModelE.getText().toString());
+        String model = carModelE.getText().toString();
+        car.setModel(model);
 
         TextView descriptionE = findViewById(R.id.descriptionE);
-        car.setDescription(descriptionE.getText().toString());
+        String description = descriptionE.getText().toString();
+        car.setDescription(description);
 
         TextView conditionE = findViewById(R.id.conditionE);
-        car.setCondition(conditionE.getText().toString());
-        updateImages();
+        String condition = conditionE.getText().toString();
+        car.setCondition(condition);
 
-        carViewModel.updateCar(car, new OnAsyncEventListener() {
-            @Override
-            public void onSuccess() {
-                setResponse(true);
-            }
+        int numberOfImages = carImages.size() + carImagesToAdd.size() - carImagesToDelete.size() ;
 
-            @Override
-            public void onFailure(Exception e) {
-                setResponse(false);
-            }
-        });
+        if (model.equals("")
+                || description.equals("")
+                || condition.equals("")
+            ) {
+            createToast("Please fill in all the fields!");
+        }
+        else if (numberOfImages <= 0){
+            createToast("Hey, you need to add at least one image!");
+        }
+        else {
+            carViewModel.updateCar(car, new OnAsyncEventListener() {
+                @Override
+                public void onSuccess() {
+                    updateImages();
+                    setResponse(true);
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    setResponse(false);
+                }
+            });
+        }
+
     }
 
     /**
@@ -470,7 +504,7 @@ public class CarDetailActivity extends AppCompatActivity {
     }
 
     public void dbImageDeleteConfirmation(View view, CarImage carImage) {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
 
         alertBuilder.setMessage(R.string.delete_image_message)
                 .setTitle(R.string.delete_image_title)
