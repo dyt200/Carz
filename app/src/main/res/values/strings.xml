@@ -17,6 +17,8 @@
     <string name="delete_car_title">Delete this car?</string>
     <string name="delete_user_message">Are you sure that you want to delete your account?</string>
     <string name="delete_user_title">Delete your account?</string>
+    <string name="delete_image_message">Are you sure you want to delete this image?</string>
+    <string name="delete_image_title">Delete this image?</string>
     <string name="description">Description</string>
     <string name="descriptionField">Description : </string>
     <string name="edit">Edit</string>

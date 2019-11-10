@@ -37,6 +37,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+
 import java.util.List;
 
 import java.util.ArrayList;
@@ -98,7 +99,6 @@ public class AddCarActivity extends AppCompatActivity {
 
         Spinner spinYear = findViewById(R.id.year_spinner);
         spinYear.setAdapter(adapter);
-
     }
 
     /**
