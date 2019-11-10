@@ -13,6 +13,8 @@ public class CarSearchParameters implements Serializable {
     private int minYear;
     private int maxYear;
     private String model;
+    private boolean showMyCars;
+    private int userId;
 
     public CarSearchParameters(
             int type,
@@ -21,7 +23,9 @@ public class CarSearchParameters implements Serializable {
             int maxMileage,
             int minYear,
             int maxYear,
-            String model
+            String model,
+            boolean showMyCars,
+            int userId
     ) {
         this.type = type;
         this.manufacturer = manufacturer;
@@ -30,13 +34,15 @@ public class CarSearchParameters implements Serializable {
         this.minYear = minYear;
         this.maxYear = maxYear;
         this.model = model;
+        this.showMyCars = showMyCars;
+        this.userId = userId;
     }
 
     public SimpleSQLiteQuery getDatabaseQuery() {
         String query = "SELECT * FROM car ";
         boolean firstParam = true;
 
-        if(type > 0 || manufacturer > 0 || minMileage > 0|| maxMileage > 0|| minYear > 0|| maxYear > 0 || !model.equals(""))
+        if(type > 0 || manufacturer > 0 || minMileage > 0|| maxMileage > 0|| minYear > 0|| maxYear > 0 || !model.equals("") || !showMyCars)
             query += "WHERE ";
 
         if(type > 0) {
@@ -77,7 +83,15 @@ public class CarSearchParameters implements Serializable {
         if(!model.equals("")) {
             if(!firstParam) query += "AND ";
             query += "model LIKE \"%"+model+"%\"";
+            firstParam = false;
         }
+
+        if(!showMyCars) {
+            if(!firstParam)
+                query += "AND ";
+            query += " user != " + userId;
+        }
+
         return new SimpleSQLiteQuery(query);
     }
 

@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.carz.Entities.CarSearchParameters;
+import com.example.carz.Entities.User;
 import com.example.carz.pojo.CarWithImages;
 import com.example.carz.repositories.CarRepository;
 
@@ -35,6 +36,18 @@ public class CarListViewModel extends AndroidViewModel {
         observableCars.setValue(null);
 
         LiveData<List<CarWithImages>> cars = repository.getAllCars(application);
+        observableCars.addSource(cars, observableCars::setValue);
+    }
+
+    private CarListViewModel(int userId, boolean check, @NonNull Application application, CarRepository carRepository){
+        super(application);
+        repository = carRepository;
+        applicationContext = application.getApplicationContext();
+
+        observableCars = new MediatorLiveData<>();
+        observableCars.setValue(null);
+
+        LiveData<List<CarWithImages>> cars = repository.getAllOtherCars(userId, application);
         observableCars.addSource(cars, observableCars::setValue);
     }
 
@@ -78,6 +91,29 @@ public class CarListViewModel extends AndroidViewModel {
         public <T extends ViewModel> T create(@NotNull Class<T> modelClass) {
             //noinspection unchecked
             return (T) new CarListViewModel(application, carRepository);
+        }
+    }
+
+    public static class AllOtherCarsFactory extends ViewModelProvider.NewInstanceFactory {
+
+        @NonNull
+        private final Application application;
+        private final CarRepository carRepository;
+        private final int userId;
+        private final boolean check;
+
+        public AllOtherCarsFactory(int userId, boolean check, @NonNull Application application) {
+            this.application = application;
+            this.userId = userId;
+            this.check = check;
+            carRepository = CarRepository.getInstance();
+        }
+
+        @NotNull
+        @Override
+        public <T extends ViewModel> T create(@NotNull Class<T> modelClass) {
+            //noinspection unchecked
+            return (T) new CarListViewModel(userId, check, application, carRepository);
         }
     }
 

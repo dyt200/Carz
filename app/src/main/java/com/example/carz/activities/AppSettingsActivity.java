@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.carz.R;
 
 import static com.example.carz.activities.MainActivity.SETTINGS;
+import static com.example.carz.activities.MainActivity.settingShowMyCars;
 import static com.example.carz.activities.MainActivity.settingSplash;
 
 /**
@@ -23,7 +24,9 @@ public class AppSettingsActivity extends AppCompatActivity {
 
         //get shared preferences from settings
         SharedPreferences sharedPreferences = getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         boolean ignoreSplash = sharedPreferences.getBoolean(settingSplash, false);
+        boolean showMyCars = sharedPreferences.getBoolean(settingShowMyCars, false);
 
         //set view
         setTitle(R.string.appSettings);
@@ -35,21 +38,29 @@ public class AppSettingsActivity extends AppCompatActivity {
 
         //get toggles
         ToggleButton ignoreSplashToggle = findViewById(R.id.splash_toggle);
+        ToggleButton showMyCarsToggle = findViewById(R.id.show_my_cars_toggle);
 
         //set toggle values
         if(ignoreSplash)
             ignoreSplashToggle.setChecked(true);
-        else
-            ignoreSplashToggle.setChecked(false);
 
-        //listeners
+        if(showMyCars)
+            showMyCarsToggle.setChecked(true);
+
+        //listeners to change sharedPreferences values
         ignoreSplashToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-
             if (isChecked)
                 editor.putBoolean(settingSplash, true);
             else
                 editor.putBoolean(settingSplash, false);
+
+            editor.apply();
+        });
+        showMyCarsToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked)
+                editor.putBoolean(settingShowMyCars, true);
+            else
+                editor.putBoolean(settingShowMyCars, false);
 
             editor.apply();
         });

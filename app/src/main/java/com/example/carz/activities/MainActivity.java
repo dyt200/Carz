@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String MyPREFERENCES = "Session" ;
     public static final String SETTINGS = "settings" ;
     public static final String settingSplash = "splash";
+    public static final String settingShowMyCars = "showMyCars";
     public static final String UserId = "userKey";
 
     SharedPreferences sharedpreferences;

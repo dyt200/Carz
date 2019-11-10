@@ -16,7 +16,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.carz.Entities.Car;
 import com.example.carz.Entities.CarAdapter;
 import com.example.carz.Entities.CarSearchParameters;
 import com.example.carz.pojo.CarWithImages;
@@ -27,6 +26,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.carz.activities.MainActivity.settingShowMyCars;
+
 /**
  *  Main display for all lists of Cars
  */
@@ -34,9 +35,11 @@ public class CarListActivity  extends AppCompatActivity {
 
     private List<CarWithImages> cars;
     SharedPreferences sharedPreferences;
+
     private DrawerLayout drawerLayout;
     private ListView drawerList;
     private boolean isDrawerOpen;
+    private int userId;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -62,7 +65,7 @@ public class CarListActivity  extends AppCompatActivity {
 
         // get user id from shared preferences
         sharedPreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-        int userId = sharedPreferences.getInt("userKey", 0);
+        userId = sharedPreferences.getInt("userKey", 0);
 
         //receives data from any source (eg. main or search activities)
         Intent i = getIntent();
@@ -98,15 +101,31 @@ public class CarListActivity  extends AppCompatActivity {
 
 
                 default:
-                    CarListViewModel.AllCarsFactory allCarsFactory = new CarListViewModel.AllCarsFactory(getApplication());
-                    viewModel = ViewModelProviders.of(this, allCarsFactory).get(CarListViewModel.class);
-                    viewModel.getCars().observe(this, carEntities -> {
-                        if (carEntities != null) {
-                            cars = carEntities;
-                            ArrayAdapter<CarWithImages> adapter = new CarAdapter(this, 0, cars);
-                            carList.setAdapter(adapter);
-                        }
-                    });
+                    //check setting for "show my cars in results"
+                    SharedPreferences settings = getSharedPreferences(MainActivity.SETTINGS, Context.MODE_PRIVATE);
+                    boolean showMyCars = settings.getBoolean(settingShowMyCars, false);
+
+                    if(showMyCars) {
+                        CarListViewModel.AllCarsFactory factoryAll = new CarListViewModel.AllCarsFactory(getApplication());
+                        viewModel = ViewModelProviders.of(this, factoryAll).get(CarListViewModel.class);
+                        viewModel.getCars().observe(this, carEntities -> {
+                            if (carEntities != null) {
+                                cars = carEntities;
+                                ArrayAdapter<CarWithImages> adapter = new CarAdapter(this, 0, cars);
+                                carList.setAdapter(adapter);
+                            }
+                        });
+                    } else {
+                        CarListViewModel.AllOtherCarsFactory factoryOther = new CarListViewModel.AllOtherCarsFactory(userId, true, getApplication());
+                        viewModel = ViewModelProviders.of(this, factoryOther).get(CarListViewModel.class);
+                        viewModel.getCars().observe(this, carEntities -> {
+                            if (carEntities != null) {
+                                cars = carEntities;
+                                ArrayAdapter<CarWithImages> adapter = new CarAdapter(this, 0, cars);
+                                carList.setAdapter(adapter);
+                            }
+                        });
+                    }
             }
         }
 

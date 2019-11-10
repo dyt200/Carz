@@ -22,6 +22,10 @@ public interface CarDao {
     LiveData<List<CarWithImages>> getAll();
 
     @Transaction
+    @Query("SELECT * FROM car WHERE user != (:userId)")
+    LiveData<List<CarWithImages>> getAllOther(int userId);
+
+    @Transaction
     @Query("SELECT * FROM car WHERE id = (:id)")
     LiveData<CarWithImages> getCarById(int id);
 
@@ -44,5 +48,4 @@ public interface CarDao {
 
     @Query("DELETE FROM car")
     void deleteAll();
-
 }

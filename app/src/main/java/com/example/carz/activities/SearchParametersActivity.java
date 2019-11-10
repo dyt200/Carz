@@ -2,7 +2,9 @@ package com.example.carz.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -11,6 +13,8 @@ import android.widget.TextView;
 
 import com.example.carz.Entities.CarSearchParameters;
 import com.example.carz.R;
+
+import static com.example.carz.activities.MainActivity.settingShowMyCars;
 
 
 public class SearchParametersActivity extends AppCompatActivity {
@@ -50,6 +54,12 @@ public class SearchParametersActivity extends AppCompatActivity {
     public void search(View view) {
         //var for finding spinner values by position
         int pos;
+
+        //get setting for showMyCars
+        SharedPreferences session = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences settings = getSharedPreferences(MainActivity.SETTINGS, Context.MODE_PRIVATE);
+        int userId = session.getInt(MainActivity.UserId, 0);
+        boolean showMyCars = settings.getBoolean(settingShowMyCars, false);
 
         //get type
         Spinner typeT = findViewById(R.id.type_spinner);
@@ -108,7 +118,9 @@ public class SearchParametersActivity extends AppCompatActivity {
                 maxMileage,
                 minYear,
                 maxYear,
-                model
+                model,
+                showMyCars,
+                userId
         );
 
         //pass search results into CarListActivity

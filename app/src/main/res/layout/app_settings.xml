@@ -9,11 +9,28 @@
         android:layout_width="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
-        android:text="@string/settings_splash_option"/>
+        android:text="@string/settings_splash_option"
+        android:layout_alignBaseline="@id/splash_toggle"/>
     <ToggleButton
         android:id="@+id/splash_toggle"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"/>
+    <TextView
+        android:id="@+id/show_my_cars_label"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:text="@string/settings_show_my_cars_option"
+        android:layout_alignBaseline="@id/show_my_cars_toggle"/>
+    <ToggleButton
+        android:id="@+id/show_my_cars_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@id/splash_toggle"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="10dp"/>

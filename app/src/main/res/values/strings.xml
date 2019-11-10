@@ -55,6 +55,7 @@
     <string name="setting_session">session</string>
     <string name="setting_splash">splash</string>
     <string name="settings_splash_option">Show splash screen on start-up</string>
+    <string name="settings_show_my_cars_option">Show my cars in search results</string>
     <string name="telephoneCreate">Telephone : </string>
     <string name="telephone_hint">+41 079 123 45 67</string>
     <string name="typeField">Type : </string>

@@ -37,6 +37,10 @@ public class CarRepository {
         return AppDatabase.getInstance(context).carDao().getAll();
     }
 
+    public LiveData<List<CarWithImages>> getAllOtherCars(int userId, Context context) {
+        return AppDatabase.getInstance(context).carDao().getAllOther(userId);
+    }
+
     public LiveData<CarWithImages> getCarById(int id, Context context) {
         return AppDatabase.getInstance(context).carDao().getCarById(id);
     }
@@ -60,5 +64,4 @@ public class CarRepository {
     public void delete(final Car car, OnAsyncEventListener callback, Context context) {
         new DeleteCar(context, callback).execute(car);
     }
-
 }
