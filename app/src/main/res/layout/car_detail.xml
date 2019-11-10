@@ -109,11 +109,26 @@
                         android:background="@color/light_gray"
                         android:layout_below="@+id/carModel"/>
                     <TextView
+                        android:id="@+id/price_T"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/line_middle"
+                        android:text="@string/priceField"
+                        android:textSize="20sp"/>
+                    <TextView
+                        android:id="@+id/carPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:layout_toEndOf="@id/align_1"
+                        android:layout_below="@id/line_middle"
+                        android:text="@string/test"/>
+                    <TextView
                         android:id="@+id/carYearT"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20sp"
-                        android:layout_below="@id/line_middle"
+                        android:layout_below="@id/price_T"
                         android:text="@string/yearField"/>
                     <TextView
                         android:id="@+id/carYear"
@@ -121,7 +136,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="20sp"
                         android:layout_toEndOf="@id/align_1"
-                        android:layout_below="@id/line_middle"
+                        android:layout_below="@id/carPrice"
                         android:text="@string/test"/>
                     <TextView
                         android:id="@+id/carMileageT"
@@ -222,15 +237,33 @@
                         android:layout_height="0dp"
                         android:layout_marginStart="100dp"/>
                     <TextView
+                        android:id="@+id/price_T_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:text="@string/priceField"
+                        android:textSize="20sp"
+                        android:layout_alignBaseline="@id/carPrice_edit"/>
+                    <EditText
+                        android:id="@+id/carPrice_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:inputType="number"
+                        android:layout_toEndOf="@id/align_2"
+                        android:text="@string/test"/>
+                    <TextView
                         android:id="@+id/carTypeT_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/price_T_2"
                         android:textSize="20sp"
                         android:text="@string/typeField"/>
                     <Spinner
                         android:id="@+id/type_spinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/carPrice_edit"
                         android:layout_toEndOf="@id/align_2"
                         android:layout_alignBottom="@id/carTypeT_2"/>
                     <TextView

@@ -133,13 +133,13 @@ public class Car {
     }
 
     //Returns the mileage in Swiss style
-    String getFormattedMileageString() {
+    public String getFormattedMileageString() {
         String mileString = NumberFormat.getNumberInstance(Locale.UK).format(mileage) + " km";
         return mileString.replaceAll(",", "'");
     }
 
     //Returns the price in Swiss style and in CHF
-    String getFormattedPriceString() {
+    public String getFormattedPriceString() {
         String priceString = NumberFormat.getNumberInstance(Locale.UK).format(price) + ".- CHF";
         return priceString.replaceAll(",", "'");
     }

@@ -112,16 +112,15 @@
             android:layout_below="@id/priceT"
             android:inputType="textMultiLine"/>
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:id="@+id/chooseImage"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:layout_below="@id/price"
             android:onClick="chooseImage"
             android:text="@string/addCarimages"/>
-
         <LinearLayout
             android:orientation="vertical"
             xmlns:tools="http://schemas.android.com/tools"
@@ -129,13 +128,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/chooseImage"
-            tools:context=".activities.AddCarActivity"
-        />
+            tools:context=".activities.AddCarActivity"/>
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="40dp"
             android:layout_below="@id/imgRl"
             android:onClick="addCar"
