@@ -32,7 +32,6 @@ import com.example.carz.pojo.CarWithImages;
 import com.example.carz.Entities.User;
 import com.example.carz.R;
 import com.example.carz.repositories.ImageRepository;
-import com.example.carz.repositories.UserRepository;
 import com.example.carz.util.OnAsyncEventListener;
 import com.example.carz.viewmodel.CarViewModel;
 import com.example.carz.viewmodel.UserViewModel;
@@ -550,7 +549,7 @@ public class CarDetailActivity extends AppCompatActivity {
     }
 
     public void tempImagedeleteConfirmation(View view, CarImage carImage) {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
 
         alertBuilder.setMessage(R.string.delete_image_message)
                 .setTitle(R.string.delete_image_title)

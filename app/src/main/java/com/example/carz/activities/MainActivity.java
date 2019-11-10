@@ -21,7 +21,10 @@ public class MainActivity extends AppCompatActivity {
     UserRepository ur;
 
     public static final String MyPREFERENCES = "Session" ;
+    public static final String SETTINGS = "settings" ;
+    public static final String settingSplash = "splash";
     public static final String UserId = "userKey";
+
     SharedPreferences sharedpreferences;
 
     public void onCreate(Bundle savedInstanceState) {

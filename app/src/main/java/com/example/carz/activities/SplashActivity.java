@@ -1,6 +1,8 @@
 package com.example.carz.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -13,12 +15,26 @@ import android.widget.TextView;
 
 import com.example.carz.R;
 
+import static com.example.carz.activities.MainActivity.SETTINGS;
+import static com.example.carz.activities.MainActivity.settingSplash;
+
 public class SplashActivity extends AppCompatActivity {
 
     private int getSplashScreenDuration = 3000;
+    Intent intent;
 
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        intent = new Intent(this, MainActivity.class);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);
+        boolean ignoreSplash = sharedPreferences.getBoolean(settingSplash, false);
+
+        if(ignoreSplash)
+            System.out.println("IGNORE IS TRUE");
+        else
+            System.out.println("IGNORE IS FALSE");
 
         setTitle(R.string.app_name);
         setContentView(R.layout.splash_screen);
@@ -33,14 +49,16 @@ public class SplashActivity extends AppCompatActivity {
         img.startAnimation(fadeIn);
         tx.startAnimation(fadeIn);
 
-        scheduleSplashScreen();
+        if(!ignoreSplash)
+            scheduleSplashScreen();
+        else
+            startActivity(intent);
 
     }
 
     private void scheduleSplashScreen() {
         Handler handler = new Handler();
         handler.postDelayed(() -> {
-            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }, getSplashScreenDuration);
     }
