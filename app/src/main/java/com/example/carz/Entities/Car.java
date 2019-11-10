@@ -151,6 +151,20 @@ public class Car {
             case 1:     string = "Skoda";   break;
             case 2:     string = "BMW";     break;
             case 3:     string = "Opel";    break;
+            case 4:     string = "Audi";    break;
+            case 5:     string = "VW";      break;
+            case 6:     string = "Mercedes-Benz";   break;
+            case 7:     string = "Alfa Romeo";   break;
+            case 8:     string = "Tesla";   break;
+            case 9:     string = "Toyota";   break;
+            case 10:    string = "Suzuki";   break;
+            case 11:    string = "Subaru";   break;
+            case 12:    string = "Porsche";   break;
+            case 13:    string = "Mitsubishi";   break;
+            case 14:    string = "Kia";   break;
+            case 15:    string = "Jeep";   break;
+            case 16:    string = "Honda";   break;
+            case 17:    string = "Hyundai";   break;
             default:    string = "ERROR";
         }
         return string;

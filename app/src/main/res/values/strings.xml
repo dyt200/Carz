@@ -93,12 +93,42 @@
         <item>Skoda</item>
         <item>BMW</item>
         <item>Opel</item>
+        <item>Audi</item>
+        <item>VW</item>
+        <item>Mercedes-Benz</item>
+        <item>Alfa Romeo</item>
+        <item>Tesla</item>
+        <item>Toyota</item>
+        <item>Suzuki</item>
+        <item>Subaru</item>
+        <item>Porsche</item>
+        <item>Mitsubishi</item>
+        <item>Kia</item>
+        <item>Jeep</item>
+        <item>Honda</item>
+        <item>Hyundai</item>
+
     </string-array>
     <integer-array name="make_values">
         <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
     </integer-array>
 
     <string-array name="drawer_menu_items">
