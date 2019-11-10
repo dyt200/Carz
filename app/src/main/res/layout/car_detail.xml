@@ -315,6 +315,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/align_2"
                         android:layout_below="@id/line_middle_2"
+                        android:inputType="number"
                         android:layout_alignBaseline="@id/carMileageT_2"
                         android:text="@string/test"/>
                     <TextView
@@ -330,6 +331,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="20sp"
+                        android:inputType="text"
                         android:layout_toEndOf="@id/align_2"
                         android:layout_below="@id/carMileageE"
                         android:text="@string/test"/>
@@ -370,6 +372,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:inputType="textMultiLine"
                         android:layout_below="@+id/conditionLabel_2"/>
                     <TextView
                         android:id="@+id/contactLabel_2"

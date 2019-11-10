@@ -14,7 +14,7 @@ import com.example.carz.Entities.User;
 import com.example.carz.R;
 import com.example.carz.repositories.UserRepository;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     String e_email = "";
     String e_pass = "";
@@ -94,18 +94,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        int userId = sharedpreferences.getInt("userKey", 0);
-
-        if (userId == 0) {
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "You must be logged in to go back!",
-                    Toast.LENGTH_SHORT
-            );
-            toast.setGravity(Gravity.CENTER, 0, 200);
-            toast.show();
-        } else {
-            super.onBackPressed();
-        }
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }
 

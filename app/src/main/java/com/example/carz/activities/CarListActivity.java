@@ -26,7 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.carz.activities.MainActivity.settingShowMyCars;
+import static com.example.carz.activities.LoginActivity.settingShowMyCars;
 
 /**
  *  Main display for all lists of Cars
@@ -64,7 +64,7 @@ public class CarListActivity  extends AppCompatActivity {
         final Intent detailIntent = new Intent(this, CarDetailActivity.class);
 
         // get user id from shared preferences
-        sharedPreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
         userId = sharedPreferences.getInt("userKey", 0);
 
         //receives data from any source (eg. main or search activities)
@@ -75,6 +75,7 @@ public class CarListActivity  extends AppCompatActivity {
         if(action != null) {
             switch (action) {
                 case "my_cars":
+                    setTitle(R.string.myCars);
                     CarListViewModel.MyCarsFactory myCarsFactory = new CarListViewModel.MyCarsFactory(userId, getApplication());
                     CarListViewModel viewModel = ViewModelProviders.of(this, myCarsFactory).get(CarListViewModel.class);
                     viewModel.getCars().observe(this, carEntities -> {
@@ -87,6 +88,7 @@ public class CarListActivity  extends AppCompatActivity {
                     break;
 
                 case "search":
+                    setTitle(R.string.search_results);
                     CarSearchParameters search = (CarSearchParameters) i.getSerializableExtra("search_parameters");
                     CarListViewModel.CarSearchFactory mySearchFactory = new CarListViewModel.CarSearchFactory(search, getApplication());
                     viewModel = ViewModelProviders.of(this, mySearchFactory).get(CarListViewModel.class);
@@ -102,7 +104,7 @@ public class CarListActivity  extends AppCompatActivity {
 
                 default:
                     //check setting for "show my cars in results"
-                    SharedPreferences settings = getSharedPreferences(MainActivity.SETTINGS, Context.MODE_PRIVATE);
+                    SharedPreferences settings = getSharedPreferences(LoginActivity.SETTINGS, Context.MODE_PRIVATE);
                     boolean showMyCars = settings.getBoolean(settingShowMyCars, false);
 
                     if(showMyCars) {
@@ -204,7 +206,7 @@ public class CarListActivity  extends AppCompatActivity {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.clear();
                     editor.apply();
-                    Intent intent13 = new Intent(view.getContext(), MainActivity.class);
+                    Intent intent13 = new Intent(view.getContext(), LoginActivity.class);
                     startActivity(intent13);
                     break;
             }

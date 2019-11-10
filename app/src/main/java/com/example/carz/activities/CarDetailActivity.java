@@ -1,6 +1,5 @@
 package com.example.carz.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -35,11 +34,8 @@ import com.example.carz.repositories.ImageRepository;
 import com.example.carz.util.OnAsyncEventListener;
 import com.example.carz.viewmodel.CarViewModel;
 import com.example.carz.viewmodel.UserViewModel;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.UploadTask;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -88,7 +84,7 @@ public class CarDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //get user session
-        sharedpreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
         userId = sharedpreferences.getInt("userKey", 0);
 
         //Building spinners
@@ -527,9 +523,7 @@ public class CarDetailActivity extends AppCompatActivity {
                             });
 
                         })
-                        .addOnFailureListener(exception -> {
-                            createToast("Upload unsuccessful");
-                        });
+                        .addOnFailureListener(exception -> createToast("Upload unsuccessful"));
             }
         } catch (Exception ex) {
             System.out.println(ex.toString());

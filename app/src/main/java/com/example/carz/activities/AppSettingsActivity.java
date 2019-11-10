@@ -3,16 +3,15 @@ package com.example.carz.activities;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.carz.R;
 
-import static com.example.carz.activities.MainActivity.SETTINGS;
-import static com.example.carz.activities.MainActivity.settingShowMyCars;
-import static com.example.carz.activities.MainActivity.settingSplash;
+import static com.example.carz.activities.LoginActivity.SETTINGS;
+import static com.example.carz.activities.LoginActivity.settingShowMyCars;
+import static com.example.carz.activities.LoginActivity.settingSplash;
 
 /**
  * Settings page

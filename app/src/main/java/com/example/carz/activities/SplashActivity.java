@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 import com.example.carz.R;
 
-import static com.example.carz.activities.MainActivity.SETTINGS;
-import static com.example.carz.activities.MainActivity.settingSplash;
+import static com.example.carz.activities.LoginActivity.SETTINGS;
+import static com.example.carz.activities.LoginActivity.settingSplash;
 
 /**
  * Splash screen
@@ -29,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        intent = new Intent(this, MainActivity.class);
+        intent = new Intent(this, LoginActivity.class);
 
         //get setting for ignore splash
         SharedPreferences sharedPreferences = getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);
@@ -66,13 +66,6 @@ public class SplashActivity extends AppCompatActivity {
      */
     private void scheduleSplashScreen() {
         Handler handler = new Handler();
-        handler.postDelayed(() -> {
-            startActivity(intent);
-        }, getSplashScreenDuration);
-    }
-
-    @Override
-    public void onBackPressed() {
-
+        handler.postDelayed(() -> startActivity(intent), getSplashScreenDuration);
     }
 }

@@ -59,13 +59,13 @@ public class AccountActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.clear();
             editor.apply();
-            Intent logoutIntent = new Intent(view.getContext(), MainActivity.class);
+            Intent logoutIntent = new Intent(view.getContext(), LoginActivity.class);
             startActivity(logoutIntent);
             createToast("Logged-out successfully");
         });
 
         //get user session
-        sharedPreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
         final int userId = sharedPreferences.getInt("userKey", 0);
 
         //builds current user from sharedPreferences and displays it
@@ -170,7 +170,7 @@ public class AccountActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.clear();
             editor.apply();
-            Intent logoutIntent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent logoutIntent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(logoutIntent);
             createToast("Account deleted successfully");
         } else

@@ -52,6 +52,7 @@
     <string name="priceField">Price :</string>
     <string name="search">Search</string>
     <string name="submit">Submit</string>
+    <string name="search_results">Search Results</string>
     <string name="setting_session">session</string>
     <string name="setting_splash">splash</string>
     <string name="settings_splash_option">Disable splash screen on start-up</string>

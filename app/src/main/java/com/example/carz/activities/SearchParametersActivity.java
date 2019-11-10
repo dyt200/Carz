@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.example.carz.Entities.CarSearchParameters;
 import com.example.carz.R;
 
-import static com.example.carz.activities.MainActivity.settingShowMyCars;
+import static com.example.carz.activities.LoginActivity.settingShowMyCars;
 
 /**
  * Search page
@@ -62,9 +62,9 @@ public class SearchParametersActivity extends AppCompatActivity {
         int pos;
 
         //get setting for showMyCars
-        SharedPreferences session = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-        SharedPreferences settings = getSharedPreferences(MainActivity.SETTINGS, Context.MODE_PRIVATE);
-        int userId = session.getInt(MainActivity.UserId, 0);
+        SharedPreferences session = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences settings = getSharedPreferences(LoginActivity.SETTINGS, Context.MODE_PRIVATE);
+        int userId = session.getInt(LoginActivity.UserId, 0);
         boolean showMyCars = settings.getBoolean(settingShowMyCars, false);
 
         //get type
@@ -81,8 +81,7 @@ public class SearchParametersActivity extends AppCompatActivity {
 
         //get model
         TextView modelT = findViewById(R.id.model_text);
-        String model = "";
-        model = modelT.getText().toString();
+        String model = modelT.getText().toString();
 
         //get min year
         TextView minYearT = findViewById(R.id.min_year);

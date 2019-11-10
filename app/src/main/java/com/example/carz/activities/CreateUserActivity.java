@@ -123,7 +123,7 @@ public class CreateUserActivity extends AppCompatActivity {
      */
     private void setResponse(Boolean response) {
         if (response) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             createToast("Account created successfully!");
         } else
