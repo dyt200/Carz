@@ -32,7 +32,9 @@
             android:name=".activities.CreateUserActivity"
             android:parentActivityName=".activities.LoginActivity"/>
         <activity android:name=".activities.AppSettingsActivity" />
-        <activity android:name=".activities.AddCarActivity" />
+        <activity
+            android:name=".activities.AddCarActivity"
+            android:parentActivityName=".activities.CarListActivity"/>
         <activity android:name=".activities.AccountActivity" />
     </application>
 

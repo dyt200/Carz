@@ -61,6 +61,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/min_mileage_label"
+        android:maxLength="6"
         android:inputType="number"/>
     <TextView
         android:id="@+id/max_mileage_label"
@@ -79,6 +80,7 @@
         android:layout_below="@id/max_mileage_label"
         android:layout_centerHorizontal="true"
         android:layout_marginEnd="-100dp"
+        android:maxLength="6"
         android:layout_toStartOf="@id/max_mileage_label"
         android:inputType="number" />
 
@@ -103,6 +105,7 @@
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/min_year_label"
+        android:maxLength="4"
         android:inputType="number"/>
     <TextView
         android:id="@+id/max_year_label"
@@ -121,6 +124,7 @@
         android:layout_centerHorizontal="true"
         android:layout_toStartOf="@id/max_year_label"
         android:layout_marginEnd="-60dp"
+        android:maxLength="4"
         android:inputType="number" />
     <Button
         android:id="@+id/btn_pick"
