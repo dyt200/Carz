@@ -15,7 +15,6 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -29,7 +28,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.CarListActivity" />
         </activity>
-        <activity android:name=".activities.CreateUserActivity"/>
+        <activity
+            android:name=".activities.CreateUserActivity"
+            android:parentActivityName=".activities.LoginActivity"/>
         <activity android:name=".activities.AppSettingsActivity" />
         <activity android:name=".activities.AddCarActivity" />
         <activity android:name=".activities.AccountActivity" />
