@@ -5,12 +5,12 @@ android:layout_height="100dp"
 android:layout_width="match_parent">
 <item
     android:id="@+id/listActionSearch"
-    android:icon="@drawable/search"
+    android:icon="@drawable/ic_search_white_72dp"
     android:title="@string/search"
     app:showAsAction="ifRoom"/>
 <item
     android:id="@+id/listActionUser"
-    android:icon="@drawable/profile"
+    android:icon="@drawable/ic_menu_white_72dp"
     android:title="@string/user"
     app:showAsAction="ifRoom">
 </item>
