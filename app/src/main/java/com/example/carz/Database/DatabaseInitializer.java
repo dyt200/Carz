@@ -88,7 +88,7 @@ class DatabaseInitializer {
         addUser( db,"Micheal", "Schumacher", "djschoom@test.com", "b", "0791234567", "Route de Test 16, Ayent, Valais, Suisse");
 
         db.carDao().deleteAll();
-        addCar(db, 1, 1, 1,15000, 2015, 85000,  "6 Series","This is my old car that I used every day to go to the HES where I learned lots of nice things. It means a lot to me so I hope it goes to a good home! Thank you for your interest!","Tires need changing and the brakes don't work. There is also a large white stain on the seat, sorry.");
+        addCar(db, 1, 2, 1,15000, 2015, 85000,  "M4","This is my old car that I used every day to go to the HES where I learned lots of nice things. It means a lot to me so I hope it goes to a good home! Thank you for your interest!","Tires need changing and the brakes don't work. There is also a large white stain on the seat, sorry.");
         addCar(db, 2, 2, 2,10000,2008, 126500,  "Octavia","This is my old car that I used every day to go to the HES where I learned lots of nice things. It means a lot to me so I hope it goes to a good home! Thank you for your interest!","Tires need changing and the brakes don't work. There is also a large white stain on the seat, sorry.\"");
         addCar(db, 2, 2, 3,12500,1999, 250000,  "6 Series","This is my old car that I used every day to go to the HES where I learned lots of nice things. It means a lot to me so I hope it goes to a good home! Thank you for your interest!","Tires need changing and the brakes don't work. There is also a large white stain on the seat, sorry.\"");
         addCar(db, 1, 3, 4,25000,2001, 180000,  "Octavia","This is my old car that I used every day to go to the HES where I learned lots of nice things. It means a lot to me so I hope it goes to a good home! Thank you for your interest!","Tires need changing and the brakes don't work. There is also a large white stain on the seat, sorry.\"");
@@ -105,7 +105,9 @@ class DatabaseInitializer {
         addCar(db, 2, 1, 1,15000,2010, 95000,  "6 Series","This is my old car that I used every day to go to the HES where I learned lots of nice things. It means a lot to me so I hope it goes to a good home! Thank you for your interest!","Tires need changing and the brakes don't work. There is also a large white stain on the seat, sorry.\"");
 
         db.imageDao().deleteAll();
-        addImage(db, "https://firebasestorage.googleapis.com/v0/b/carz-c49b0.appspot.com/o/demoData%2Fskoda.jpeg?alt=media&token=fdc0ddad-666c-4870-b51c-0a1f05b2f6bd",1);
+        addImage(db, "https://firebasestorage.googleapis.com/v0/b/carz-c49b0.appspot.com/o/demoData%2Fbmw.jpg?alt=media&token=c7fc147e-5088-4a3e-8654-f8861d283b07",1);
+        addImage(db, "https://firebasestorage.googleapis.com/v0/b/carz-c49b0.appspot.com/o/demoData%2Fbmw_2.jpg?alt=media&token=053ea660-ef9e-42ed-82df-be14334cf0b8",1);
+        addImage(db, "https://firebasestorage.googleapis.com/v0/b/carz-c49b0.appspot.com/o/demoData%2Fbmw_3.png?alt=media&token=2ca0cb91-d471-480f-8450-dc4e65f33a74",1);
         addImage(db, "https://firebasestorage.googleapis.com/v0/b/carz-c49b0.appspot.com/o/demoData%2Fbmw.jpg?alt=media&token=c7fc147e-5088-4a3e-8654-f8861d283b07",2);
         addImage(db, "https://firebasestorage.googleapis.com/v0/b/carz-c49b0.appspot.com/o/demoData%2Fopel.jpg?alt=media&token=00dae790-d18f-4762-97e1-eb142ba6e5af",3);
         addImage(db, "https://firebasestorage.googleapis.com/v0/b/carz-c49b0.appspot.com/o/demoData%2Fford.jpg?alt=media&token=91b2f821-df6f-48f8-8641-f80878b4b748",4);
