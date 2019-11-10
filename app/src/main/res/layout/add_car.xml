@@ -131,12 +131,6 @@
             android:layout_below="@id/chooseImage"
             tools:context=".activities.AddCarActivity"
         />
-<!--        <ImageView
-            android:id="@+id/choosenImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/chooseImage"
-            android:contentDescription="@string/carImage"/>-->
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

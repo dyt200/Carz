@@ -254,9 +254,6 @@ public class AddCarActivity extends AppCompatActivity {
                 .setPositiveButton("YES", (dialog, id) -> {
                     addedImageUrls.remove(carUri);
                     imgLl.removeView(view);
-                    for (String url: addedImageUrls) {
-                        System.out.println(url);
-                    }
                 })
                 .setNegativeButton("NO", (dialog, id) -> createToast("Car deletion cancelled"));
         alertBuilder.show();
