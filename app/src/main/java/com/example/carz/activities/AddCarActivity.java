@@ -54,7 +54,7 @@ public class AddCarActivity extends AppCompatActivity {
         imgLl = findViewById(R.id.imgRl);
 
         //get user id from session
-        SharedPreferences sharedpreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
         userId = sharedpreferences.getInt("userKey", 0);
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
