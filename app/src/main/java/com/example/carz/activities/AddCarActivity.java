@@ -147,8 +147,12 @@ public class AddCarActivity extends AppCompatActivity {
                 || desc.equals("")
                 || condition.equals("")
                 || price == 0
-                || addedImageUrls.size() == 0
-        ) createToast("Please fill in all of the fields !");
+        ) {
+            createToast("Please fill in all of the fields !");
+        }
+        else if (addedImageUrls.size() == 0){
+            createToast("Hey, you need to add at least one image!");
+        }
         else
             insertCar(
                     new Car(
