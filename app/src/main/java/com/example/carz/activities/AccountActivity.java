@@ -145,7 +145,7 @@ public class AccountActivity extends AppCompatActivity {
      * Manages the confirmation to delete an account
      */
     private void deleteConfirmation() {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
 
         alertBuilder.setMessage(R.string.delete_user_message)
                 .setTitle(R.string.delete_user_title)

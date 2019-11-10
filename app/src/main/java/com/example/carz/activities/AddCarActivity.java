@@ -247,7 +247,7 @@ public class AddCarActivity extends AppCompatActivity {
     }
 
     public void deleteConfirmation(View view, String carUri) {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
 
         alertBuilder.setMessage(R.string.delete_car_message)
                 .setTitle(R.string.delete_car_title)

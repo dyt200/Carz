@@ -25,6 +25,10 @@
         <item name="editTextStyle">@style/EditTextDark</item>
     </style>
 
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:colorAccent">#0000FF</item>
+    </style>
+
     <style name="EditTextDark">
         <item name="android:textColor">@android:color/white</item>
     </style>
