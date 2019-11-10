@@ -160,9 +160,12 @@ public class Car {
     public String getTypeString() {
         String string;
         switch(this.type) {
-            case 1:     string = "Family";   break;
-            case 2:     string = "Coupé";     break;
-            case 3:     string = "Cabriolet";    break;
+            case 1:     string = "Hatchback";   break;
+            case 2:     string = "Sedan";     break;
+            case 3:     string = "SUV";    break;
+            case 4:     string = "Crossover";    break;
+            case 5:     string = "Coupe";    break;
+            case 6:     string = "Convertible";    break;
             default:    string = "ERROR";
         }
         return string;

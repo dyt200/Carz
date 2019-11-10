@@ -69,15 +69,23 @@
 
     <string-array name="type_array">
         <item>Any</item>
-        <item>Family</item>
-        <item>Coupé</item>
-        <item>Cabriolet</item>
+        <item>Hatchback</item>
+        <item>Sedan</item>
+        <item>SUV</item>
+        <item>Crossover</item>
+        <item>Coupe</item>
+        <item>Convertible</item>
+
     </string-array>
     <integer-array name="type_values">
         <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
     </integer-array>
 
     <string-array name="make_array">
