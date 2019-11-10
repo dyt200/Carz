@@ -51,10 +51,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.UUID;
 
+/**
+ * Car details activity
+ */
 public class CarDetailActivity extends AppCompatActivity {
 
     SharedPreferences sharedpreferences;
     private StorageReference mStorageRef;
+    private Context context = CarDetailActivity.this;
 
     CarViewModel carViewModel;
     UserViewModel userViewModel;
@@ -66,13 +70,12 @@ public class CarDetailActivity extends AppCompatActivity {
     CarWithImages carI;
     Car car;
     User carUser;
-    private Context context = CarDetailActivity.this;
+
     int userId;
     List<CarImage> carImages;
-    List<CarImage> carImagesToDelete = new ArrayList<CarImage>();
-    List<CarImage> carImagesToAdd = new ArrayList<CarImage>();
+    List<CarImage> carImagesToDelete = new ArrayList<>();
+    List<CarImage> carImagesToAdd = new ArrayList<>();
     LinearLayout imgLl;
-    private ImageView carImageView;
     ImageRepository ir;
 
     @Override
@@ -150,23 +153,24 @@ public class CarDetailActivity extends AppCompatActivity {
                 });
             }
         });
-
     }
 
+    /**
+     * Initialises slider adapter for car images
+     * @param carImages the list of car images
+     */
     private void setSliderAdapter(List<CarImage> carImages) {
-
-        sliderView = findViewById(R.id.imageSlider);
-
+        //init
         final ImageSliderAdapter imAdapter = new ImageSliderAdapter(this, carImages);
-
+        sliderView = findViewById(R.id.imageSlider);
         sliderView.setSliderAdapter(imAdapter);
 
+        //configure slider parameters
         sliderView.setIndicatorAnimation(IndicatorAnimations.SLIDE); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         sliderView.setIndicatorSelectedColor(Color.WHITE);
         sliderView.setIndicatorUnselectedColor(Color.GRAY);
         sliderView.setAutoCycle(false);
-
         sliderView.setOnIndicatorClickListener(position -> sliderView.setCurrentPagePosition(position));
     }
 
@@ -175,9 +179,8 @@ public class CarDetailActivity extends AppCompatActivity {
         if (isCarOwner) {
             getMenuInflater().inflate(R.menu.user_car_action_bar, menu);
             return super.onCreateOptionsMenu(menu);
-        } else {
+        } else
             return false;
-        }
     }
 
     @Override
@@ -258,9 +261,7 @@ public class CarDetailActivity extends AppCompatActivity {
         //Makes FAB invisible (just in case)
         FloatingActionButton saveCar = findViewById(R.id.saveCar);
         saveCar.setVisibility(View.INVISIBLE);
-
     }
-
 
     /**
      * Initialises the editable version of CarDetails
@@ -321,7 +322,6 @@ public class CarDetailActivity extends AppCompatActivity {
 
     /**
      * Rebuilds and updates the current car object to the DB
-     *
      * @param view the current view
      */
     public void saveCar(View view) {
@@ -367,6 +367,10 @@ public class CarDetailActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Response from adding car
+     * @param response response boolean
+     */
     private void setResponse(boolean response) {
         if (response) {
             createToast("Car has been saved");
@@ -384,9 +388,11 @@ public class CarDetailActivity extends AppCompatActivity {
         toast.show();
     }
 
+    /**
+     * Delete confirmation
+     */
     public void deleteConfirmation() {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
-
         alertBuilder.setMessage(R.string.delete_car_message)
                 .setTitle(R.string.delete_car_title)
                 .setPositiveButton(R.string.yes, (dialog, id) -> carViewModel.deleteCar(car, new OnAsyncEventListener() {
@@ -405,6 +411,10 @@ public class CarDetailActivity extends AppCompatActivity {
         alertBuilder.show();
     }
 
+    /**
+     * Delete response
+     * @param response response bool
+     */
     private void setDeleteResponse(boolean response) {
         if (response) {
             createToast("Car has been has ben successfully deleted");
@@ -416,7 +426,6 @@ public class CarDetailActivity extends AppCompatActivity {
 
     /**
      * Force hides the keyboard in certain instances where we do not change page
-     *
      * @param activity the current activity
      */
     public void hideKeyboard(Activity activity) {
@@ -450,14 +459,14 @@ public class CarDetailActivity extends AppCompatActivity {
             iv.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    dbImagedeleteConfirmation(view, image);
+                    dbImageDeleteConfirmation(view, image);
                     return true;
                 }
             });
         }
     }
 
-    public void dbImagedeleteConfirmation(View view, CarImage carImage) {
+    public void dbImageDeleteConfirmation(View view, CarImage carImage) {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 
         alertBuilder.setMessage(R.string.delete_image_message)
@@ -496,33 +505,21 @@ public class CarDetailActivity extends AppCompatActivity {
                 StorageReference riversRef = mStorageRef.child("test/" + UUID.randomUUID().toString() + ".jpg");
 
                 riversRef.putFile(file)
-                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                // Get a URL to the uploaded content
-                                /*  Uri downloadUrl =  taskSnapshot;*/
-                                riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        String carUri = uri.toString();
-                                        CarImage ci = new CarImage(carI.getCar().getId(), carUri);
-                                        carImagesToAdd.add(ci);
-                                        Toast.makeText(getBaseContext(), "Upload success! URL - " + uri.toString(), Toast.LENGTH_SHORT).show();
-                                        loadImageFromGallery(ci);
-                                    }
-                                });
+                        .addOnSuccessListener(taskSnapshot -> {
+                            // Get a URL to the uploaded content
+                            /*  Uri downloadUrl =  taskSnapshot;*/
+                            riversRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                                String carUri = uri.toString();
+                                CarImage ci = new CarImage(carI.getCar().getId(), carUri);
+                                carImagesToAdd.add(ci);
+                                createToast("Upload success");
+                                loadImageFromGallery(ci);
+                            });
 
-                            }
                         })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                // Handle unsuccessful uploads
-                                // ...
-                            }
+                        .addOnFailureListener(exception -> {
+                            createToast("Upload unsuccessful");
                         });
-
-
             }
         } catch (Exception ex) {
             System.out.println(ex.toString());
@@ -532,6 +529,10 @@ public class CarDetailActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * load Images from Gallery
+     * @param carImage image
+     */
     public void loadImageFromGallery(CarImage carImage) {
         ImageView iv = new ImageView(getApplicationContext());
         imgLl.addView(iv);
@@ -539,16 +540,18 @@ public class CarDetailActivity extends AppCompatActivity {
                 .load(carImage.getUrl())
                 .into(iv);
         iv.setPadding(0, 20, 0, 20);
-        iv.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                tempImagedeleteConfirmation(view, carImage);
-                return true;
-            }
+        iv.setOnLongClickListener(view -> {
+            tempImageDeleteConfirmation(view, carImage);
+            return true;
         });
     }
 
-    public void tempImagedeleteConfirmation(View view, CarImage carImage) {
+    /**
+     * Temp image delete confirmation
+     * @param view current view
+     * @param carImage image of car
+     */
+    public void tempImageDeleteConfirmation(View view, CarImage carImage) {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
 
         alertBuilder.setMessage(R.string.delete_image_message)
@@ -561,12 +564,18 @@ public class CarDetailActivity extends AppCompatActivity {
         alertBuilder.show();
     }
 
+    /**
+     * Update images to DB
+     */
     public void updateImages() {
-        bulckDeleteImage();
-        bulckAddImage();
+        bulkDeleteImage();
+        bulkAddImage();
     }
 
-    public void bulckDeleteImage() {
+    /**
+     * Delete multiple images
+     */
+    public void bulkDeleteImage() {
         for (CarImage image : carImagesToDelete) {
             ir.delete(image, new OnAsyncEventListener() {
                 @Override
@@ -583,7 +592,10 @@ public class CarDetailActivity extends AppCompatActivity {
         carImagesToDelete.clear();
     }
 
-    public void bulckAddImage() {
+    /**
+     * Add multiple images
+     */
+    public void bulkAddImage() {
         for (CarImage image : carImagesToAdd) {
             ir.insert(image, new OnAsyncEventListener() {
                 @Override

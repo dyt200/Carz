@@ -13,6 +13,9 @@ import com.example.carz.R;
 import com.example.carz.repositories.UserRepository;
 import com.example.carz.util.OnAsyncEventListener;
 
+/**
+ * New account creation activity
+ */
 public class CreateUserActivity extends AppCompatActivity {
 
     private UserRepository ur;
@@ -27,6 +30,10 @@ public class CreateUserActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    /**
+     * Creates a new user
+     * @param view current view
+     */
     public void createUser(View view) {
         //get all text from all the fields
 
@@ -79,6 +86,10 @@ public class CreateUserActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Creates a short toast
+     * @param text toast message
+     */
     private void createToast(String text) {
         Toast toast = Toast.makeText(getApplicationContext(),
                 text,
@@ -87,6 +98,11 @@ public class CreateUserActivity extends AppCompatActivity {
         toast.show();
     }
 
+    /**
+     * Insert a user
+     * @param user user to insert
+     * @param view current view
+     */
     private void insertUser(User user, View view) {
         ur.insert(user, new OnAsyncEventListener() {
             @Override
@@ -101,6 +117,10 @@ public class CreateUserActivity extends AppCompatActivity {
         }, view.getContext());
     }
 
+    /**
+     * Responds to user insertion
+     * @param response response boolean
+     */
     private void setResponse(Boolean response) {
         if (response) {
             Intent intent = new Intent(this, MainActivity.class);

@@ -25,8 +25,9 @@ import com.example.carz.util.OnAsyncEventListener;
 import com.example.carz.viewmodel.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.w3c.dom.Text;
-
+/**
+ * Account details activity
+ */
 public class AccountActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;

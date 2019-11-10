@@ -18,6 +18,9 @@ import com.example.carz.R;
 import static com.example.carz.activities.MainActivity.SETTINGS;
 import static com.example.carz.activities.MainActivity.settingSplash;
 
+/**
+ * Splash screen
+ */
 public class SplashActivity extends AppCompatActivity {
 
     private int getSplashScreenDuration = 3000;
@@ -28,6 +31,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         intent = new Intent(this, MainActivity.class);
 
+        //get setting for ignore splash
         SharedPreferences sharedPreferences = getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);
         boolean ignoreSplash = sharedPreferences.getBoolean(settingSplash, false);
 
@@ -49,6 +53,7 @@ public class SplashActivity extends AppCompatActivity {
         img.startAnimation(fadeIn);
         tx.startAnimation(fadeIn);
 
+        //manages ignore splash setting
         if(!ignoreSplash)
             scheduleSplashScreen();
         else
@@ -56,6 +61,9 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Delay to display splash
+     */
     private void scheduleSplashScreen() {
         Handler handler = new Handler();
         handler.postDelayed(() -> {

@@ -16,7 +16,9 @@ import com.example.carz.R;
 
 import static com.example.carz.activities.MainActivity.settingShowMyCars;
 
-
+/**
+ * Search page
+ */
 public class SearchParametersActivity extends AppCompatActivity {
 
     @Override
@@ -51,6 +53,10 @@ public class SearchParametersActivity extends AppCompatActivity {
         makeSpinner.setAdapter(makeAdapter);
     }
 
+    /**
+     * Perform a search
+     * @param view curr view
+     */
     public void search(View view) {
         //var for finding spinner values by position
         int pos;

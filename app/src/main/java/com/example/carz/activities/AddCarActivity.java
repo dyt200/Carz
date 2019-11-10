@@ -1,6 +1,5 @@
 package com.example.carz.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -9,21 +8,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.Target;
-import com.example.carz.Database.AppDatabase;
 import com.example.carz.Entities.Car;
 import com.example.carz.Entities.CarImage;
 import com.example.carz.R;
@@ -31,19 +25,13 @@ import com.example.carz.repositories.CarRepository;
 import com.example.carz.repositories.ImageRepository;
 import com.example.carz.util.OnAsyncEventListener;
 import com.example.carz.util.OnAsyncInsertEventListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
 
 import java.util.List;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.UUID;
-
 
 /**
  * Add a new car!
@@ -53,12 +41,11 @@ public class AddCarActivity extends AppCompatActivity {
     public static final int GALLERY_REQUEST_CODE = 44;
     private StorageReference mStorageRef;
     private Context context = AddCarActivity.this;
-    private ImageView c_image;
     private int userId;
     private List<String> addedImageUrls = new ArrayList<>();
     private Boolean successImageUpload = false;
-    LinearLayout imgLl;
 
+    LinearLayout imgLl;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +53,7 @@ public class AddCarActivity extends AppCompatActivity {
 
         imgLl = findViewById(R.id.imgRl);
 
+        //get user id from session
         SharedPreferences sharedpreferences = getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
         userId = sharedpreferences.getInt("userKey", 0);
 
@@ -108,9 +96,6 @@ public class AddCarActivity extends AppCompatActivity {
      */
     public void addCar(View view) {
         int pos;
-
-        // get user id from shared preferences
-
 
         Spinner manufacturerT = findViewById(R.id.make_spinner);
         pos = manufacturerT.getSelectedItemPosition();
@@ -173,6 +158,9 @@ public class AddCarActivity extends AppCompatActivity {
         pickFromGallery();
     }
 
+    /**
+     * Select an image from the gallery
+     */
     private void pickFromGallery() {
         //Create an Intent with action as ACTION_PICK
         Intent intent = new Intent(Intent.ACTION_PICK);
@@ -194,42 +182,28 @@ public class AddCarActivity extends AppCompatActivity {
                 Uri file = data.getData();
                 StorageReference riversRef = mStorageRef.child("users/" + userId + "/" + UUID.randomUUID().toString() + ".jpg");
 
-
-                riversRef.putFile(file)
-                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                // Get a URL to the uploaded content
-                                /*  Uri downloadUrl =  taskSnapshot;*/
-                                riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        String carUri = uri.toString();
-                                        addedImageUrls.add(carUri);
-                                        Toast.makeText(getBaseContext(), "Upload success! URL - " + uri.toString(), Toast.LENGTH_SHORT).show();
-                                        loadImage(carUri);
-                                    }
-                                });
-
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                // Handle unsuccessful uploads
-                                // ...
-                            }
+                if(file != null) {
+                    riversRef.putFile(file).addOnSuccessListener(taskSnapshot -> {
+                        // Get a URL to the uploaded content
+                        riversRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                            String carUri = uri.toString();
+                            addedImageUrls.add(carUri);
+                            createToast("Upload successful");
+                            loadImage(carUri);
                         });
-
-
+                    })
+                    .addOnFailureListener(exception -> createToast("Upload unsuccessful"));
+                }
             }
         } catch (Exception ex) {
-            Toast.makeText(this, ex.toString(),
-                    Toast.LENGTH_SHORT).show();
+            Log.i("AddCarActivity upload", ex.toString());
         }
-
     }
 
+    /**
+     * Load an image from uri
+     * @param carUri the image uri
+     */
     public void loadImage(String carUri) {
         ImageView iv = new ImageView(getApplicationContext());
         imgLl.addView(iv);
@@ -237,15 +211,17 @@ public class AddCarActivity extends AppCompatActivity {
                 .load(carUri)
                 .into(iv);
         iv.setPadding(0,20,0,20);
-        iv.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                deleteConfirmation(view, carUri);
-                return true;
-            }
+        iv.setOnLongClickListener(view -> {
+            deleteConfirmation(view, carUri);
+            return true;
         });
     }
 
+    /**
+     * Display delete confirmation for image
+     * @param view current view
+     * @param carUri the URI of the image
+     */
     public void deleteConfirmation(View view, String carUri) {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
 
@@ -262,7 +238,6 @@ public class AddCarActivity extends AppCompatActivity {
 
     /**
      * Process to insert a car
-     *
      * @param car  Car to be inserted
      * @param view Context
      */
@@ -286,6 +261,12 @@ public class AddCarActivity extends AppCompatActivity {
         }, view.getContext());
     }
 
+    /**
+     * Insert images into database
+     * @param carId id of the car
+     * @param addedImageUrls list of uris
+     * @param view current view
+     */
     private void insertImages(long carId, List<String> addedImageUrls, View view) {
         ImageRepository ir = ImageRepository.getInstance();
         for (String imageUrl : addedImageUrls) {
@@ -303,19 +284,16 @@ public class AddCarActivity extends AppCompatActivity {
                     successImageUpload = false;
                 }
 
-
             }, view.getContext());
         }
-        if (successImageUpload = true) {
+        if (successImageUpload = true)
             setResponse(true);
-        } else {
+        else
             setResponse(false);
-        }
     }
 
     /**
      * Manages the response after inserting a car
-     *
      * @param response boolean returned from OnAsyncEventListener
      */
     private void setResponse(boolean response) {
@@ -330,7 +308,6 @@ public class AddCarActivity extends AppCompatActivity {
 
     /**
      * Creates a short toast
-     *
      * @param text The toast message
      */
     private void createToast(String text) {

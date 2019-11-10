@@ -37,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
     }
 
+    /**
+     * Make a login attempt
+     * @param view current view
+     */
     public void tryLogin(View view) {
         EditText emailT = findViewById(R.id.email);
         e_email = emailT.getText().toString();
@@ -52,11 +56,19 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Navigate to CreateUser Activity
+     * @param view curr view
+     */
     public void createUser(View view) {
         Intent intent = new Intent(this, CreateUserActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Navigate to app and store session
+     * @param userData current user
+     */
     private void login(User userData){
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putInt(UserId, userData.getId());
@@ -66,6 +78,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Invaid login procedure
+     */
     private void invalidLogin() {
         EditText passT = findViewById(R.id.password);
         passT.setText("");
