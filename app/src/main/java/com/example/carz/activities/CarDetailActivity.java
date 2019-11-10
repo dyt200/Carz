@@ -70,6 +70,8 @@ public class CarDetailActivity extends AppCompatActivity {
     private Context context = CarDetailActivity.this;
     int userId;
     List<CarImage> carImages;
+    List<CarImage> carImagesToDelete = new ArrayList<CarImage>();
+    List<CarImage> carImagesToAdd = new ArrayList<CarImage>();
     LinearLayout imgLl;
     private ImageView carImageView;
     ImageRepository ir;
@@ -136,7 +138,7 @@ public class CarDetailActivity extends AppCompatActivity {
                     if (user != null) {
                         this.carUser = user;
 
-                        System.out.println("My user id = "+userId+" AND the car user Id = "+carOwner);
+                        System.out.println("My user id = " + userId + " AND the car user Id = " + carOwner);
                         if (carOwner == userId)
                             isCarOwner = true;
 
@@ -183,13 +185,13 @@ public class CarDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        switch(id) {
+        switch (id) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
 
             case R.id.edit:
-                if(!editMode) {
+                if (!editMode) {
                     editMode = true;
                     editMode();
                 } else {
@@ -230,11 +232,11 @@ public class CarDetailActivity extends AppCompatActivity {
         carManufacturerTextView.setText(manufacturer);
 
         TextView carYearTextView = findViewById(R.id.carYear);
-        String year =  Integer.toString(car.getYear());
+        String year = Integer.toString(car.getYear());
         carYearTextView.setText(year);
 
         TextView carMileageTextView = findViewById(R.id.carMileage);
-        String mileage = car.getMileage()+" km";
+        String mileage = car.getMileage() + " km";
         carMileageTextView.setText(mileage);
 
         TextView carModelTextView = findViewById(R.id.carModel);
@@ -286,7 +288,7 @@ public class CarDetailActivity extends AppCompatActivity {
         makeSpinner.setSelection(car.getManufacturer());
 
         Spinner yearSpinner = findViewById(R.id.year_spinner);
-        ArrayAdapter adapter = (ArrayAdapter)yearSpinner.getAdapter();
+        ArrayAdapter adapter = (ArrayAdapter) yearSpinner.getAdapter();
         yearSpinner.setSelection(adapter.getPosition(car.getYear()));
 
         TextView carMileageE = findViewById(R.id.carMileageE);
@@ -320,6 +322,7 @@ public class CarDetailActivity extends AppCompatActivity {
 
     /**
      * Rebuilds and updates the current car object to the DB
+     *
      * @param view the current view
      */
     public void saveCar(View view) {
@@ -350,13 +353,18 @@ public class CarDetailActivity extends AppCompatActivity {
 
         TextView conditionE = findViewById(R.id.conditionE);
         car.setCondition(conditionE.getText().toString());
+        updateImages();
 
         carViewModel.updateCar(car, new OnAsyncEventListener() {
             @Override
-            public void onSuccess() { setResponse(true); }
+            public void onSuccess() {
+                setResponse(true);
+            }
 
             @Override
-            public void onFailure(Exception e) { setResponse(false); }
+            public void onFailure(Exception e) {
+                setResponse(false);
+            }
         });
     }
 
@@ -381,18 +389,20 @@ public class CarDetailActivity extends AppCompatActivity {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 
         alertBuilder.setMessage(R.string.delete_car_message)
-        .setTitle(R.string.delete_car_title)
-        .setPositiveButton(R.string.yes, (dialog, id) -> carViewModel.deleteCar(car, new OnAsyncEventListener() {
-            @Override
-            public void onSuccess() {
-                onBackPressed();
-                setDeleteResponse(true);
-            }
+                .setTitle(R.string.delete_car_title)
+                .setPositiveButton(R.string.yes, (dialog, id) -> carViewModel.deleteCar(car, new OnAsyncEventListener() {
+                    @Override
+                    public void onSuccess() {
+                        onBackPressed();
+                        setDeleteResponse(true);
+                    }
 
-            @Override
-            public void onFailure(Exception e) { setDeleteResponse(false); }
-        }))
-        .setNegativeButton(R.string.cancel, (dialog, id) -> createToast("Car deletion cancelled"));
+                    @Override
+                    public void onFailure(Exception e) {
+                        setDeleteResponse(false);
+                    }
+                }))
+                .setNegativeButton(R.string.cancel, (dialog, id) -> createToast("Car deletion cancelled"));
         alertBuilder.show();
     }
 
@@ -407,12 +417,13 @@ public class CarDetailActivity extends AppCompatActivity {
 
     /**
      * Force hides the keyboard in certain instances where we do not change page
+     *
      * @param activity the current activity
      */
     public void hideKeyboard(Activity activity) {
         View view = activity.getCurrentFocus();
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             assert imm != null;
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
@@ -423,20 +434,20 @@ public class CarDetailActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onSupportNavigateUp(){
+    public boolean onSupportNavigateUp() {
         finish();
         return true;
     }
 
     private void displayImageList() {
         imgLl.removeAllViewsInLayout();
-        for (CarImage image: carImages){
+        for (CarImage image : carImages) {
             ImageView iv = new ImageView(getApplicationContext());
             imgLl.addView(iv);
             Glide.with(context)
                     .load(image.getUrl())
                     .into(iv);
-            iv.setPadding(0,20,0,20);
+            iv.setPadding(0, 20, 0, 20);
             iv.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
@@ -450,22 +461,11 @@ public class CarDetailActivity extends AppCompatActivity {
     public void dbImagedeleteConfirmation(View view, CarImage carImage) {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 
-        alertBuilder.setMessage(R.string.delete_car_message)
-                .setTitle(R.string.delete_car_title)
+        alertBuilder.setMessage(R.string.delete_image_message)
+                .setTitle(R.string.delete_image_title)
                 .setPositiveButton("YES", (dialog, id) -> {
-                    carImages.remove(carImage);
-           /*         imgLl.removeView(view);*/
-                    ir.delete(carImage, new OnAsyncEventListener() {
-                        @Override
-                        public void onSuccess() {
-                            System.out.println("image deleted");
-                        }
-
-                        @Override
-                        public void onFailure(Exception e) {
-                            System.out.println("failure");
-                        }
-                    },context);
+                    carImagesToDelete.add(carImage);
+                    imgLl.removeView(view);
                 })
                 .setNegativeButton("NO", (dialog, id) -> createToast("Image deletion cancelled"));
         alertBuilder.show();
@@ -486,6 +486,7 @@ public class CarDetailActivity extends AppCompatActivity {
         // Launching the Intent
         startActivityForResult(intent, 44);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
@@ -506,7 +507,7 @@ public class CarDetailActivity extends AppCompatActivity {
                                     public void onSuccess(Uri uri) {
                                         String carUri = uri.toString();
                                         CarImage ci = new CarImage(carI.getCar().getId(), carUri);
-                                        carImages.add(ci);
+                                        carImagesToAdd.add(ci);
                                         Toast.makeText(getBaseContext(), "Upload success! URL - " + uri.toString(), Toast.LENGTH_SHORT).show();
                                         loadImageFromGallery(ci);
                                     }
@@ -533,30 +534,70 @@ public class CarDetailActivity extends AppCompatActivity {
     }
 
     public void loadImageFromGallery(CarImage carImage) {
-        ir.insert(carImage, new OnAsyncEventListener() {
-            @Override
-            public void onSuccess() {
-                System.out.println("image added to db");
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                System.out.println("failure");
-            }
-        },context);
-/*        ImageView iv = new ImageView(getApplicationContext());
+        ImageView iv = new ImageView(getApplicationContext());
         imgLl.addView(iv);
         Glide.with(context)
                 .load(carImage.getUrl())
                 .into(iv);
-        iv.setPadding(0,20,0,20);
+        iv.setPadding(0, 20, 0, 20);
         iv.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                deleteConfirmation(view, carUri);
+                tempImagedeleteConfirmation(view, carImage);
                 return true;
             }
-        });*/
+        });
     }
 
+    public void tempImagedeleteConfirmation(View view, CarImage carImage) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+
+        alertBuilder.setMessage(R.string.delete_image_message)
+                .setTitle(R.string.delete_image_title)
+                .setPositiveButton("YES", (dialog, id) -> {
+                    carImagesToAdd.remove(carImage);
+                    imgLl.removeView(view);
+                })
+                .setNegativeButton("NO", (dialog, id) -> createToast("Image deletion cancelled"));
+        alertBuilder.show();
+    }
+
+    public void updateImages() {
+        bulckDeleteImage();
+        bulckAddImage();
+    }
+
+    public void bulckDeleteImage() {
+        for (CarImage image : carImagesToDelete) {
+            ir.delete(image, new OnAsyncEventListener() {
+                @Override
+                public void onSuccess() {
+                    System.out.println("image deleted");
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    System.out.println("failure");
+                }
+            }, context);
+        }
+        carImagesToDelete.clear();
+    }
+
+    public void bulckAddImage() {
+        for (CarImage image : carImagesToAdd) {
+            ir.insert(image, new OnAsyncEventListener() {
+                @Override
+                public void onSuccess() {
+                    System.out.println("image added to db");
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    System.out.println("failure");
+                }
+            }, context);
+        }
+        carImagesToAdd.clear();
+    }
 }
