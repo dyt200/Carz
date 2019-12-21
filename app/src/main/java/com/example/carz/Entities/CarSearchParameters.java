@@ -14,7 +14,7 @@ public class CarSearchParameters implements Serializable {
     private int maxYear;
     private String model;
     private boolean showMyCars;
-    private int userId;
+    private String userId;
 
     public CarSearchParameters(
             int type,
@@ -25,7 +25,7 @@ public class CarSearchParameters implements Serializable {
             int maxYear,
             String model,
             boolean showMyCars,
-            int userId
+            String userId
     ) {
         this.type = type;
         this.manufacturer = manufacturer;

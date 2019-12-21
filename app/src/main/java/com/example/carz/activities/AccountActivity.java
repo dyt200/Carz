@@ -66,7 +66,7 @@ public class AccountActivity extends AppCompatActivity {
 
         //get user session
         sharedPreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-        final int userId = sharedPreferences.getInt("userKey", 0);
+        final String userId = sharedPreferences.getString("userKey", "");
 
         //builds current user from sharedPreferences and displays it
         UserViewModel.UserFromIdFactory userFactory = new UserViewModel.UserFromIdFactory(getApplication(), userId);

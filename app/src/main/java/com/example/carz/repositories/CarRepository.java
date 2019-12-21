@@ -37,7 +37,7 @@ public class CarRepository {
         return AppDatabase.getInstance(context).carDao().getAll();
     }
 
-    public LiveData<List<CarWithImages>> getAllOtherCars(int userId, Context context) {
+    public LiveData<List<CarWithImages>> getAllOtherCars(String userId, Context context) {
         return AppDatabase.getInstance(context).carDao().getAllOther(userId);
     }
 
@@ -45,7 +45,7 @@ public class CarRepository {
         return AppDatabase.getInstance(context).carDao().getCarById(id);
     }
 
-    public LiveData<List<CarWithImages>> getMyCars(int userId, Context context) {
+    public LiveData<List<CarWithImages>> getMyCars(String userId, Context context) {
         return AppDatabase.getInstance(context).carDao().getMyCars(userId);
     }
 

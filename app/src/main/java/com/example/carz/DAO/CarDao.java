@@ -23,7 +23,7 @@ public interface CarDao {
 
     @Transaction
     @Query("SELECT * FROM car WHERE user != (:userId)")
-    LiveData<List<CarWithImages>> getAllOther(int userId);
+    LiveData<List<CarWithImages>> getAllOther(String userId);
 
     @Transaction
     @Query("SELECT * FROM car WHERE id = (:id)")
@@ -31,7 +31,7 @@ public interface CarDao {
 
     @Transaction
     @Query("SELECT * FROM car WHERE user = (:userId)")
-    LiveData<List<CarWithImages>> getMyCars(int userId);
+    LiveData<List<CarWithImages>> getMyCars(String userId);
 
     @Transaction
     @RawQuery(observedEntities = Car.class)

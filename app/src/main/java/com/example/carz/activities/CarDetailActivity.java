@@ -68,7 +68,7 @@ public class CarDetailActivity extends AppCompatActivity {
     Car car;
     User carUser;
 
-    int userId;
+    String userId;
     List<CarImage> carImages;
     List<CarImage> carImagesToDelete = new ArrayList<>();
     List<CarImage> carImagesToAdd = new ArrayList<>();
@@ -86,7 +86,7 @@ public class CarDetailActivity extends AppCompatActivity {
 
         //get user session
         sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-        userId = sharedpreferences.getInt("userKey", 0);
+        userId = sharedpreferences.getString("userKey", "");
 
         //Building spinners
         Spinner typeSpinner = findViewById(R.id.type_spinner);
@@ -129,7 +129,7 @@ public class CarDetailActivity extends AppCompatActivity {
                 carI = carData;
                 car = carI.getCar();
                 carImages = carI.getImages();
-                int carOwner = car.getUser();
+                String carOwner = car.getUser();
 
                 UserViewModel.UserFromIdFactory userFactory = new UserViewModel.UserFromIdFactory(getApplication(), carOwner);
                 userViewModel = ViewModelProviders.of(this, userFactory).get(UserViewModel.class);

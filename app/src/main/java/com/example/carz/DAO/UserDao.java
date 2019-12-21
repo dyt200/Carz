@@ -17,7 +17,7 @@ public interface UserDao {
     LiveData<List<User>> getAll();
 
     @Query("SELECT * FROM user WHERE id = (:id)")
-    LiveData<User> getUserById(int id);
+    LiveData<User> getUserById(String id);
 
     @Query("SELECT * FROM user WHERE email = (:email) AND password = (:password)")
     LiveData<User> validateLogin(String email, String password);

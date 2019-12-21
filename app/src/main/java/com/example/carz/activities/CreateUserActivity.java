@@ -76,7 +76,7 @@ public class CreateUserActivity extends AppCompatActivity {
                 ur.doesEmailExist(email, view.getContext()).observe(this, doesEmailExist -> {
                     //TODO This always triggers both on success... Fix plz
                     if(doesEmailExist == null) {
-                        User user = new User(firstName, lastName, email, pass1, telephone, address1);
+                        User user = new User("REMOVE" ,firstName, lastName, email, pass1, telephone, address1);
                         insertUser(user, view);
                     } else
                         createToast("An account with that email already exists!");

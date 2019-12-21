@@ -64,7 +64,7 @@ public class SearchParametersActivity extends AppCompatActivity {
         //get setting for showMyCars
         SharedPreferences session = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences settings = getSharedPreferences(LoginActivity.SETTINGS, Context.MODE_PRIVATE);
-        int userId = session.getInt(LoginActivity.UserId, 0);
+        String userId = session.getString(LoginActivity.UserId, "");
         boolean showMyCars = settings.getBoolean(settingShowMyCars, false);
 
         //get type

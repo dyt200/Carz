@@ -32,7 +32,7 @@ public class Car {
     private int type;
 
     @ColumnInfo(name = "user")
-    private int user;
+    private String user;
 
     @ColumnInfo(name = "price")
     private int price;
@@ -52,7 +52,7 @@ public class Car {
     @ColumnInfo(name = "condition")
     private String condition;
 
-    public Car (int type, int manufacturer, int user, int price, int year, int mileage, String model, String description, String condition) {
+    public Car (int type, int manufacturer, String user, int price, int year, int mileage, String model, String description, String condition) {
         this.type = type;
         this.manufacturer = manufacturer;
         this.user = user;
@@ -86,9 +86,9 @@ public class Car {
 
     public void setType(int type) { this.type = type; }
 
-    public int getUser() { return user; }
+    public String getUser() { return user; }
 
-    public void setUser(int user) {
+    public void setUser(String user) {
         this.user = user;
     }
 

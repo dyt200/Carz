@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void login(User userData){
         SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putInt(UserId, userData.getId());
+        editor.putString(UserId, userData.getId());
         editor.apply();
         Intent intent = new Intent(this, CarListActivity.class);
         intent.putExtra("action", "all_cars");

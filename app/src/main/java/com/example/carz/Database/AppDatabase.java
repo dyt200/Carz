@@ -25,7 +25,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private static final String TAG = "AppDatabase";
     private static AppDatabase instance;
-    private static final String DATABASE_NAME = "carz_database_v2";
+    private static final String DATABASE_NAME = "carz_database_v14";
 
     public abstract CarDao carDao();
     public abstract UserDao userDao();

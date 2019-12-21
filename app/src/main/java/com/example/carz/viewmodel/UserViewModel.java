@@ -45,7 +45,7 @@ public class UserViewModel extends AndroidViewModel {
     }
 
     private UserViewModel(
-            int userId,
+            String userId,
             @NonNull Application application,
             UserRepository userRepository
     ) {
@@ -91,11 +91,11 @@ public class UserViewModel extends AndroidViewModel {
         @NonNull
         private final Application application;
 
-        private final int userId;
+        private final String userId;
 
         private final UserRepository repository;
 
-        public UserFromIdFactory(@NonNull Application application, int userId){
+        public UserFromIdFactory(@NonNull Application application, String userId){
             this.application = application;
             this.userId = userId;
             repository = UserRepository.getInstance();

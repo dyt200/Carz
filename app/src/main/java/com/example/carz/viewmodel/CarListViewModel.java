@@ -39,7 +39,7 @@ public class CarListViewModel extends AndroidViewModel {
         observableCars.addSource(cars, observableCars::setValue);
     }
 
-    private CarListViewModel(int userId, boolean check, @NonNull Application application, CarRepository carRepository){
+    private CarListViewModel(String userId, boolean check, @NonNull Application application, CarRepository carRepository){
         super(application);
         repository = carRepository;
         applicationContext = application.getApplicationContext();
@@ -51,7 +51,7 @@ public class CarListViewModel extends AndroidViewModel {
         observableCars.addSource(cars, observableCars::setValue);
     }
 
-    private CarListViewModel(@NonNull int userId, Application application, CarRepository carRepository){
+    private CarListViewModel(@NonNull String userId, Application application, CarRepository carRepository){
         super(application);
         repository = carRepository;
         applicationContext = application.getApplicationContext();
@@ -99,10 +99,10 @@ public class CarListViewModel extends AndroidViewModel {
         @NonNull
         private final Application application;
         private final CarRepository carRepository;
-        private final int userId;
+        private final String userId;
         private final boolean check;
 
-        public AllOtherCarsFactory(int userId, boolean check, @NonNull Application application) {
+        public AllOtherCarsFactory(String userId, boolean check, @NonNull Application application) {
             this.application = application;
             this.userId = userId;
             this.check = check;
@@ -121,10 +121,10 @@ public class CarListViewModel extends AndroidViewModel {
 
         @NonNull
         private final Application application;
-        private final int userId;
+        private final String userId;
         private final CarRepository carRepository;
 
-        public MyCarsFactory(int userId, @NonNull Application application) {
+        public MyCarsFactory(String userId, @NonNull Application application) {
             this.application = application;
             this.userId = userId;
             carRepository = CarRepository.getInstance();

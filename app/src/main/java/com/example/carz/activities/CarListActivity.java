@@ -39,7 +39,7 @@ public class CarListActivity  extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ListView drawerList;
     private boolean isDrawerOpen;
-    private int userId;
+    private String userId;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -65,7 +65,7 @@ public class CarListActivity  extends AppCompatActivity {
 
         // get user id from shared preferences
         sharedPreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-        userId = sharedPreferences.getInt("userKey", 0);
+        userId = sharedPreferences.getString("userKey", "");
 
         //receives data from any source (eg. main or search activities)
         Intent i = getIntent();

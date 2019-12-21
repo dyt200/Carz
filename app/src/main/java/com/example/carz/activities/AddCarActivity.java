@@ -41,7 +41,7 @@ public class AddCarActivity extends AppCompatActivity {
     public static final int GALLERY_REQUEST_CODE = 44;
     private StorageReference mStorageRef;
     private Context context = AddCarActivity.this;
-    private int userId;
+    private String userId;
     private List<String> addedImageUrls = new ArrayList<>();
     private Boolean successImageUpload = false;
 
@@ -55,7 +55,7 @@ public class AddCarActivity extends AppCompatActivity {
 
         //get user id from session
         SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-        userId = sharedpreferences.getInt("userKey", 0);
+        userId = sharedpreferences.getString("userKey", "");
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
 

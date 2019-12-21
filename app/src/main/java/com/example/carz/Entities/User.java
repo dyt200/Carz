@@ -1,13 +1,15 @@
 package com.example.carz.Entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "user")
 public class User {
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+    @PrimaryKey
+    @NonNull
+    private String id;
 
     @ColumnInfo(name = "firstName")
     private String firstName;
@@ -27,7 +29,8 @@ public class User {
     @ColumnInfo(name = "address")
     private String address;
 
-    public User(String firstName, String lastName, String email,String password, String telephone, String address) {
+    public User(String id, String firstName, String lastName, String email,String password, String telephone, String address) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -36,11 +39,11 @@ public class User {
         this.address = address;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
