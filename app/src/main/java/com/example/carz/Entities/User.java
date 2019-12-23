@@ -3,7 +3,13 @@ package com.example.carz.Entities;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity(tableName = "user")
 public class User {
@@ -29,8 +35,11 @@ public class User {
     @ColumnInfo(name = "address")
     private String address;
 
-    public User(String id, String firstName, String lastName, String email,String password, String telephone, String address) {
-        this.id = id;
+    public User() {
+    }
+
+    @Ignore
+    public User(String firstName, String lastName, String email,String password, String telephone, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -39,11 +48,13 @@ public class User {
         this.address = address;
     }
 
+    @NonNull
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 
@@ -89,5 +100,14 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("firstName", firstName);
+        result.put("lastName", lastName);
+        result.put("email", email);
+        return result;
     }
 }

@@ -266,6 +266,7 @@ public class AddCarActivity extends AppCompatActivity {
         cr.insert(car, new OnAsyncInsertEventListener() {
             @Override
             public void onSuccessResult(Long id) {
+                System.out.println("CAR ADDED :" + car.getUser() + car.getModel() + id);
                 insertImages(id, addedImageUrls, view);
             }
 

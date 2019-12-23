@@ -12,13 +12,17 @@ import android.content.SharedPreferences;
 
 import com.example.carz.Entities.User;
 import com.example.carz.R;
+import com.example.carz.db.repo.UserRepo;
 import com.example.carz.repositories.UserRepository;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
     String e_email = "";
     String e_pass = "";
     UserRepository ur;
+    UserRepo userRepo;
 
     public static final String MyPREFERENCES = "Session" ;
     public static final String SETTINGS = "settings" ;
@@ -33,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         setTitle(getString(R.string.app_name));
         setContentView(R.layout.login);
         ur = UserRepository.getInstance();
+        userRepo = UserRepo.getInstance();
 
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
     }
@@ -48,12 +53,23 @@ public class LoginActivity extends AppCompatActivity {
         EditText passT = findViewById(R.id.password);
         e_pass = passT.getText().toString();
 
-        ur.validateLogin(e_email,e_pass, view.getContext()).observe(this, userData -> {
-            if(userData != null)
-                login(userData);
-            else
+        userRepo.signIn(e_email, e_pass, task -> {
+            if (task.isSuccessful()) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                login(user);
+            } else {
                 invalidLogin();
+            }
         });
+
+    /*    ur.validateLogin(e_email,e_pass, view.getContext()).observe(this, userData -> {
+         *//*   if(userData != null)
+              //  login(userData);
+            else
+                invalidLogin();*//*
+        });*/
+
+
     }
 
     /**
@@ -67,15 +83,22 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Navigate to app and store session
-     * @param userData current user
+     * @param firebaseUser current user
      */
-    private void login(User userData){
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString(UserId, userData.getId());
-        editor.apply();
-        Intent intent = new Intent(this, CarListActivity.class);
-        intent.putExtra("action", "all_cars");
-        startActivity(intent);
+    private void login(FirebaseUser firebaseUser){
+        userRepo.getUser(firebaseUser.getUid()).observe(this, userData -> {
+            if(userData != null){
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(UserId, userData.getId());
+                editor.apply();
+                Intent intent = new Intent(this, CarListActivity.class);
+                intent.putExtra("action", "all_cars");
+                startActivity(intent);
+            }
+            else
+                invalidLogin();
+        });
+
     }
 
     /**

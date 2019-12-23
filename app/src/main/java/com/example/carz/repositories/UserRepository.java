@@ -35,21 +35,21 @@ public class UserRepository {
         return AppDatabase.getInstance(context).userDao().getAll();
     }
 
-    public LiveData<User> getUserById(String id, Context context) {
+/*    public LiveData<User> getUserById(String id, Context context) {
         return AppDatabase.getInstance(context).userDao().getUserById(id);
-    }
+    }*/
 
-    public LiveData<User> validateLogin(String email, String pass, Context context) {
+/*    public LiveData<User> validateLogin(String email, String pass, Context context) {
         return AppDatabase.getInstance(context).userDao().validateLogin(email, pass);
     }
 
     public LiveData<User> doesEmailExist(String email, Context context) {
         return AppDatabase.getInstance(context).userDao().doesEmailExist(email);
-    }
+    }*/
 
-    public void insert(final User user, OnAsyncEventListener callback, Context context) {
+/*    public void insert(final User user, OnAsyncEventListener callback, Context context) {
         new CreateUser(context, callback).execute(user);
-    }
+    }*/
 
     public void update(final User user, OnAsyncEventListener callback, Context context) {
         new UpdateUser(context, callback).execute(user);

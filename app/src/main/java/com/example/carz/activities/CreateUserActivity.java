@@ -2,6 +2,7 @@ package com.example.carz.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.carz.Entities.User;
 import com.example.carz.R;
+import com.example.carz.db.repo.UserRepo;
 import com.example.carz.repositories.UserRepository;
 import com.example.carz.util.OnAsyncEventListener;
 
@@ -18,12 +20,13 @@ import com.example.carz.util.OnAsyncEventListener;
  */
 public class CreateUserActivity extends AppCompatActivity {
 
-    private UserRepository ur;
+    private UserRepo ur;
+    private static final String TAG = "CreateUserActivity";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_user);
-        ur = UserRepository.getInstance();
+        ur = UserRepo.getInstance();
 
         //get back button
         assert getSupportActionBar() != null;
@@ -72,15 +75,30 @@ public class CreateUserActivity extends AppCompatActivity {
             //check if both password fields are the same
             if (pass1.equals(pass2)) {
 
-                //check to see if we find a User with the same email
+                User user = new User(firstName, lastName, email, pass1, telephone, address1);
+
+                ur.register(user, new OnAsyncEventListener() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d(TAG, "createUserWithEmail: success");
+                        setResponse(true);
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        Log.d(TAG, "createUserWithEmail: failure", e);
+                        setResponse(false);
+                    }
+                });
+
+/*                //check to see if we find a User with the same email
                 ur.doesEmailExist(email, view.getContext()).observe(this, doesEmailExist -> {
-                    //TODO This always triggers both on success... Fix plz
                     if(doesEmailExist == null) {
                         User user = new User("REMOVE" ,firstName, lastName, email, pass1, telephone, address1);
                         insertUser(user, view);
                     } else
                         createToast("An account with that email already exists!");
-                });
+                });*/
             } else
                 createToast("Your passwords do not match!");
         }
@@ -103,7 +121,7 @@ public class CreateUserActivity extends AppCompatActivity {
      * @param user user to insert
      * @param view current view
      */
-    private void insertUser(User user, View view) {
+/*    private void insertUser(User user, View view) {
         ur.insert(user, new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
@@ -115,7 +133,7 @@ public class CreateUserActivity extends AppCompatActivity {
                 setResponse(false);
             }
         }, view.getContext());
-    }
+    }*/
 
     /**
      * Responds to user insertion
