@@ -5,7 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 
 import com.example.carz.Entities.User;
-import com.example.carz.db.repo.firebase.UserLiveData;
+import com.example.carz.db.firebase.UserLiveData;
 import com.example.carz.util.OnAsyncEventListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.AuthResult;

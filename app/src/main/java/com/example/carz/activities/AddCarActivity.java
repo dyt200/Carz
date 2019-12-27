@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.carz.Entities.Car;
 import com.example.carz.Entities.CarImage;
 import com.example.carz.R;
+import com.example.carz.db.repo.CarRepo;
 import com.example.carz.repositories.CarRepository;
 import com.example.carz.repositories.ImageRepository;
 import com.example.carz.util.OnAsyncEventListener;
@@ -262,8 +263,8 @@ public class AddCarActivity extends AppCompatActivity {
      * @param view Context
      */
     private void insertCar(Car car, View view) {
-        CarRepository cr = CarRepository.getInstance();
-        cr.insert(car, new OnAsyncInsertEventListener() {
+        CarRepo cr = CarRepo.getInstance();
+    /*    cr.insert(car, new OnAsyncInsertEventListener() {
             @Override
             public void onSuccessResult(Long id) {
                 System.out.println("CAR ADDED :" + car.getUser() + car.getModel() + id);
@@ -279,7 +280,20 @@ public class AddCarActivity extends AppCompatActivity {
             public void onFailure(Exception e) {
 
             }
-        }, view.getContext());
+        }, view.getContext());*/
+        cr.insert(car, new OnAsyncEventListener() {
+            @Override
+            public void onSuccess() {
+               //Log.d(TAG, "createUserWithEmail: success");
+                System.out.println("---------succes");
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+               // Log.d(TAG, "createUserWithEmail: failure", e);
+                System.out.println("---------fail");
+            }
+        });
     }
 
     /**

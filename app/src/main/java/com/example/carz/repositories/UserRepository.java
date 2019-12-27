@@ -51,11 +51,11 @@ public class UserRepository {
         new CreateUser(context, callback).execute(user);
     }*/
 
-    public void update(final User user, OnAsyncEventListener callback, Context context) {
+/*    public void update(final User user, OnAsyncEventListener callback, Context context) {
         new UpdateUser(context, callback).execute(user);
     }
 
     public void delete(final User user, OnAsyncEventListener callback, Context context) {
         new DeleteUser(context, callback).execute(user);
-    }
+    }*/
 }

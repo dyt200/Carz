@@ -1,5 +1,6 @@
 package com.example.carz.Entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -21,9 +22,10 @@ import java.util.Locale;
     indices = {@Index("user")}
 )
 public class Car {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
+    @NonNull
     @ColumnInfo(name = "id")
-    private int id;
+    private String id;
 
     @ColumnInfo(name = "manufacturer")
     private int manufacturer;
@@ -64,11 +66,11 @@ public class Car {
         this.condition = condition;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

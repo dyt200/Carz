@@ -1,4 +1,4 @@
-package com.example.carz.db.repo.firebase;
+package com.example.carz.db.firebase;
 
 import android.util.Log;
 

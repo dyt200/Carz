@@ -548,13 +548,13 @@ public class CarDetailActivity extends AppCompatActivity {
                         .addOnSuccessListener(taskSnapshot -> {
                             // Get a URL to the uploaded content
                             /*  Uri downloadUrl =  taskSnapshot;*/
-                            riversRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                   /*         riversRef.getDownloadUrl().addOnSuccessListener(uri -> {
                                 String carUri = uri.toString();
                                 CarImage ci = new CarImage(carI.getCar().getId(), carUri);
                                 carImagesToAdd.add(ci);
                                 createToast("Upload success");
                                 loadImageFromGallery(ci);
-                            });
+                            });*/
 
                         })
                         .addOnFailureListener(exception -> createToast("Upload unsuccessful"));
