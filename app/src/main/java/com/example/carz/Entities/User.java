@@ -108,6 +108,7 @@ public class User {
         result.put("firstName", firstName);
         result.put("lastName", lastName);
         result.put("email", email);
+        result.put("telephone", telephone);
         return result;
     }
 }

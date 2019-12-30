@@ -65,8 +65,16 @@ public class CarRepo {
     public LiveData<List<FCar>> getAllCars() {
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReference("cars");
-        return new CarListLiveData(reference);
+        return new CarListLiveData(reference, "");
     }
+
+    public LiveData<List<FCar>> getAllOtherCars(String userId) {
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("cars");
+        return new CarListLiveData(reference, userId);
+    }
+
+
 
     public LiveData<FCar> getCarById(String id) {
         DatabaseReference reference = FirebaseDatabase.getInstance()

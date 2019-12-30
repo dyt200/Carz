@@ -126,15 +126,15 @@ public class CarListActivity  extends AppCompatActivity {
 
                     } else {
                         // TODO show all cars  (without user cars)
-                      /*  CarListViewModel.AllOtherCarsFactory factoryOther = new CarListViewModel.AllOtherCarsFactory(userId, true, getApplication());
-                        viewModel = ViewModelProviders.of(this, factoryOther).get(CarListViewModel.class);
+                        FCarListViewModel.AllOtherCarsFactory allCarFactoryNoUser = new FCarListViewModel.AllOtherCarsFactory(userId, true, getApplication());
+                        FCarListViewModel viewModel = ViewModelProviders.of(this, allCarFactoryNoUser).get(FCarListViewModel.class);
                         viewModel.getCars().observe(this, carEntities -> {
                             if (carEntities != null) {
-                                cars = carEntities;
-                                ArrayAdapter<CarWithImages> adapter = new CarAdapter(this, 0, cars);
+                                Fcars = carEntities;
+                                ArrayAdapter<FCar> adapter = new FCarAdapter(this, 0, Fcars);
                                 carList.setAdapter(adapter);
                             }
-                        });*/
+                        });
                     }
             }
         }
