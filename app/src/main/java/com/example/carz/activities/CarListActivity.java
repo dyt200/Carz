@@ -18,9 +18,12 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.carz.Entities.CarAdapter;
 import com.example.carz.Entities.CarSearchParameters;
+import com.example.carz.db.entities.FCar;
+import com.example.carz.db.entities.FCarAdapter;
 import com.example.carz.pojo.CarWithImages;
 import com.example.carz.R;
 import com.example.carz.viewmodel.CarListViewModel;
+import com.example.carz.viewmodel.FCarListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -34,6 +37,7 @@ import static com.example.carz.activities.LoginActivity.settingShowMyCars;
 public class CarListActivity  extends AppCompatActivity {
 
     private List<CarWithImages> cars;
+    private List<FCar> Fcars;
     SharedPreferences sharedPreferences;
 
     private DrawerLayout drawerLayout;
@@ -76,20 +80,22 @@ public class CarListActivity  extends AppCompatActivity {
             switch (action) {
                 case "my_cars":
                     setTitle(R.string.myCars);
+                    // TODO diplay user cars
                     CarListViewModel.MyCarsFactory myCarsFactory = new CarListViewModel.MyCarsFactory(userId, getApplication());
-                    CarListViewModel viewModel = ViewModelProviders.of(this, myCarsFactory).get(CarListViewModel.class);
-                    viewModel.getCars().observe(this, carEntities -> {
+                   // FCarListViewModel viewModel = ViewModelProviders.of(this, myCarsFactory).get(CarListViewModel.class);
+               /*     viewModel.getCars().observe(this, carEntities -> {
                         if (carEntities != null) {
                             cars = carEntities;
                             ArrayAdapter<CarWithImages> adapter = new CarAdapter(this, 0, cars);
                             carList.setAdapter(adapter);
                         }
-                    });
+                    });*/
                     break;
 
                 case "search":
                     setTitle(R.string.search_results);
-                    CarSearchParameters search = (CarSearchParameters) i.getSerializableExtra("search_parameters");
+                    // TODO fix search
+                   /* CarSearchParameters search = (CarSearchParameters) i.getSerializableExtra("search_parameters");
                     CarListViewModel.CarSearchFactory mySearchFactory = new CarListViewModel.CarSearchFactory(search, getApplication());
                     viewModel = ViewModelProviders.of(this, mySearchFactory).get(CarListViewModel.class);
                     viewModel.getCars().observe(this, carEntities -> {
@@ -98,7 +104,7 @@ public class CarListActivity  extends AppCompatActivity {
                             ArrayAdapter<CarWithImages> adapter = new CarAdapter(this, 0, cars);
                             carList.setAdapter(adapter);
                         }
-                    });
+                    });*/
                     break;
 
 
@@ -108,17 +114,19 @@ public class CarListActivity  extends AppCompatActivity {
                     boolean showMyCars = settings.getBoolean(settingShowMyCars, false);
 
                     if(showMyCars) {
-                        CarListViewModel.AllCarsFactory factoryAll = new CarListViewModel.AllCarsFactory(getApplication());
-                        viewModel = ViewModelProviders.of(this, factoryAll).get(CarListViewModel.class);
+                        FCarListViewModel.AllCarsFactory allCarFactory = new FCarListViewModel.AllCarsFactory(getApplication());
+                        FCarListViewModel viewModel = ViewModelProviders.of(this, allCarFactory).get(FCarListViewModel.class);
                         viewModel.getCars().observe(this, carEntities -> {
                             if (carEntities != null) {
-                                cars = carEntities;
-                                ArrayAdapter<CarWithImages> adapter = new CarAdapter(this, 0, cars);
+                                Fcars = carEntities;
+                                ArrayAdapter<FCar> adapter = new FCarAdapter(this, 0, Fcars);
                                 carList.setAdapter(adapter);
                             }
                         });
+
                     } else {
-                        CarListViewModel.AllOtherCarsFactory factoryOther = new CarListViewModel.AllOtherCarsFactory(userId, true, getApplication());
+                        // TODO show all cars  (without user cars)
+                      /*  CarListViewModel.AllOtherCarsFactory factoryOther = new CarListViewModel.AllOtherCarsFactory(userId, true, getApplication());
                         viewModel = ViewModelProviders.of(this, factoryOther).get(CarListViewModel.class);
                         viewModel.getCars().observe(this, carEntities -> {
                             if (carEntities != null) {
@@ -126,15 +134,15 @@ public class CarListActivity  extends AppCompatActivity {
                                 ArrayAdapter<CarWithImages> adapter = new CarAdapter(this, 0, cars);
                                 carList.setAdapter(adapter);
                             }
-                        });
+                        });*/
                     }
             }
         }
 
         //Onclick listener for each car
         carList.setOnItemClickListener((parent, view, position, id) -> {
-            CarWithImages carWithImages = (CarWithImages) parent.getItemAtPosition(position);
-            int clickedCarId = carWithImages.getCar().getId();
+            FCar car = (FCar) parent.getItemAtPosition(position);
+            String clickedCarId = car.getId();
             detailIntent.putExtra("car_id", clickedCarId);
             startActivity(detailIntent);
         });

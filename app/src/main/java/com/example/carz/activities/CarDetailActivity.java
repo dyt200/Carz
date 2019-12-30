@@ -28,12 +28,14 @@ import com.bumptech.glide.Glide;
 import com.example.carz.Entities.Car;
 import com.example.carz.Entities.CarImage;
 import com.example.carz.Entities.ImageSliderAdapter;
+import com.example.carz.db.entities.FCar;
 import com.example.carz.pojo.CarWithImages;
 import com.example.carz.Entities.User;
 import com.example.carz.R;
 import com.example.carz.repositories.ImageRepository;
 import com.example.carz.util.OnAsyncEventListener;
 import com.example.carz.viewmodel.CarViewModel;
+import com.example.carz.viewmodel.FCarViewModel;
 import com.example.carz.viewmodel.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.storage.FirebaseStorage;
@@ -49,7 +51,7 @@ import java.util.Calendar;
 import java.util.UUID;
 
 /**
- * Car details activity
+ * FCar details activity
  */
 public class CarDetailActivity extends AppCompatActivity {
 
@@ -58,6 +60,7 @@ public class CarDetailActivity extends AppCompatActivity {
     private Context context = CarDetailActivity.this;
 
     CarViewModel carViewModel;
+    FCarViewModel fCarViewModel;
     UserViewModel userViewModel;
     SliderView sliderView;
 
@@ -65,13 +68,13 @@ public class CarDetailActivity extends AppCompatActivity {
     boolean editMode = false;
 
     CarWithImages carI;
-    Car car;
+    FCar car;
     User carUser;
 
     String userId;
-    List<CarImage> carImages;
-    List<CarImage> carImagesToDelete = new ArrayList<>();
-    List<CarImage> carImagesToAdd = new ArrayList<>();
+    List<String> carImages;
+    List<String> carImagesToDelete = new ArrayList<>();
+    List<String> carImagesToAdd = new ArrayList<>();
     LinearLayout imgLl;
     ImageRepository ir;
 
@@ -119,9 +122,9 @@ public class CarDetailActivity extends AppCompatActivity {
         spinYear.setAdapter(adapter);
 
         Intent i = getIntent();
-        final int carId = (int) i.getSerializableExtra("car_id");
+        final String carId = (String) i.getSerializableExtra("car_id");
 
-        CarViewModel.Factory carFactory = new CarViewModel.Factory(getApplication(), carId);
+/*        CarViewModel.Factory carFactory = new CarViewModel.Factory(getApplication(), carId);
         carViewModel = ViewModelProviders.of(this, carFactory).get(CarViewModel.class);
         carViewModel.getCar().observe(this, carData -> {
 
@@ -149,6 +152,35 @@ public class CarDetailActivity extends AppCompatActivity {
                     }
                 });
             }
+        });*/
+        FCarViewModel.Factory carFactory = new FCarViewModel.Factory(getApplication(), carId);
+        fCarViewModel = ViewModelProviders.of(this, carFactory).get(FCarViewModel.class);
+        fCarViewModel.getCar().observe(this, carData -> {
+
+            if (carData != null) {
+             /*   carI = carData;*/
+                car = carData;
+                carImages = car.getImages();
+                String carOwner = car.getUser();
+
+                UserViewModel.UserFromIdFactory userFactory = new UserViewModel.UserFromIdFactory(getApplication(), carOwner);
+                userViewModel = ViewModelProviders.of(this, userFactory).get(UserViewModel.class);
+                userViewModel.getUser().observe(this, user -> {
+                    if (user != null) {
+                        this.carUser = user;
+
+                        System.out.println("My user id = " + userId + " AND the car user Id = " + carOwner);
+                        if (carOwner == userId)
+                            isCarOwner = true;
+
+                        //refresh menu in case where request is too slow for onCreateOptionsMenu()
+                        refreshMenu(this);
+
+                        setSliderAdapter(carImages);
+                        displayMode();
+                    }
+                });
+            }
         });
     }
 
@@ -156,7 +188,7 @@ public class CarDetailActivity extends AppCompatActivity {
      * Initialises slider adapter for car images
      * @param carImages the list of car images
      */
-    private void setSliderAdapter(List<CarImage> carImages) {
+    private void setSliderAdapter(List<String> carImages) {
         //init
         final ImageSliderAdapter imAdapter = new ImageSliderAdapter(this, carImages);
         sliderView = findViewById(R.id.imageSlider);
@@ -384,7 +416,8 @@ public class CarDetailActivity extends AppCompatActivity {
             createToast("Hey, you need to add at least one image!");
         }
         else {
-            carViewModel.updateCar(car, new OnAsyncEventListener() {
+            // TODO reimplement update car
+        /*    carViewModel.updateCar(car, new OnAsyncEventListener() {
                 @Override
                 public void onSuccess() {
                     updateImages();
@@ -395,7 +428,7 @@ public class CarDetailActivity extends AppCompatActivity {
                 public void onFailure(Exception e) {
                     setResponse(false);
                 }
-            });
+            });*/
         }
 
     }
@@ -406,7 +439,7 @@ public class CarDetailActivity extends AppCompatActivity {
      */
     private void setResponse(boolean response) {
         if (response) {
-            createToast("Car has been saved");
+            createToast("FCar has been saved");
             hideKeyboard(this);
             displayMode();
         } else
@@ -425,7 +458,8 @@ public class CarDetailActivity extends AppCompatActivity {
      * Delete confirmation
      */
     public void deleteConfirmation() {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
+        // TODO Reimplement delete car
+  /*      AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
         alertBuilder.setMessage(R.string.delete_car_message)
                 .setTitle(R.string.delete_car_title)
                 .setPositiveButton(R.string.yes, (dialog, id) -> carViewModel.deleteCar(car, new OnAsyncEventListener() {
@@ -440,8 +474,8 @@ public class CarDetailActivity extends AppCompatActivity {
                         setDeleteResponse(false);
                     }
                 }))
-                .setNegativeButton(R.string.cancel, (dialog, id) -> createToast("Car deletion cancelled"));
-        alertBuilder.show();
+                .setNegativeButton(R.string.cancel, (dialog, id) -> createToast("FCar deletion cancelled"));
+        alertBuilder.show();*/
     }
 
     /**
@@ -450,7 +484,7 @@ public class CarDetailActivity extends AppCompatActivity {
      */
     private void setDeleteResponse(boolean response) {
         if (response) {
-            createToast("Car has been has ben successfully deleted");
+            createToast("FCar has been has ben successfully deleted");
             hideKeyboard(this);
             displayMode();
         } else
@@ -489,11 +523,11 @@ public class CarDetailActivity extends AppCompatActivity {
      */
     private void displayImageList() {
         imgLl.removeAllViewsInLayout();
-        for (CarImage image : carImages) {
+        for (String image : carImages) {
             ImageView iv = new ImageView(getApplicationContext());
             imgLl.addView(iv);
             Glide.with(context)
-                    .load(image.getUrl())
+                    .load(image)
                     .into(iv);
             iv.setPadding(0, 20, 0, 20);
             iv.setOnLongClickListener(view -> {
@@ -503,7 +537,7 @@ public class CarDetailActivity extends AppCompatActivity {
         }
     }
 
-    public void dbImageDeleteConfirmation(View view, CarImage carImage) {
+    public void dbImageDeleteConfirmation(View view, String carImage) {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
 
         alertBuilder.setMessage(R.string.delete_image_message)
@@ -614,7 +648,8 @@ public class CarDetailActivity extends AppCompatActivity {
      * Delete multiple images
      */
     public void bulkDeleteImage() {
-        for (CarImage image : carImagesToDelete) {
+        // TODO Reimplement bulk delete image
+/*        for (String image : carImagesToDelete) {
             ir.delete(image, new OnAsyncEventListener() {
                 @Override
                 public void onSuccess() {
@@ -627,14 +662,15 @@ public class CarDetailActivity extends AppCompatActivity {
                 }
             }, context);
         }
-        carImagesToDelete.clear();
+        carImagesToDelete.clear();*/
     }
 
     /**
      * Add multiple images
      */
     public void bulkAddImage() {
-        for (CarImage image : carImagesToAdd) {
+        // TODO Reimplement bulk add image
+/*        for (String image : carImagesToAdd) {
             ir.insert(image, new OnAsyncEventListener() {
                 @Override
                 public void onSuccess() {
@@ -647,6 +683,6 @@ public class CarDetailActivity extends AppCompatActivity {
                 }
             }, context);
         }
-        carImagesToAdd.clear();
+        carImagesToAdd.clear();*/
     }
 }

@@ -1,14 +1,17 @@
-package com.example.carz.Entities;
+package com.example.carz.db.entities;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import java.io.Serializable;
+import com.example.carz.Entities.User;
+
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 
 @Entity(
@@ -21,10 +24,10 @@ import java.util.Locale;
     ),
     indices = {@Index("user")}
 )
-public class Car {
-    @PrimaryKey(autoGenerate = true)
+public class FCar {
     @ColumnInfo(name = "id")
-    private int id;
+    @NonNull
+    private String id;
 
     @ColumnInfo(name = "manufacturer")
     private int manufacturer;
@@ -53,7 +56,14 @@ public class Car {
     @ColumnInfo(name = "condition")
     private String condition;
 
-    public Car (int type, int manufacturer, String user, int price, int year, int mileage, String model, String description, String condition) {
+    @ColumnInfo(name = "images")
+    private List<String> images;
+
+    public FCar() {
+    }
+
+    @Ignore
+    public FCar(int type, int manufacturer, String user, int price, int year, int mileage, String model, String description, String condition, List<String> images) {
         this.type = type;
         this.manufacturer = manufacturer;
         this.user = user;
@@ -63,13 +73,14 @@ public class Car {
         this.model = model;
         this.description = description;
         this.condition = condition;
+        this.images = images;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -131,6 +142,14 @@ public class Car {
 
     public void setCondition(String condition) {
         this.condition = condition;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 
     //Returns the mileage in Swiss style

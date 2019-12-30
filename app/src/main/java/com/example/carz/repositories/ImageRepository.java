@@ -47,7 +47,7 @@ public class ImageRepository {
         new UpdateImage(context, callback).execute(image);
     }
 
-    public void delete(final CarImage image, OnAsyncEventListener callback, Context context) {
+/*    public void delete(final CarImage image, OnAsyncEventListener callback, Context context) {
         new DeleteImage(context, callback).execute(image);
-    }
+    }*/
 }

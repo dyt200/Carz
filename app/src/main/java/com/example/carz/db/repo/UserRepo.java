@@ -40,6 +40,7 @@ public class UserRepo {
     }
 
     public LiveData<User> getUser(final String clientId) {
+        System.out.println("-------" + clientId);
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReference("users")
                 .child(clientId);

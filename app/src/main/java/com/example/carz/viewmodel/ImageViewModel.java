@@ -80,8 +80,8 @@ public class ImageViewModel extends AndroidViewModel {
         repository.update(image, callback, application);
     }
 
-    public void deleteImage(CarImage image, OnAsyncEventListener callback) {
+   /* public void deleteImage(CarImage image, OnAsyncEventListener callback) {
         repository.delete(image, callback, application);
 
-    }
+    }*/
 }

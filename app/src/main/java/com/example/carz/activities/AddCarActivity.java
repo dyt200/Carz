@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.carz.Entities.Car;
 import com.example.carz.Entities.CarImage;
 import com.example.carz.R;
+import com.example.carz.db.entities.FCar;
 import com.example.carz.db.repo.CarRepo;
 import com.example.carz.repositories.CarRepository;
 import com.example.carz.repositories.ImageRepository;
@@ -158,7 +159,8 @@ public class AddCarActivity extends AppCompatActivity {
         else if (addedImageUrls.size() == 0){
             createToast("Hey, you need to add at least one image!");
         }
-        else
+        else {
+            // TODO Delete when firebase works
             insertCar(
                     new Car(
                             type,
@@ -173,6 +175,22 @@ public class AddCarActivity extends AppCompatActivity {
                     ),
                     view
             );
+            insertFCar(
+                    new FCar(
+                            type,
+                            manufacturer,
+                            userId,
+                            price,
+                            year,
+                            mileage,
+                            model,
+                            desc,
+                            condition,
+                            addedImageUrls
+                    ),
+                    view
+            );
+        }
     }
 
     public void chooseImage(View view) {
@@ -252,25 +270,25 @@ public class AddCarActivity extends AppCompatActivity {
                     addedImageUrls.remove(carUri);
                     imgLl.removeView(view);
                 })
-                .setNegativeButton("NO", (dialog, id) -> createToast("Car deletion cancelled"));
+                .setNegativeButton("NO", (dialog, id) -> createToast("FCar deletion cancelled"));
         alertBuilder.show();
 
     }
 
     /**
      * Process to insert a car
-     * @param car  Car to be inserted
+     * @param car  FCar to be inserted
      * @param view Context
      */
+    // TODO delete when firebase works
     private void insertCar(Car car, View view) {
-        CarRepo cr = CarRepo.getInstance();
-    /*    cr.insert(car, new OnAsyncInsertEventListener() {
+        CarRepository cr = CarRepository.getInstance();
+        cr.insert(car, new OnAsyncInsertEventListener() {
             @Override
             public void onSuccessResult(Long id) {
                 System.out.println("CAR ADDED :" + car.getUser() + car.getModel() + id);
                 insertImages(id, addedImageUrls, view);
             }
-
             @Override
             public void onSuccess() {
 
@@ -280,20 +298,25 @@ public class AddCarActivity extends AppCompatActivity {
             public void onFailure(Exception e) {
 
             }
-        }, view.getContext());*/
-        cr.insert(car, new OnAsyncEventListener() {
+        }, view.getContext());
+    }
+
+    private void insertFCar(FCar car, View view) {
+        CarRepo carRepo = CarRepo.getInstance();
+        carRepo.insert(car, new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
-               //Log.d(TAG, "createUserWithEmail: success");
+                //Log.d(TAG, "createUserWithEmail: success");
                 System.out.println("---------succes");
             }
 
             @Override
             public void onFailure(Exception e) {
-               // Log.d(TAG, "createUserWithEmail: failure", e);
+                // Log.d(TAG, "createUserWithEmail: failure", e);
                 System.out.println("---------fail");
             }
         });
+
     }
 
     /**

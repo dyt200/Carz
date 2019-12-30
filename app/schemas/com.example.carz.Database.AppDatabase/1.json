@@ -2,16 +2,16 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b0252648ce43aacd0ccfbee43856d1e7",
+    "identityHash": "ca5d9fe4a91582905d9159dc40d9d9a3",
     "entities": [
       {
         "tableName": "car",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `manufacturer` INTEGER NOT NULL, `type` INTEGER NOT NULL, `user` TEXT, `price` INTEGER NOT NULL, `year` INTEGER NOT NULL, `mileage` INTEGER NOT NULL, `model` TEXT, `description` TEXT, `condition` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`user`) REFERENCES `user`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `manufacturer` INTEGER NOT NULL, `type` INTEGER NOT NULL, `user` TEXT, `price` INTEGER NOT NULL, `year` INTEGER NOT NULL, `mileage` INTEGER NOT NULL, `model` TEXT, `description` TEXT, `condition` TEXT, FOREIGN KEY(`user`) REFERENCES `user`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -73,7 +73,7 @@
           "columnNames": [
             "id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [
           {
@@ -212,7 +212,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b0252648ce43aacd0ccfbee43856d1e7')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ca5d9fe4a91582905d9159dc40d9d9a3')"
     ]
   }
 }

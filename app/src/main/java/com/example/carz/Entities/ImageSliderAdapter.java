@@ -16,9 +16,9 @@ import java.util.List;
 public class ImageSliderAdapter extends SliderViewAdapter<ImageSliderAdapter.SliderAdapterVH> {
 
     private Context context;
-    private List<CarImage> carImages;
+    private List<String> carImages;
 
-    public ImageSliderAdapter(Context context, List<CarImage> carImages) {
+    public ImageSliderAdapter(Context context, List<String> carImages) {
         this.context = context;
         this.carImages = carImages;
     }
@@ -32,10 +32,10 @@ public class ImageSliderAdapter extends SliderViewAdapter<ImageSliderAdapter.Sli
     @Override
     public void onBindViewHolder(SliderAdapterVH viewHolder, int position) {
         viewHolder.textViewDescription.setText("Carz™");
-        for (CarImage carImage: carImages){
+        for (String carImage: carImages){
             if (position == carImages.indexOf(carImage)){
                 Glide.with(viewHolder.itemView)
-                        .load(carImage.getUrl())
+                        .load(carImage)
                         .into(viewHolder.imageViewBackground);
             }
         }
