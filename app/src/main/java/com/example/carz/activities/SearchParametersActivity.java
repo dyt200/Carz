@@ -123,9 +123,7 @@ public class SearchParametersActivity extends AppCompatActivity {
                 maxMileage,
                 minYear,
                 maxYear,
-                model,
-                showMyCars,
-                userId
+                model
         );
 
         //pass search results into CarListActivity

@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -25,16 +24,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.carz.Entities.Car;
-import com.example.carz.Entities.CarImage;
 import com.example.carz.Entities.ImageSliderAdapter;
 import com.example.carz.db.entities.FCar;
-import com.example.carz.pojo.CarWithImages;
 import com.example.carz.Entities.User;
 import com.example.carz.R;
-import com.example.carz.repositories.ImageRepository;
 import com.example.carz.util.OnAsyncEventListener;
-import com.example.carz.viewmodel.CarViewModel;
 import com.example.carz.viewmodel.FCarViewModel;
 import com.example.carz.viewmodel.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -59,7 +53,6 @@ public class CarDetailActivity extends AppCompatActivity {
     private StorageReference mStorageRef;
     private Context context = CarDetailActivity.this;
 
-    CarViewModel carViewModel;
     FCarViewModel fCarViewModel;
     UserViewModel userViewModel;
     SliderView sliderView;
@@ -67,14 +60,12 @@ public class CarDetailActivity extends AppCompatActivity {
     boolean isCarOwner = false;
     boolean editMode = false;
 
-    CarWithImages carI;
     FCar car;
     User carUser;
 
     String userId;
     List<String> carImages;
     LinearLayout imgLl;
-    ImageRepository ir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -279,7 +270,6 @@ public class CarDetailActivity extends AppCompatActivity {
         editMode.setVisibility(View.VISIBLE);
 
         imgLl = findViewById(R.id.imgRl);
-        ir = ImageRepository.getInstance();
 
 
         TextView carPriceEditTextView = findViewById(R.id.carPrice_edit);

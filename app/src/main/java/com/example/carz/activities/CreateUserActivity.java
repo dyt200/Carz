@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.carz.Entities.User;
 import com.example.carz.R;
 import com.example.carz.db.repo.UserRepo;
-import com.example.carz.repositories.UserRepository;
 import com.example.carz.util.OnAsyncEventListener;
 
 /**

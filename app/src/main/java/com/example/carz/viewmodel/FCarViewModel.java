@@ -9,13 +9,10 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.carz.Entities.Car;
 import com.example.carz.db.entities.FCar;
 import com.example.carz.db.repo.CarRepo;
-import com.example.carz.pojo.CarWithImages;
-import com.example.carz.repositories.CarRepository;
 import com.example.carz.util.OnAsyncEventListener;
-import com.example.carz.util.OnAsyncInsertEventListener;
+
 
 import org.jetbrains.annotations.NotNull;
 

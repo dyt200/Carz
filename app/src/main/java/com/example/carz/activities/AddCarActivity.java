@@ -18,15 +18,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.example.carz.Entities.Car;
-import com.example.carz.Entities.CarImage;
 import com.example.carz.R;
 import com.example.carz.db.entities.FCar;
 import com.example.carz.db.repo.CarRepo;
-import com.example.carz.repositories.CarRepository;
-import com.example.carz.repositories.ImageRepository;
 import com.example.carz.util.OnAsyncEventListener;
-import com.example.carz.util.OnAsyncInsertEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 

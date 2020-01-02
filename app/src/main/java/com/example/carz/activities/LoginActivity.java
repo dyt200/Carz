@@ -10,10 +10,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 
-import com.example.carz.Entities.User;
+
 import com.example.carz.R;
 import com.example.carz.db.repo.UserRepo;
-import com.example.carz.repositories.UserRepository;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -21,7 +20,6 @@ public class LoginActivity extends AppCompatActivity {
 
     String e_email = "";
     String e_pass = "";
-    UserRepository ur;
     UserRepo userRepo;
 
     public static final String MyPREFERENCES = "Session" ;
@@ -36,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTitle(getString(R.string.app_name));
         setContentView(R.layout.login);
-        ur = UserRepository.getInstance();
         userRepo = UserRepo.getInstance();
 
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);

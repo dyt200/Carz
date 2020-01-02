@@ -16,13 +16,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.carz.Entities.CarAdapter;
 import com.example.carz.Entities.CarSearchParameters;
 import com.example.carz.db.entities.FCar;
 import com.example.carz.db.entities.FCarAdapter;
-import com.example.carz.pojo.CarWithImages;
 import com.example.carz.R;
-import com.example.carz.viewmodel.CarListViewModel;
 import com.example.carz.viewmodel.FCarListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -36,7 +33,6 @@ import static com.example.carz.activities.LoginActivity.settingShowMyCars;
  */
 public class CarListActivity  extends AppCompatActivity {
 
-    private List<CarWithImages> cars;
     private List<FCar> Fcars;
     SharedPreferences sharedPreferences;
 

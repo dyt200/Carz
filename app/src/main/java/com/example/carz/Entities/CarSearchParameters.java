@@ -1,7 +1,4 @@
 package com.example.carz.Entities;
-
-import androidx.sqlite.db.SimpleSQLiteQuery;
-
 import java.io.Serializable;
 
 public class CarSearchParameters implements Serializable {
@@ -13,8 +10,7 @@ public class CarSearchParameters implements Serializable {
     private int minYear;
     private int maxYear;
     private String model;
-    private boolean showMyCars;
-    private String userId;
+
 
     public CarSearchParameters(
             int type,
@@ -23,9 +19,7 @@ public class CarSearchParameters implements Serializable {
             int maxMileage,
             int minYear,
             int maxYear,
-            String model,
-            boolean showMyCars,
-            String userId
+            String model
     ) {
         this.type = type;
         this.manufacturer = manufacturer;
@@ -34,90 +28,20 @@ public class CarSearchParameters implements Serializable {
         this.minYear = minYear;
         this.maxYear = maxYear;
         this.model = model;
-        this.showMyCars = showMyCars;
-        this.userId = userId;
     }
-/*
-    public SimpleSQLiteQuery getDatabaseQuery() {
-        String query = "SELECT * FROM car ";
-        boolean firstParam = true;
-
-        if(type > 0 || manufacturer > 0 || minMileage > 0|| maxMileage > 0|| minYear > 0|| maxYear > 0 || !model.equals("") || !showMyCars)
-            query += "WHERE ";
-
-        if(type > 0) {
-            query += "type = "+type+" ";
-            firstParam = false;
-        }
-
-        if(manufacturer > 0) {
-            if(!firstParam) query += "AND ";
-            query += "manufacturer = "+manufacturer+" ";
-            firstParam = false;
-        }
-
-        if(minMileage > 0) {
-            if(!firstParam) query += "AND ";
-            query += "mileage >= "+minMileage+" ";
-            firstParam = false;
-        }
-
-        if(maxMileage > 0) {
-            if(!firstParam) query += "AND ";
-            query += "mileage <= "+maxMileage+" ";
-            firstParam = false;
-        }
-
-        if(minYear > 0) {
-            if(!firstParam) query += "AND ";
-            query += "year >= "+minYear+" ";
-            firstParam = false;
-        }
-
-        if(maxYear > 0) {
-            if(!firstParam) query += "AND ";
-            query += "year <= "+maxYear+" ";
-            firstParam = false;
-        }
-
-        if(!model.equals("")) {
-            if(!firstParam) query += "AND ";
-            query += "model LIKE \"%"+model+"%\"";
-            firstParam = false;
-        }
-
-        if(!showMyCars) {
-            if(!firstParam)
-                query += "AND ";
-            query += " user != " + userId;
-        }
-
-        return new SimpleSQLiteQuery(query);
-    }*/
 
     public int getType() { return type; }
 
-    public void setType(int type) { this.type = type; }
-
     public int getManufacturer() { return manufacturer; }
-
-    public void setManufacturer(int manufacturer) { this.manufacturer = manufacturer; }
 
     public int getMinMileage() { return minMileage; }
 
-    public void setMinMileage(int minMileage) { this.minMileage = minMileage; }
-
     public int getMaxMileage() { return maxMileage; }
 
-    public void setMaxMileage(int maxMileage) { this.maxMileage = maxMileage; }
-
     public int getMinYear() { return minYear; }
-
-    public void setMinYear(int minYear) { this.minYear = minYear; }
 
     public int getMaxYear() { return maxYear; }
 
     public String getModel() { return model; }
 
-    public void setMaxYear(int maxYear) { this.maxYear = maxYear; }
 }

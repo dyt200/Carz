@@ -9,10 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.carz.Entities.Car;
-import com.example.carz.Entities.CarImage;
 import com.example.carz.R;
-import com.example.carz.pojo.CarWithImages;
+
 
 import org.jetbrains.annotations.NotNull;
 

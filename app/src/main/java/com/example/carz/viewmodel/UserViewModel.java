@@ -8,11 +8,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-
-import com.example.carz.BaseApp;
 import com.example.carz.Entities.User;
 import com.example.carz.db.repo.UserRepo;
-import com.example.carz.repositories.UserRepository;
 import com.example.carz.util.OnAsyncEventListener;
 
 import org.jetbrains.annotations.NotNull;

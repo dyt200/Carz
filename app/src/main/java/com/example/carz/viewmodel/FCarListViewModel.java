@@ -13,8 +13,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.carz.Entities.CarSearchParameters;
 import com.example.carz.db.entities.FCar;
 import com.example.carz.db.repo.CarRepo;
-import com.example.carz.pojo.CarWithImages;
-import com.example.carz.repositories.CarRepository;
 
 import org.jetbrains.annotations.NotNull;
 
