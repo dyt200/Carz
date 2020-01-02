@@ -420,7 +420,6 @@ public class CarDetailActivity extends AppCompatActivity {
      * Delete confirmation
      */
     public void deleteConfirmation() {
-        // TODO fix crash delete car
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.AlertDialogCustom);
         alertBuilder.setMessage(R.string.delete_car_message)
                 .setTitle(R.string.delete_car_title)
@@ -453,16 +452,6 @@ public class CarDetailActivity extends AppCompatActivity {
         } else
             createToast("Failed to delete this car !");
     }
-
-/*    private void setDeleteResponse(boolean response) {
-
-        if (response) {
-            createToast("Car has been has ben successfully deleted");
-            hideKeyboard(this);
-            displayMode();
-        } else
-            createToast("Error deleting car");
-    }*/
 
     /**
      * Force hides the keyboard in certain instances where we do not change page

@@ -76,7 +76,6 @@ public class CarListLiveData extends LiveData<List<Car>> {
         List<Car> cars = new ArrayList<>();
         for (DataSnapshot childSnapshot : snapshot.getChildren()) {
             Car entity = childSnapshot.getValue(Car.class);
-            entity.setId(childSnapshot.getKey());
             if (entity.getType() == carSearchParameters.getType()){
                 cars.add(entity);
             }
@@ -106,7 +105,6 @@ public class CarListLiveData extends LiveData<List<Car>> {
         List<Car> cars = new ArrayList<>();
         for (DataSnapshot childSnapshot : snapshot.getChildren()) {
             Car entity = childSnapshot.getValue(Car.class);
-            entity.setId(childSnapshot.getKey());
             cars.add(entity);
         }
         return cars;
@@ -116,7 +114,6 @@ public class CarListLiveData extends LiveData<List<Car>> {
         List<Car> cars = new ArrayList<>();
         for (DataSnapshot childSnapshot : snapshot.getChildren()) {
             Car entity = childSnapshot.getValue(Car.class);
-            entity.setId(childSnapshot.getKey());
             if (!entity.getUser().equals(owner)){
                 cars.add(entity);
             }
@@ -128,7 +125,6 @@ public class CarListLiveData extends LiveData<List<Car>> {
         List<Car> cars = new ArrayList<>();
         for (DataSnapshot childSnapshot : snapshot.getChildren()) {
             Car entity = childSnapshot.getValue(Car.class);
-            entity.setId(childSnapshot.getKey());
             if (entity.getUser().equals(owner)){
                 cars.add(entity);
             }

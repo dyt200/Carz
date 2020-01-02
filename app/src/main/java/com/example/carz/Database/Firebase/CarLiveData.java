@@ -38,7 +38,6 @@ public class CarLiveData extends LiveData<Car> {
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             Car entity = dataSnapshot.getValue(Car.class);
             assert entity != null;
-            entity.setId(dataSnapshot.getKey());
             setValue(entity);
         }
 
