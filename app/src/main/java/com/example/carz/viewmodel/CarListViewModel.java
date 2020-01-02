@@ -72,8 +72,8 @@ public class CarListViewModel extends AndroidViewModel {
         observableCars = new MediatorLiveData<>();
         observableCars.setValue(null);
 
-        LiveData<List<CarWithImages>> cars = repository.getSearchResults(searchParameters.getDatabaseQuery(), application);
-        observableCars.addSource(cars, observableCars::setValue);
+        //LiveData<List<CarWithImages>> cars = repository.getSearchResults(searchParameters.getDatabaseQuery(), application);
+        //observableCars.addSource(cars, observableCars::setValue);
     }
 
     public static class AllCarsFactory extends ViewModelProvider.NewInstanceFactory {

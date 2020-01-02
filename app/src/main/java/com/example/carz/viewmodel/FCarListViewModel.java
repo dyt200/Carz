@@ -65,8 +65,7 @@ public class FCarListViewModel extends AndroidViewModel {
     }
 
 
-    /*
-    private FCarListViewModel(@NonNull CarSearchParameters searchParameters, Application application, CarRepository carRepository){
+    private FCarListViewModel(@NonNull CarSearchParameters searchParameters, Application application, CarRepo carRepository){
         super(application);
         repository = carRepository;
         applicationContext = application.getApplicationContext();
@@ -74,9 +73,9 @@ public class FCarListViewModel extends AndroidViewModel {
         observableCars = new MediatorLiveData<>();
         observableCars.setValue(null);
 
-        LiveData<List<CarWithImages>> cars = repository.getSearchResults(searchParameters.getDatabaseQuery(), application);
+        LiveData<List<FCar>> cars = repository.getSearchResults(searchParameters);
         observableCars.addSource(cars, observableCars::setValue);
-    }*/
+    }
 
     public static class AllCarsFactory extends ViewModelProvider.NewInstanceFactory {
 
@@ -142,19 +141,18 @@ public class FCarListViewModel extends AndroidViewModel {
         }
     }
 
-    /*
 
-    public static class CarSearchFactory extends ViewModelProvider.NewInstanceFactory {
+    public static class SearchCarFactory extends ViewModelProvider.NewInstanceFactory {
 
         @NonNull
         private final Application application;
-        private final CarRepository carRepository;
+        private final CarRepo carRepository;
         private final CarSearchParameters searchParameters;
 
-        public CarSearchFactory(CarSearchParameters searchParameters, @NonNull Application application) {
+        public SearchCarFactory(CarSearchParameters searchParameters, @NonNull Application application) {
             this.application = application;
             this.searchParameters = searchParameters;
-            carRepository = CarRepository.getInstance();
+            carRepository = CarRepo.getInstance();
         }
 
         @NotNull
@@ -163,7 +161,7 @@ public class FCarListViewModel extends AndroidViewModel {
             //noinspection unchecked
             return (T) new FCarListViewModel(searchParameters, application, carRepository);
         }
-    }*/
+    }
 
     public LiveData<List<FCar>> getCars() {
         return observableCars;

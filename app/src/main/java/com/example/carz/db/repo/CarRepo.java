@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.carz.Entities.CarSearchParameters;
 import com.example.carz.Entities.User;
 import com.example.carz.db.entities.FCar;
 import com.example.carz.db.firebase.CarListLiveData;
@@ -43,10 +44,7 @@ public class CarRepo {
     public LiveData<List<CarWithImages>> getMyCars(String userId, Context context) {
         return AppDatabase.getInstance(context).carDao().getMyCars(userId);
     }
-
-    public LiveData<List<CarWithImages>> getSearchResults(SimpleSQLiteQuery query, Context context) {
-        return AppDatabase.getInstance(context).carDao().getSearchResults(query);
-    }*/
+*/
 
     public void insert(final FCar car, final OnAsyncEventListener callback) {
         DatabaseReference reference = FirebaseDatabase.getInstance()
@@ -69,20 +67,26 @@ public class CarRepo {
     public LiveData<List<FCar>> getAllCars() {
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReference("cars");
-        return new CarListLiveData(reference, "", false);
+        return new CarListLiveData(reference, "", false, false, null);
+    }
+
+    public LiveData<List<FCar>> getSearchResults(CarSearchParameters carSearchParameters) {
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("cars");
+        return new CarListLiveData(reference, "", false, true, carSearchParameters);
     }
 
     public LiveData<List<FCar>> getAllOtherCars(String userId) {
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReference("cars");
-        return new CarListLiveData(reference, userId, false);
+        return new CarListLiveData(reference, userId, false, false, null);
     }
 
     public LiveData<List<FCar>> getMyCars(String userId) {
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReference("cars")
                 .child("");
-        return new CarListLiveData(reference, userId, true);
+        return new CarListLiveData(reference, userId, true, false, null);
     }
 
 

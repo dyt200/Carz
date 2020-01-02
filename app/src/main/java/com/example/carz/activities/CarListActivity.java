@@ -92,24 +92,22 @@ public class CarListActivity  extends AppCompatActivity {
 
                 case "search":
                     setTitle(R.string.search_results);
-                    // TODO fix search
-                   /* CarSearchParameters search = (CarSearchParameters) i.getSerializableExtra("search_parameters");
-                    CarListViewModel.CarSearchFactory mySearchFactory = new CarListViewModel.CarSearchFactory(search, getApplication());
-                    viewModel = ViewModelProviders.of(this, mySearchFactory).get(CarListViewModel.class);
+                    CarSearchParameters search = (CarSearchParameters) i.getSerializableExtra("search_parameters");
+                    FCarListViewModel.SearchCarFactory searchCarFactory = new FCarListViewModel.SearchCarFactory(search, getApplication());
+                    viewModel = ViewModelProviders.of(this, searchCarFactory).get(FCarListViewModel.class);
                     viewModel.getCars().observe(this, carEntities -> {
                         if (carEntities != null) {
-                            cars = new ArrayList<>(carEntities);
-                            ArrayAdapter<CarWithImages> adapter = new CarAdapter(this, 0, cars);
+                            Fcars = carEntities;
+                            ArrayAdapter<FCar> adapter = new FCarAdapter(this, 0, Fcars);
                             carList.setAdapter(adapter);
                         }
-                    });*/
+                    });
                     break;
 
 
                 default:
                     SharedPreferences settings = getSharedPreferences(LoginActivity.SETTINGS, Context.MODE_PRIVATE);
                     boolean showMyCars = settings.getBoolean(settingShowMyCars, false);
-
                     if(showMyCars) {
                         FCarListViewModel.AllCarsFactory allCarFactory = new FCarListViewModel.AllCarsFactory(getApplication());
                         viewModel = ViewModelProviders.of(this, allCarFactory).get(FCarListViewModel.class);

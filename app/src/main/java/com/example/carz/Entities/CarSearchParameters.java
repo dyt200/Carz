@@ -37,7 +37,7 @@ public class CarSearchParameters implements Serializable {
         this.showMyCars = showMyCars;
         this.userId = userId;
     }
-
+/*
     public SimpleSQLiteQuery getDatabaseQuery() {
         String query = "SELECT * FROM car ";
         boolean firstParam = true;
@@ -93,7 +93,7 @@ public class CarSearchParameters implements Serializable {
         }
 
         return new SimpleSQLiteQuery(query);
-    }
+    }*/
 
     public int getType() { return type; }
 
@@ -116,6 +116,8 @@ public class CarSearchParameters implements Serializable {
     public void setMinYear(int minYear) { this.minYear = minYear; }
 
     public int getMaxYear() { return maxYear; }
+
+    public String getModel() { return model; }
 
     public void setMaxYear(int maxYear) { this.maxYear = maxYear; }
 }

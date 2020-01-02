@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
+import com.example.carz.Entities.CarSearchParameters;
 import com.example.carz.db.entities.FCar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,14 +23,19 @@ public class CarListLiveData extends LiveData<List<FCar>> {
     private final DatabaseReference reference;
     private final String owner;
     private final Boolean isUserCars;
+    private final Boolean isSearch;
+    private final CarSearchParameters carSearchParameters;
+
 
 /*    private final String owner;*/
     private final MyValueEventListener listener = new MyValueEventListener();
 
-    public CarListLiveData(DatabaseReference ref, String userId, Boolean myCars) {
+    public CarListLiveData(DatabaseReference ref, String userId, Boolean myCars, Boolean search, CarSearchParameters searchParams) {
         reference = ref;
         owner = userId;
         isUserCars = myCars;
+        isSearch = search;
+        carSearchParameters = searchParams;
     }
 
     @Override
@@ -46,11 +52,15 @@ public class CarListLiveData extends LiveData<List<FCar>> {
     private class MyValueEventListener implements ValueEventListener {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            if (owner.equals("")){
+            if (isSearch) {
+                setValue(toSearchCars(dataSnapshot));
+            }
+            else if (owner.equals("")){
                 setValue(toCars(dataSnapshot));
             }else if (!isUserCars)  {
                 setValue(toCarsNoOwner(dataSnapshot));
-            } else {
+            }
+            else {
                 setValue(toMyCars(dataSnapshot));
             }
 
@@ -60,6 +70,36 @@ public class CarListLiveData extends LiveData<List<FCar>> {
         public void onCancelled(@NonNull DatabaseError databaseError) {
             Log.e(TAG, "Can't listen to query " + reference, databaseError.toException());
         }
+    }
+
+    private List<FCar> toSearchCars(DataSnapshot snapshot) {
+        List<FCar> cars = new ArrayList<>();
+        for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+            FCar entity = childSnapshot.getValue(FCar.class);
+            entity.setId(childSnapshot.getKey());
+            if (entity.getType() == carSearchParameters.getType()){
+                cars.add(entity);
+            }
+            else if (entity.getManufacturer() == carSearchParameters.getManufacturer()){
+                cars.add(entity);
+            }
+            else if (entity.getMileage() >= carSearchParameters.getMinMileage() && carSearchParameters.getMinMileage() > 0 ){
+                cars.add(entity);
+            }
+            else if (entity.getMileage() <= carSearchParameters.getMaxMileage() && carSearchParameters.getMaxMileage() > 0){
+                cars.add(entity);
+            }
+            else if (entity.getYear() >= carSearchParameters.getMinYear() && carSearchParameters.getMinYear() > 0){
+                cars.add(entity);
+            }
+            else if (entity.getYear() <= carSearchParameters.getMaxYear() && carSearchParameters.getMaxYear() > 0){
+                cars.add(entity);
+            }
+            else if (entity.getModel().equals(carSearchParameters.getModel())){
+                cars.add(entity);
+            }
+        }
+        return cars;
     }
 
     private List<FCar> toCars(DataSnapshot snapshot) {
