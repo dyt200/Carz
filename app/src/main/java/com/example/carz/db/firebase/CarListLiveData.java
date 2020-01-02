@@ -21,13 +21,15 @@ public class CarListLiveData extends LiveData<List<FCar>> {
 
     private final DatabaseReference reference;
     private final String owner;
+    private final Boolean isUserCars;
 
 /*    private final String owner;*/
     private final MyValueEventListener listener = new MyValueEventListener();
 
-    public CarListLiveData(DatabaseReference ref, String userId) {
+    public CarListLiveData(DatabaseReference ref, String userId, Boolean myCars) {
         reference = ref;
         owner = userId;
+        isUserCars = myCars;
     }
 
     @Override
@@ -46,8 +48,10 @@ public class CarListLiveData extends LiveData<List<FCar>> {
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             if (owner.equals("")){
                 setValue(toCars(dataSnapshot));
-            }else {
+            }else if (!isUserCars)  {
                 setValue(toCarsNoOwner(dataSnapshot));
+            } else {
+                setValue(toMyCars(dataSnapshot));
             }
 
         }
@@ -74,6 +78,18 @@ public class CarListLiveData extends LiveData<List<FCar>> {
             FCar entity = childSnapshot.getValue(FCar.class);
             entity.setId(childSnapshot.getKey());
             if (!entity.getUser().equals(owner)){
+                cars.add(entity);
+            }
+        }
+        return cars;
+    }
+
+    private List<FCar> toMyCars(DataSnapshot snapshot) {
+        List<FCar> cars = new ArrayList<>();
+        for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+            FCar entity = childSnapshot.getValue(FCar.class);
+            entity.setId(childSnapshot.getKey());
+            if (entity.getUser().equals(owner)){
                 cars.add(entity);
             }
         }

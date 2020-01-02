@@ -51,8 +51,8 @@ public class FCarListViewModel extends AndroidViewModel {
         observableCars.addSource(cars, observableCars::setValue);
     }
 
-/*
-    private FCarListViewModel(@NonNull String userId, Application application, CarRepository carRepository){
+
+    private FCarListViewModel(@NonNull String userId, Application application, CarRepo carRepository){
         super(application);
         repository = carRepository;
         applicationContext = application.getApplicationContext();
@@ -60,10 +60,12 @@ public class FCarListViewModel extends AndroidViewModel {
         observableCars = new MediatorLiveData<>();
         observableCars.setValue(null);
 
-        LiveData<List<CarWithImages>> cars = repository.getMyCars(userId, application);
+        LiveData<List<FCar>> cars = repository.getMyCars(userId);
         observableCars.addSource(cars, observableCars::setValue);
     }
 
+
+    /*
     private FCarListViewModel(@NonNull CarSearchParameters searchParameters, Application application, CarRepository carRepository){
         super(application);
         repository = carRepository;
@@ -118,18 +120,18 @@ public class FCarListViewModel extends AndroidViewModel {
         }
     }
 
-/*
+
     public static class MyCarsFactory extends ViewModelProvider.NewInstanceFactory {
 
         @NonNull
         private final Application application;
         private final String userId;
-        private final CarRepository carRepository;
+        private final CarRepo carRepository;
 
         public MyCarsFactory(String userId, @NonNull Application application) {
             this.application = application;
             this.userId = userId;
-            carRepository = CarRepository.getInstance();
+            carRepository = CarRepo.getInstance();
         }
 
         @NotNull
@@ -139,6 +141,8 @@ public class FCarListViewModel extends AndroidViewModel {
             return (T) new FCarListViewModel(userId, application, carRepository);
         }
     }
+
+    /*
 
     public static class CarSearchFactory extends ViewModelProvider.NewInstanceFactory {
 

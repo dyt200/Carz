@@ -9,10 +9,13 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.example.carz.Entities.User;
+import com.google.firebase.database.Exclude;
 
 import java.text.NumberFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 @Entity(
     tableName = "car",
@@ -212,4 +215,20 @@ public class FCar {
     public void setPrice(int price) {
         this.price = price;
     }
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("type", type);
+        result.put("manufacturer", manufacturer);
+        result.put("user", user);
+        result.put("year", year);
+        result.put("mileage", mileage);
+        result.put("model", model);
+        result.put("description", description);
+        result.put("condition", condition);
+        result.put("price", price);
+        result.put("images", images);
+        return result;
+    }
+
 }

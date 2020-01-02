@@ -160,21 +160,6 @@ public class AddCarActivity extends AppCompatActivity {
             createToast("Hey, you need to add at least one image!");
         }
         else {
-            // TODO Delete when firebase works
-            insertCar(
-                    new Car(
-                            type,
-                            manufacturer,
-                            userId,
-                            price,
-                            year,
-                            mileage,
-                            model,
-                            desc,
-                            condition
-                    ),
-                    view
-            );
             insertFCar(
                     new FCar(
                             type,
@@ -187,8 +172,7 @@ public class AddCarActivity extends AppCompatActivity {
                             desc,
                             condition,
                             addedImageUrls
-                    ),
-                    view
+                    )
             );
         }
     }
@@ -278,36 +262,13 @@ public class AddCarActivity extends AppCompatActivity {
     /**
      * Process to insert a car
      * @param car  FCar to be inserted
-     * @param view Context
      */
-    // TODO delete when firebase works
-    private void insertCar(Car car, View view) {
-        CarRepository cr = CarRepository.getInstance();
-        cr.insert(car, new OnAsyncInsertEventListener() {
-            @Override
-            public void onSuccessResult(Long id) {
-                System.out.println("CAR ADDED :" + car.getUser() + car.getModel() + id);
-                insertImages(id, addedImageUrls, view);
-            }
-            @Override
-            public void onSuccess() {
-
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-
-            }
-        }, view.getContext());
-    }
-
-    private void insertFCar(FCar car, View view) {
+    private void insertFCar(FCar car) {
         CarRepo carRepo = CarRepo.getInstance();
         carRepo.insert(car, new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
-                //Log.d(TAG, "createUserWithEmail: success");
-                System.out.println("---------succes");
+                setResponse(true);
             }
 
             @Override
@@ -317,37 +278,6 @@ public class AddCarActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    /**
-     * Insert images into database
-     * @param carId id of the car
-     * @param addedImageUrls list of uris
-     * @param view current view
-     */
-    private void insertImages(long carId, List<String> addedImageUrls, View view) {
-        ImageRepository ir = ImageRepository.getInstance();
-        for (String imageUrl : addedImageUrls) {
-            System.out.println(imageUrl);
-            CarImage ci = new CarImage((int) carId, imageUrl);
-            ir.insert(ci, new OnAsyncEventListener() {
-
-                @Override
-                public void onSuccess() {
-                    successImageUpload = true;
-                }
-
-                @Override
-                public void onFailure(Exception e) {
-                    successImageUpload = false;
-                }
-
-            }, view.getContext());
-        }
-        if (successImageUpload = true)
-            setResponse(true);
-        else
-            setResponse(false);
     }
 
     /**

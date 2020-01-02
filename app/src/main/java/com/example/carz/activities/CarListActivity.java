@@ -43,7 +43,6 @@ public class CarListActivity  extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ListView drawerList;
     private boolean isDrawerOpen;
-    private String userId;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -69,7 +68,7 @@ public class CarListActivity  extends AppCompatActivity {
 
         // get user id from shared preferences
         sharedPreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-        userId = sharedPreferences.getString("userKey", "");
+        String userId = sharedPreferences.getString("userKey", "");
 
         //receives data from any source (eg. main or search activities)
         Intent i = getIntent();
@@ -80,16 +79,15 @@ public class CarListActivity  extends AppCompatActivity {
             switch (action) {
                 case "my_cars":
                     setTitle(R.string.myCars);
-                    // TODO diplay user cars
-                    CarListViewModel.MyCarsFactory myCarsFactory = new CarListViewModel.MyCarsFactory(userId, getApplication());
-                   // FCarListViewModel viewModel = ViewModelProviders.of(this, myCarsFactory).get(CarListViewModel.class);
-               /*     viewModel.getCars().observe(this, carEntities -> {
+                    FCarListViewModel.MyCarsFactory myCarsFactory = new FCarListViewModel.MyCarsFactory(userId, getApplication());
+                    FCarListViewModel viewModel = ViewModelProviders.of(this, myCarsFactory).get(FCarListViewModel.class);
+                    viewModel.getCars().observe(this, carEntities -> {
                         if (carEntities != null) {
-                            cars = carEntities;
-                            ArrayAdapter<CarWithImages> adapter = new CarAdapter(this, 0, cars);
+                            Fcars = carEntities;
+                            ArrayAdapter<FCar> adapter = new FCarAdapter(this, 0, Fcars);
                             carList.setAdapter(adapter);
                         }
-                    });*/
+                    });
                     break;
 
                 case "search":
@@ -109,13 +107,12 @@ public class CarListActivity  extends AppCompatActivity {
 
 
                 default:
-                    //check setting for "show my cars in results"
                     SharedPreferences settings = getSharedPreferences(LoginActivity.SETTINGS, Context.MODE_PRIVATE);
                     boolean showMyCars = settings.getBoolean(settingShowMyCars, false);
 
                     if(showMyCars) {
                         FCarListViewModel.AllCarsFactory allCarFactory = new FCarListViewModel.AllCarsFactory(getApplication());
-                        FCarListViewModel viewModel = ViewModelProviders.of(this, allCarFactory).get(FCarListViewModel.class);
+                        viewModel = ViewModelProviders.of(this, allCarFactory).get(FCarListViewModel.class);
                         viewModel.getCars().observe(this, carEntities -> {
                             if (carEntities != null) {
                                 Fcars = carEntities;
@@ -125,9 +122,8 @@ public class CarListActivity  extends AppCompatActivity {
                         });
 
                     } else {
-                        // TODO show all cars  (without user cars)
                         FCarListViewModel.AllOtherCarsFactory allCarFactoryNoUser = new FCarListViewModel.AllOtherCarsFactory(userId, true, getApplication());
-                        FCarListViewModel viewModel = ViewModelProviders.of(this, allCarFactoryNoUser).get(FCarListViewModel.class);
+                        viewModel = ViewModelProviders.of(this, allCarFactoryNoUser).get(FCarListViewModel.class);
                         viewModel.getCars().observe(this, carEntities -> {
                             if (carEntities != null) {
                                 Fcars = carEntities;

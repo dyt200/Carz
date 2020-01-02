@@ -78,18 +78,12 @@ public class FCarViewModel extends AndroidViewModel {
         return observableCar;
     }
 
-/*    public void createCar(Car car, OnAsyncInsertEventListener callback) {
-        repository.insert(car, callback, application);
-    }*/
 
-// TODO adapt upadate and delete car
-
-/*    public void updateCar(Car car, OnAsyncEventListener callback) {
-        repository.update(car, callback, application);
+   public void updateCar(FCar car, OnAsyncEventListener callback) {
+       repository.update(car, callback);
     }
+    public void deleteCar(FCar car, OnAsyncEventListener callback) {
+        repository.delete(car, callback);
 
-    public void deleteCar(Car car, OnAsyncEventListener callback) {
-        repository.delete(car, callback, application);
-
-    }*/
+    }
 }
