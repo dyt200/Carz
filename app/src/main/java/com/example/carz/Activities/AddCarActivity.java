@@ -1,4 +1,4 @@
-package com.example.carz.activities;
+package com.example.carz.Activities;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,9 +19,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.carz.R;
-import com.example.carz.db.entities.FCar;
-import com.example.carz.db.repo.CarRepo;
-import com.example.carz.util.OnAsyncEventListener;
+import com.example.carz.Database.Entities.Car;
+import com.example.carz.Database.Repository.CarRepo;
+import com.example.carz.Util.OnAsyncEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -156,7 +156,7 @@ public class AddCarActivity extends AppCompatActivity {
         }
         else {
             insertFCar(
-                    new FCar(
+                    new Car(
                             type,
                             manufacturer,
                             userId,
@@ -249,16 +249,16 @@ public class AddCarActivity extends AppCompatActivity {
                     addedImageUrls.remove(carUri);
                     imgLl.removeView(view);
                 })
-                .setNegativeButton("NO", (dialog, id) -> createToast("FCar deletion cancelled"));
+                .setNegativeButton("NO", (dialog, id) -> createToast("Car deletion cancelled"));
         alertBuilder.show();
 
     }
 
     /**
      * Process to insert a car
-     * @param car  FCar to be inserted
+     * @param car  Car to be inserted
      */
-    private void insertFCar(FCar car) {
+    private void insertFCar(Car car) {
         CarRepo carRepo = CarRepo.getInstance();
         carRepo.insert(car, new OnAsyncEventListener() {
             @Override

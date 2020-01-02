@@ -1,4 +1,4 @@
-package com.example.carz.activities;
+package com.example.carz.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 import com.example.carz.R;
 
-import static com.example.carz.activities.LoginActivity.SETTINGS;
-import static com.example.carz.activities.LoginActivity.settingSplash;
+import static com.example.carz.Activities.LoginActivity.SETTINGS;
+import static com.example.carz.Activities.LoginActivity.settingSplash;
 
 /**
  * Splash screen

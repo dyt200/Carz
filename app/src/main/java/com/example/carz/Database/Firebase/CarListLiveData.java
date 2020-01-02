@@ -1,12 +1,12 @@
-package com.example.carz.db.firebase;
+package com.example.carz.Database.Firebase;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-import com.example.carz.Entities.CarSearchParameters;
-import com.example.carz.db.entities.FCar;
+import com.example.carz.Database.Entities.Car;
+import com.example.carz.Database.Entities.CarSearchParameters;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -15,7 +15,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarListLiveData extends LiveData<List<FCar>> {
+public class CarListLiveData extends LiveData<List<Car>> {
 
 
     private static final String TAG = "CarListLiveData";
@@ -72,10 +72,10 @@ public class CarListLiveData extends LiveData<List<FCar>> {
         }
     }
 
-    private List<FCar> toSearchCars(DataSnapshot snapshot) {
-        List<FCar> cars = new ArrayList<>();
+    private List<Car> toSearchCars(DataSnapshot snapshot) {
+        List<Car> cars = new ArrayList<>();
         for (DataSnapshot childSnapshot : snapshot.getChildren()) {
-            FCar entity = childSnapshot.getValue(FCar.class);
+            Car entity = childSnapshot.getValue(Car.class);
             entity.setId(childSnapshot.getKey());
             if (entity.getType() == carSearchParameters.getType()){
                 cars.add(entity);
@@ -102,20 +102,20 @@ public class CarListLiveData extends LiveData<List<FCar>> {
         return cars;
     }
 
-    private List<FCar> toCars(DataSnapshot snapshot) {
-        List<FCar> cars = new ArrayList<>();
+    private List<Car> toCars(DataSnapshot snapshot) {
+        List<Car> cars = new ArrayList<>();
         for (DataSnapshot childSnapshot : snapshot.getChildren()) {
-            FCar entity = childSnapshot.getValue(FCar.class);
+            Car entity = childSnapshot.getValue(Car.class);
             entity.setId(childSnapshot.getKey());
             cars.add(entity);
         }
         return cars;
     }
 
-    private List<FCar> toCarsNoOwner(DataSnapshot snapshot) {
-        List<FCar> cars = new ArrayList<>();
+    private List<Car> toCarsNoOwner(DataSnapshot snapshot) {
+        List<Car> cars = new ArrayList<>();
         for (DataSnapshot childSnapshot : snapshot.getChildren()) {
-            FCar entity = childSnapshot.getValue(FCar.class);
+            Car entity = childSnapshot.getValue(Car.class);
             entity.setId(childSnapshot.getKey());
             if (!entity.getUser().equals(owner)){
                 cars.add(entity);
@@ -124,10 +124,10 @@ public class CarListLiveData extends LiveData<List<FCar>> {
         return cars;
     }
 
-    private List<FCar> toMyCars(DataSnapshot snapshot) {
-        List<FCar> cars = new ArrayList<>();
+    private List<Car> toMyCars(DataSnapshot snapshot) {
+        List<Car> cars = new ArrayList<>();
         for (DataSnapshot childSnapshot : snapshot.getChildren()) {
-            FCar entity = childSnapshot.getValue(FCar.class);
+            Car entity = childSnapshot.getValue(Car.class);
             entity.setId(childSnapshot.getKey());
             if (entity.getUser().equals(owner)){
                 cars.add(entity);

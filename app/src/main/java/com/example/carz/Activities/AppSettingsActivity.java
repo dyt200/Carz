@@ -1,4 +1,4 @@
-package com.example.carz.activities;
+package com.example.carz.Activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,9 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.carz.R;
 
-import static com.example.carz.activities.LoginActivity.SETTINGS;
-import static com.example.carz.activities.LoginActivity.settingShowMyCars;
-import static com.example.carz.activities.LoginActivity.settingSplash;
+import static com.example.carz.Activities.LoginActivity.SETTINGS;
+import static com.example.carz.Activities.LoginActivity.settingShowMyCars;
+import static com.example.carz.Activities.LoginActivity.settingSplash;
 
 /**
  * Settings page

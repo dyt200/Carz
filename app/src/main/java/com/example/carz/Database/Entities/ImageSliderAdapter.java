@@ -1,4 +1,4 @@
-package com.example.carz.Entities;
+package com.example.carz.Database.Entities;
 
 import android.content.Context;
 import android.view.LayoutInflater;

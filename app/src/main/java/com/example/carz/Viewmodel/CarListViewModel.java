@@ -1,4 +1,4 @@
-package com.example.carz.viewmodel;
+package com.example.carz.Viewmodel;
 
 import android.app.Application;
 import android.content.Context;
@@ -10,22 +10,22 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.carz.Entities.CarSearchParameters;
-import com.example.carz.db.entities.FCar;
-import com.example.carz.db.repo.CarRepo;
+import com.example.carz.Database.Entities.Car;
+import com.example.carz.Database.Entities.CarSearchParameters;
+import com.example.carz.Database.Repository.CarRepo;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class FCarListViewModel extends AndroidViewModel {
+public class CarListViewModel extends AndroidViewModel {
     private CarRepo repository;
 
     private Context applicationContext;
 
-    private final MediatorLiveData<List<FCar>> observableCars;
+    private final MediatorLiveData<List<Car>> observableCars;
 
-    private FCarListViewModel(@NonNull Application application, CarRepo carRepository){
+    private CarListViewModel(@NonNull Application application, CarRepo carRepository){
         super(application);
         repository = carRepository;
         applicationContext = application.getApplicationContext();
@@ -33,11 +33,11 @@ public class FCarListViewModel extends AndroidViewModel {
         observableCars = new MediatorLiveData<>();
         observableCars.setValue(null);
 
-        LiveData<List<FCar>> cars = repository.getAllCars();
+        LiveData<List<Car>> cars = repository.getAllCars();
         observableCars.addSource(cars, observableCars::setValue);
     }
 
-   private FCarListViewModel(String userId, boolean check, @NonNull Application application, CarRepo carRepository){
+   private CarListViewModel(String userId, boolean check, @NonNull Application application, CarRepo carRepository){
         super(application);
         repository = carRepository;
         applicationContext = application.getApplicationContext();
@@ -45,25 +45,12 @@ public class FCarListViewModel extends AndroidViewModel {
         observableCars = new MediatorLiveData<>();
         observableCars.setValue(null);
 
-        LiveData<List<FCar>> cars = repository.getAllOtherCars(userId);
-        observableCars.addSource(cars, observableCars::setValue);
-    }
-
-
-    private FCarListViewModel(@NonNull String userId, Application application, CarRepo carRepository){
-        super(application);
-        repository = carRepository;
-        applicationContext = application.getApplicationContext();
-
-        observableCars = new MediatorLiveData<>();
-        observableCars.setValue(null);
-
-        LiveData<List<FCar>> cars = repository.getMyCars(userId);
+        LiveData<List<Car>> cars = repository.getAllOtherCars(userId);
         observableCars.addSource(cars, observableCars::setValue);
     }
 
 
-    private FCarListViewModel(@NonNull CarSearchParameters searchParameters, Application application, CarRepo carRepository){
+    private CarListViewModel(@NonNull String userId, Application application, CarRepo carRepository){
         super(application);
         repository = carRepository;
         applicationContext = application.getApplicationContext();
@@ -71,7 +58,20 @@ public class FCarListViewModel extends AndroidViewModel {
         observableCars = new MediatorLiveData<>();
         observableCars.setValue(null);
 
-        LiveData<List<FCar>> cars = repository.getSearchResults(searchParameters);
+        LiveData<List<Car>> cars = repository.getMyCars(userId);
+        observableCars.addSource(cars, observableCars::setValue);
+    }
+
+
+    private CarListViewModel(@NonNull CarSearchParameters searchParameters, Application application, CarRepo carRepository){
+        super(application);
+        repository = carRepository;
+        applicationContext = application.getApplicationContext();
+
+        observableCars = new MediatorLiveData<>();
+        observableCars.setValue(null);
+
+        LiveData<List<Car>> cars = repository.getSearchResults(searchParameters);
         observableCars.addSource(cars, observableCars::setValue);
     }
 
@@ -90,7 +90,7 @@ public class FCarListViewModel extends AndroidViewModel {
         @Override
         public <T extends ViewModel> T create(@NotNull Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new FCarListViewModel(application, carRepository);
+            return (T) new CarListViewModel(application, carRepository);
         }
     }
 
@@ -113,7 +113,7 @@ public class FCarListViewModel extends AndroidViewModel {
         @Override
         public <T extends ViewModel> T create(@NotNull Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new FCarListViewModel(userId, check, application, carRepository);
+            return (T) new CarListViewModel(userId, check, application, carRepository);
         }
     }
 
@@ -135,7 +135,7 @@ public class FCarListViewModel extends AndroidViewModel {
         @Override
         public <T extends ViewModel> T create(@NotNull Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new FCarListViewModel(userId, application, carRepository);
+            return (T) new CarListViewModel(userId, application, carRepository);
         }
     }
 
@@ -157,11 +157,11 @@ public class FCarListViewModel extends AndroidViewModel {
         @Override
         public <T extends ViewModel> T create(@NotNull Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new FCarListViewModel(searchParameters, application, carRepository);
+            return (T) new CarListViewModel(searchParameters, application, carRepository);
         }
     }
 
-    public LiveData<List<FCar>> getCars() {
+    public LiveData<List<Car>> getCars() {
         return observableCars;
     }
 

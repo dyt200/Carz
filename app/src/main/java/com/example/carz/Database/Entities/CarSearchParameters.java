@@ -1,4 +1,4 @@
-package com.example.carz.Entities;
+package com.example.carz.Database.Entities;
 import java.io.Serializable;
 
 public class CarSearchParameters implements Serializable {

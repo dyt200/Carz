@@ -1,4 +1,4 @@
-package com.example.carz.viewmodel;
+package com.example.carz.Viewmodel;
 
 import android.app.Application;
 
@@ -8,9 +8,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import com.example.carz.Entities.User;
-import com.example.carz.db.repo.UserRepo;
-import com.example.carz.util.OnAsyncEventListener;
+import com.example.carz.Database.Entities.User;
+import com.example.carz.Database.Repository.UserRepo;
+import com.example.carz.Util.OnAsyncEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -21,26 +21,6 @@ public class UserViewModel extends AndroidViewModel {
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
     private final MediatorLiveData<User> observableUser;
-/*
-    private UserViewModel(
-            @NonNull Application application,
-            final String email,
-            final String pass,
-            UserRepo userRepo
-    ) {
-        super(application);
-
-        this.application = application;
-        repository = userRepo;
-        observableUser = new MediatorLiveData<>();
-
-        // set by default null, until we get data from the database.
-        observableUser.setValue(null);
-        LiveData<User> user = repository.validateLogin(email, pass, application);
-
-        // observe the changes of the client entity from the database and forward them
-        observableUser.addSource(user, observableUser::setValue);
-    }*/
 
     private UserViewModel(
             String userId,
@@ -61,31 +41,6 @@ public class UserViewModel extends AndroidViewModel {
         // observe the changes of the client entity from the database and forward them
         observableUser.addSource(user, observableUser::setValue);
     }
-
-/*
-    public static class Factory extends ViewModelProvider.NewInstanceFactory {
-
-        @NonNull
-        private final Application application;
-        private final String email;
-        private final String pass;
-        private final UserRepo repository;
-
-        public Factory(@NonNull Application application, String email, String pass){
-            this.application = application;
-            this.email = email;
-            this.pass = pass;
-            repository = UserRepo.getInstance();
-        }
-
-        @NotNull
-        @Override
-        public <T extends ViewModel> T create(@NotNull Class<T> modelClass) {
-            //noinspection unchecked
-            return (T) new UserViewModel(application, email, pass, repository);
-        }
-    }
-*/
 
     public static class UserFromIdFactory extends ViewModelProvider.NewInstanceFactory {
 
@@ -116,10 +71,6 @@ public class UserViewModel extends AndroidViewModel {
     public LiveData<User> getUser() {
         return observableUser;
     }
-
-/*    public void createUser(User user, OnAsyncEventListener callback) {
-        repository.insert(user, callback, application);
-    }*/
 
     public void updateUser(User user, OnAsyncEventListener callback) {
         repository.update(user, callback);

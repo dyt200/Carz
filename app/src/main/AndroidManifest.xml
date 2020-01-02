@@ -11,31 +11,31 @@
         android:supportsRtl="true"
         android:theme="@style/CarzLight">
         <activity
-            android:name=".activities.SplashActivity"
+            android:name=".Activities.SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.CarDetailActivity"/>
-        <activity android:name=".activities.LoginActivity"/>
-        <activity android:name=".activities.CarListActivity"/>
+        <activity android:name=".Activities.CarDetailActivity"/>
+        <activity android:name=".Activities.LoginActivity"/>
+        <activity android:name=".Activities.CarListActivity"/>
         <activity
-            android:name=".activities.SearchParametersActivity"
-            android:parentActivityName=".activities.CarListActivity">
+            android:name=".Activities.SearchParametersActivity"
+            android:parentActivityName=".Activities.CarListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.CarListActivity" />
+                android:value=".Activities.CarListActivity" />
         </activity>
         <activity
-            android:name=".activities.CreateUserActivity"
-            android:parentActivityName=".activities.LoginActivity"/>
-        <activity android:name=".activities.AppSettingsActivity" />
+            android:name=".Activities.CreateUserActivity"
+            android:parentActivityName=".Activities.LoginActivity"/>
+        <activity android:name=".Activities.AppSettingsActivity" />
         <activity
-            android:name=".activities.AddCarActivity"
-            android:parentActivityName=".activities.CarListActivity"/>
-        <activity android:name=".activities.AccountActivity" />
+            android:name=".Activities.AddCarActivity"
+            android:parentActivityName=".Activities.CarListActivity"/>
+        <activity android:name=".Activities.AccountActivity" />
     </application>
 
 </manifest>

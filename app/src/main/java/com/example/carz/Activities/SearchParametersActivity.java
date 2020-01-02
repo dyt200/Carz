@@ -1,4 +1,4 @@
-package com.example.carz.activities;
+package com.example.carz.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,10 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.carz.Entities.CarSearchParameters;
+import com.example.carz.Database.Entities.CarSearchParameters;
 import com.example.carz.R;
 
-import static com.example.carz.activities.LoginActivity.settingShowMyCars;
+import static com.example.carz.Activities.LoginActivity.settingShowMyCars;
 
 /**
  * Search page

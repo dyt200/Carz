@@ -1,4 +1,4 @@
-package com.example.carz.db.entities;
+package com.example.carz.Database.Entities;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
@@ -6,9 +6,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.Index;
-import androidx.room.PrimaryKey;
 
-import com.example.carz.Entities.User;
 import com.google.firebase.database.Exclude;
 
 import java.text.NumberFormat;
@@ -27,7 +25,7 @@ import java.util.Map;
     ),
     indices = {@Index("user")}
 )
-public class FCar {
+public class Car {
     @ColumnInfo(name = "id")
     @NonNull
     private String id;
@@ -62,11 +60,11 @@ public class FCar {
     @ColumnInfo(name = "images")
     private List<String> images;
 
-    public FCar() {
+    public Car() {
     }
 
     @Ignore
-    public FCar(int type, int manufacturer, String user, int price, int year, int mileage, String model, String description, String condition, List<String> images) {
+    public Car(int type, int manufacturer, String user, int price, int year, int mileage, String model, String description, String condition, List<String> images) {
         this.type = type;
         this.manufacturer = manufacturer;
         this.user = user;

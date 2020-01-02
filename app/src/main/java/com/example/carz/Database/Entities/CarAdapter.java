@@ -1,4 +1,4 @@
-package com.example.carz.db.entities;
+package com.example.carz.Database.Entities;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -16,13 +16,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class FCarAdapter extends ArrayAdapter<FCar> {
+public class CarAdapter extends ArrayAdapter<Car> {
 
     private Context context;
-    private List<FCar> cars;
+    private List<Car> cars;
     private ImageView imageT;
 
-    public FCarAdapter(Context context, int resource, List<FCar> cars) {
+    public CarAdapter(Context context, int resource, List<Car> cars) {
         super(context, resource, cars);
         this.context = context;
         this.cars = cars;
@@ -30,7 +30,7 @@ public class FCarAdapter extends ArrayAdapter<FCar> {
 
     @NotNull
     public View getView(int position, View convertView, @NotNull ViewGroup parent) {
-        FCar car = cars.get(position);
+        Car car = cars.get(position);
         View view;
 
         if (convertView == null) {

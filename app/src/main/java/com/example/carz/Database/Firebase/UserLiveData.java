@@ -1,11 +1,11 @@
-package com.example.carz.db.firebase;
+package com.example.carz.Database.Firebase;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-import com.example.carz.Entities.User;
+import com.example.carz.Database.Entities.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

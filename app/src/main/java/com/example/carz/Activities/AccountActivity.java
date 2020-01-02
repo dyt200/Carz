@@ -1,4 +1,4 @@
-package com.example.carz.activities;
+package com.example.carz.Activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,10 +19,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.carz.Entities.User;
+import com.example.carz.Database.Entities.User;
 import com.example.carz.R;
-import com.example.carz.util.OnAsyncEventListener;
-import com.example.carz.viewmodel.UserViewModel;
+import com.example.carz.Util.OnAsyncEventListener;
+import com.example.carz.Viewmodel.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**

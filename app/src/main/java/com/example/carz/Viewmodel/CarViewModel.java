@@ -1,4 +1,4 @@
-package com.example.carz.viewmodel;
+package com.example.carz.Viewmodel;
 
 import android.app.Application;
 
@@ -9,22 +9,22 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.carz.db.entities.FCar;
-import com.example.carz.db.repo.CarRepo;
-import com.example.carz.util.OnAsyncEventListener;
+import com.example.carz.Database.Entities.Car;
+import com.example.carz.Database.Repository.CarRepo;
+import com.example.carz.Util.OnAsyncEventListener;
 
 
 import org.jetbrains.annotations.NotNull;
 
-public class FCarViewModel extends AndroidViewModel {
+public class CarViewModel extends AndroidViewModel {
 
     private CarRepo repository;
     private Application application;
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
-    private final MediatorLiveData<FCar> observableCar;
+    private final MediatorLiveData<Car> observableCar;
 
-    public FCarViewModel(
+    public CarViewModel(
             @NonNull Application application,
             final String carId,
             CarRepo carRepository
@@ -36,7 +36,7 @@ public class FCarViewModel extends AndroidViewModel {
 
         // set by default null, until we get data from the database.
         observableCar.setValue(null);
-        LiveData<FCar> car = repository.getCarById(carId);
+        LiveData<Car> car = repository.getCarById(carId);
 
         // observe the changes of the client entity from the database and forward them
         observableCar.addSource(car, observableCar::setValue);
@@ -64,22 +64,22 @@ public class FCarViewModel extends AndroidViewModel {
         @Override
         public <T extends ViewModel> T create(@NotNull Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new FCarViewModel(application, carId, repository);
+            return (T) new CarViewModel(application, carId, repository);
         }
     }
 
     /**
      * Expose the LiveData ClientEntity query so the UI can observe it.
      */
-    public LiveData<FCar> getCar() {
+    public LiveData<Car> getCar() {
         return observableCar;
     }
 
 
-   public void updateCar(FCar car, OnAsyncEventListener callback) {
+   public void updateCar(Car car, OnAsyncEventListener callback) {
        repository.update(car, callback);
     }
-    public void deleteCar(FCar car, OnAsyncEventListener callback) {
+    public void deleteCar(Car car, OnAsyncEventListener callback) {
         repository.delete(car, callback);
 
     }

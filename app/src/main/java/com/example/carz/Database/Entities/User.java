@@ -1,4 +1,4 @@
-package com.example.carz.Entities;
+package com.example.carz.Database.Entities;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;

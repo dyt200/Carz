@@ -1,4 +1,4 @@
-package com.example.carz.activities;
+package com.example.carz.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -24,13 +24,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.carz.Entities.ImageSliderAdapter;
-import com.example.carz.db.entities.FCar;
-import com.example.carz.Entities.User;
+import com.example.carz.Database.Entities.Car;
+import com.example.carz.Database.Entities.ImageSliderAdapter;
+import com.example.carz.Database.Entities.User;
 import com.example.carz.R;
-import com.example.carz.util.OnAsyncEventListener;
-import com.example.carz.viewmodel.FCarViewModel;
-import com.example.carz.viewmodel.UserViewModel;
+import com.example.carz.Util.OnAsyncEventListener;
+import com.example.carz.Viewmodel.CarViewModel;
+import com.example.carz.Viewmodel.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.storage.FirebaseStorage;
 import com.smarteist.autoimageslider.IndicatorAnimations;
@@ -45,7 +45,7 @@ import java.util.Calendar;
 import java.util.UUID;
 
 /**
- * FCar details activity
+ * Car details activity
  */
 public class CarDetailActivity extends AppCompatActivity {
 
@@ -53,14 +53,14 @@ public class CarDetailActivity extends AppCompatActivity {
     private StorageReference mStorageRef;
     private Context context = CarDetailActivity.this;
 
-    FCarViewModel fCarViewModel;
+    CarViewModel fCarViewModel;
     UserViewModel userViewModel;
     SliderView sliderView;
 
     boolean isCarOwner = false;
     boolean editMode = false;
 
-    FCar car;
+    Car car;
     User carUser;
 
     String userId;
@@ -113,9 +113,9 @@ public class CarDetailActivity extends AppCompatActivity {
         Intent i = getIntent();
         final String carId = (String) i.getSerializableExtra("car_id");
 
-        FCarViewModel.Factory carFactory = new FCarViewModel.Factory(getApplication(), carId);
+        CarViewModel.Factory carFactory = new CarViewModel.Factory(getApplication(), carId);
         fCarViewModel = ViewModelProviders.of(this,
-                carFactory).get(FCarViewModel.class);
+                carFactory).get(CarViewModel.class);
         fCarViewModel.getCar().observe(this, carData -> {
 
             if (carData != null) {
@@ -401,7 +401,7 @@ public class CarDetailActivity extends AppCompatActivity {
      */
     private void setResponse(boolean response) {
         if (response) {
-            createToast("FCar has been saved");
+            createToast("Car has been saved");
             hideKeyboard(this);
             displayMode();
         } else
@@ -436,7 +436,7 @@ public class CarDetailActivity extends AppCompatActivity {
                         setDeleteResponse(false);
                     }
                 }))
-                .setNegativeButton(R.string.cancel, (dialog, id) -> createToast("FCar deletion cancelled"));
+                .setNegativeButton(R.string.cancel, (dialog, id) -> createToast("Car deletion cancelled"));
         alertBuilder.show();
     }
 
@@ -449,7 +449,7 @@ public class CarDetailActivity extends AppCompatActivity {
             Intent intent = new Intent(this, CarListActivity.class);
             intent.putExtra("action", "my_cars");
             startActivity(intent);
-            createToast("FCar has been has ben successfully deleted!");
+            createToast("Car has been has ben successfully deleted!");
         } else
             createToast("Failed to delete this car !");
     }
@@ -457,7 +457,7 @@ public class CarDetailActivity extends AppCompatActivity {
 /*    private void setDeleteResponse(boolean response) {
 
         if (response) {
-            createToast("FCar has been has ben successfully deleted");
+            createToast("Car has been has ben successfully deleted");
             hideKeyboard(this);
             displayMode();
         } else

@@ -1,4 +1,4 @@
-package com.example.carz.activities;
+package com.example.carz.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import android.content.SharedPreferences;
 
 
 import com.example.carz.R;
-import com.example.carz.db.repo.UserRepo;
+import com.example.carz.Database.Repository.UserRepo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -58,14 +58,6 @@ public class LoginActivity extends AppCompatActivity {
                 invalidLogin();
             }
         });
-
-    /*    ur.validateLogin(e_email,e_pass, view.getContext()).observe(this, userData -> {
-         *//*   if(userData != null)
-              //  login(userData);
-            else
-                invalidLogin();*//*
-        });*/
-
 
     }
 

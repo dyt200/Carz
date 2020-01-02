@@ -1,19 +1,18 @@
-package com.example.carz.db.firebase;
+package com.example.carz.Database.Firebase;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-import com.example.carz.Entities.User;
-import com.example.carz.db.entities.FCar;
+import com.example.carz.Database.Entities.Car;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class CarLiveData extends LiveData<FCar> {
+public class CarLiveData extends LiveData<Car> {
     private static final String TAG = "ClientLiveData";
 
     private final DatabaseReference reference;
@@ -37,7 +36,7 @@ public class CarLiveData extends LiveData<FCar> {
     private class MyValueEventListener implements ValueEventListener {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            FCar entity = dataSnapshot.getValue(FCar.class);
+            Car entity = dataSnapshot.getValue(Car.class);
             assert entity != null;
             entity.setId(dataSnapshot.getKey());
             setValue(entity);

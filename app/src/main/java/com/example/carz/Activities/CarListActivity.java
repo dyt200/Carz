@@ -1,4 +1,4 @@
-package com.example.carz.activities;
+package com.example.carz.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,24 +16,23 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.carz.Entities.CarSearchParameters;
-import com.example.carz.db.entities.FCar;
-import com.example.carz.db.entities.FCarAdapter;
+import com.example.carz.Database.Entities.Car;
+import com.example.carz.Database.Entities.CarSearchParameters;
+import com.example.carz.Database.Entities.CarAdapter;
 import com.example.carz.R;
-import com.example.carz.viewmodel.FCarListViewModel;
+import com.example.carz.Viewmodel.CarListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.carz.activities.LoginActivity.settingShowMyCars;
+import static com.example.carz.Activities.LoginActivity.settingShowMyCars;
 
 /**
  *  Main display for all lists of Cars
  */
 public class CarListActivity  extends AppCompatActivity {
 
-    private List<FCar> Fcars;
+    private List<Car> Fcars;
     SharedPreferences sharedPreferences;
 
     private DrawerLayout drawerLayout;
@@ -75,12 +74,12 @@ public class CarListActivity  extends AppCompatActivity {
             switch (action) {
                 case "my_cars":
                     setTitle(R.string.myCars);
-                    FCarListViewModel.MyCarsFactory myCarsFactory = new FCarListViewModel.MyCarsFactory(userId, getApplication());
-                    FCarListViewModel viewModel = ViewModelProviders.of(this, myCarsFactory).get(FCarListViewModel.class);
+                    CarListViewModel.MyCarsFactory myCarsFactory = new CarListViewModel.MyCarsFactory(userId, getApplication());
+                    CarListViewModel viewModel = ViewModelProviders.of(this, myCarsFactory).get(CarListViewModel.class);
                     viewModel.getCars().observe(this, carEntities -> {
                         if (carEntities != null) {
                             Fcars = carEntities;
-                            ArrayAdapter<FCar> adapter = new FCarAdapter(this, 0, Fcars);
+                            ArrayAdapter<Car> adapter = new CarAdapter(this, 0, Fcars);
                             carList.setAdapter(adapter);
                         }
                     });
@@ -89,12 +88,12 @@ public class CarListActivity  extends AppCompatActivity {
                 case "search":
                     setTitle(R.string.search_results);
                     CarSearchParameters search = (CarSearchParameters) i.getSerializableExtra("search_parameters");
-                    FCarListViewModel.SearchCarFactory searchCarFactory = new FCarListViewModel.SearchCarFactory(search, getApplication());
-                    viewModel = ViewModelProviders.of(this, searchCarFactory).get(FCarListViewModel.class);
+                    CarListViewModel.SearchCarFactory searchCarFactory = new CarListViewModel.SearchCarFactory(search, getApplication());
+                    viewModel = ViewModelProviders.of(this, searchCarFactory).get(CarListViewModel.class);
                     viewModel.getCars().observe(this, carEntities -> {
                         if (carEntities != null) {
                             Fcars = carEntities;
-                            ArrayAdapter<FCar> adapter = new FCarAdapter(this, 0, Fcars);
+                            ArrayAdapter<Car> adapter = new CarAdapter(this, 0, Fcars);
                             carList.setAdapter(adapter);
                         }
                     });
@@ -105,23 +104,23 @@ public class CarListActivity  extends AppCompatActivity {
                     SharedPreferences settings = getSharedPreferences(LoginActivity.SETTINGS, Context.MODE_PRIVATE);
                     boolean showMyCars = settings.getBoolean(settingShowMyCars, false);
                     if(showMyCars) {
-                        FCarListViewModel.AllCarsFactory allCarFactory = new FCarListViewModel.AllCarsFactory(getApplication());
-                        viewModel = ViewModelProviders.of(this, allCarFactory).get(FCarListViewModel.class);
+                        CarListViewModel.AllCarsFactory allCarFactory = new CarListViewModel.AllCarsFactory(getApplication());
+                        viewModel = ViewModelProviders.of(this, allCarFactory).get(CarListViewModel.class);
                         viewModel.getCars().observe(this, carEntities -> {
                             if (carEntities != null) {
                                 Fcars = carEntities;
-                                ArrayAdapter<FCar> adapter = new FCarAdapter(this, 0, Fcars);
+                                ArrayAdapter<Car> adapter = new CarAdapter(this, 0, Fcars);
                                 carList.setAdapter(adapter);
                             }
                         });
 
                     } else {
-                        FCarListViewModel.AllOtherCarsFactory allCarFactoryNoUser = new FCarListViewModel.AllOtherCarsFactory(userId, true, getApplication());
-                        viewModel = ViewModelProviders.of(this, allCarFactoryNoUser).get(FCarListViewModel.class);
+                        CarListViewModel.AllOtherCarsFactory allCarFactoryNoUser = new CarListViewModel.AllOtherCarsFactory(userId, true, getApplication());
+                        viewModel = ViewModelProviders.of(this, allCarFactoryNoUser).get(CarListViewModel.class);
                         viewModel.getCars().observe(this, carEntities -> {
                             if (carEntities != null) {
                                 Fcars = carEntities;
-                                ArrayAdapter<FCar> adapter = new FCarAdapter(this, 0, Fcars);
+                                ArrayAdapter<Car> adapter = new CarAdapter(this, 0, Fcars);
                                 carList.setAdapter(adapter);
                             }
                         });
@@ -131,7 +130,7 @@ public class CarListActivity  extends AppCompatActivity {
 
         //Onclick listener for each car
         carList.setOnItemClickListener((parent, view, position, id) -> {
-            FCar car = (FCar) parent.getItemAtPosition(position);
+            Car car = (Car) parent.getItemAtPosition(position);
             String clickedCarId = car.getId();
             detailIntent.putExtra("car_id", clickedCarId);
             startActivity(detailIntent);

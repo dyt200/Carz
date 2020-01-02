@@ -1,4 +1,4 @@
-package com.example.carz.activities;
+package com.example.carz.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +9,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.carz.Entities.User;
+import com.example.carz.Database.Entities.User;
 import com.example.carz.R;
-import com.example.carz.db.repo.UserRepo;
-import com.example.carz.util.OnAsyncEventListener;
+import com.example.carz.Database.Repository.UserRepo;
+import com.example.carz.Util.OnAsyncEventListener;
 
 /**
  * New account creation activity
@@ -90,14 +90,6 @@ public class CreateUserActivity extends AppCompatActivity {
                     }
                 });
 
-/*                //check to see if we find a User with the same email
-                ur.doesEmailExist(email, view.getContext()).observe(this, doesEmailExist -> {
-                    if(doesEmailExist == null) {
-                        User user = new User("REMOVE" ,firstName, lastName, email, pass1, telephone, address1);
-                        insertUser(user, view);
-                    } else
-                        createToast("An account with that email already exists!");
-                });*/
             } else
                 createToast("Your passwords do not match!");
         }
@@ -114,25 +106,6 @@ public class CreateUserActivity extends AppCompatActivity {
         );
         toast.show();
     }
-
-    /**
-     * Insert a user
-     * @param user user to insert
-     * @param view current view
-     */
-/*    private void insertUser(User user, View view) {
-        ur.insert(user, new OnAsyncEventListener() {
-            @Override
-            public void onSuccess() {
-                setResponse(true);
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                setResponse(false);
-            }
-        }, view.getContext());
-    }*/
 
     /**
      * Responds to user insertion
