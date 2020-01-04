@@ -65,6 +65,7 @@ public class CarDetailActivity extends AppCompatActivity {
 
     String userId;
     List<String> carImages;
+    List<String> tempCarImages;
     LinearLayout imgLl;
 
     @Override
@@ -117,12 +118,12 @@ public class CarDetailActivity extends AppCompatActivity {
         fCarViewModel = ViewModelProviders.of(this,
                 carFactory).get(CarViewModel.class);
         fCarViewModel.getCar().observe(this, carData -> {
+            System.out.println("PASS");
 
             if (carData != null) {
              /*   carI = carData;*/
                 car = carData;
                 carImages = car.getImages();
-                //tempCarImages = carImages;
                 String carOwner = car.getUser();
 
                 UserViewModel.UserFromIdFactory userFactory = new UserViewModel.UserFromIdFactory(getApplication(), carOwner);
@@ -139,7 +140,9 @@ public class CarDetailActivity extends AppCompatActivity {
                         refreshMenu(this);
 
                         setSliderAdapter(carImages);
-                        displayMode();
+                        if (!editMode){
+                            displayMode();
+                        }
                     }
                 });
             }
@@ -262,6 +265,8 @@ public class CarDetailActivity extends AppCompatActivity {
      */
     private void editMode() {
 
+        tempCarImages = new ArrayList<>(carImages);
+
         RelativeLayout displayMode = findViewById(R.id.displayMode);
         RelativeLayout editMode = findViewById(R.id.editMode);
 
@@ -365,7 +370,8 @@ public class CarDetailActivity extends AppCompatActivity {
         String condition = conditionE.getText().toString();
         car.setCondition(condition);
 
-        int numberOfImages = car.getImages().size();
+
+        int numberOfImages =  tempCarImages.size();
 
         if (model.equals("")
                 || description.equals("")
@@ -377,12 +383,10 @@ public class CarDetailActivity extends AppCompatActivity {
             createToast("Hey, you need to add at least one image!");
         }
         else {
-            //car.setImages(tempCarImages);
-            //System.out.println("-*-" + tempCarImages);
+            car.setImages(tempCarImages);
             fCarViewModel.updateCar(car, new OnAsyncEventListener() {
                 @Override
                 public void onSuccess() {
-                /*    updateImages();*/
                     setResponse(true);
                 }
 
@@ -485,7 +489,7 @@ public class CarDetailActivity extends AppCompatActivity {
      */
     private void displayImageList() {
         imgLl.removeAllViewsInLayout();
-        for (String image : car.getImages()) {
+        for (String image : tempCarImages) {
             ImageView iv = new ImageView(getApplicationContext());
             imgLl.addView(iv);
             Glide.with(context)
@@ -504,9 +508,7 @@ public class CarDetailActivity extends AppCompatActivity {
         alertBuilder.setMessage(R.string.delete_image_message)
                 .setTitle(R.string.delete_image_title)
                 .setPositiveButton("YES", (dialog, id) -> {
-                    List<String> tempCarImgs = car.getImages();
-                    tempCarImgs.remove(carImage);
-                    car.setImages(tempCarImgs);
+                    tempCarImages.remove(carImage);
                     imgLl.removeView(view);
                 })
                 .setNegativeButton("NO", (dialog, id) -> createToast("Image deletion cancelled"));
@@ -548,11 +550,11 @@ public class CarDetailActivity extends AppCompatActivity {
                             //Uri downloadUrl =  taskSnapshot;
                             riversRef.getDownloadUrl().addOnSuccessListener(uri -> {
                                 String carUri = uri.toString();
-                                List<String> tempCarImgs = car.getImages();
-                                tempCarImgs.add(carUri);
-                                car.setImages(tempCarImgs);
+                                tempCarImages.add(carUri);
+                                displayImageList();
                                 createToast("Upload success");
-                                editMode();
+                                System.out.println("log EDIT MODE" + editMode);
+                                //editMode();
                             });
 
                         })
