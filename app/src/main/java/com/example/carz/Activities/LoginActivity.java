@@ -36,7 +36,12 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login);
         userRepo = UserRepo.getInstance();
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
+        if (user != null){
+            login(user);
+        }
     }
 
     /**
@@ -50,17 +55,24 @@ public class LoginActivity extends AppCompatActivity {
         EditText passT = findViewById(R.id.password);
         e_pass = passT.getText().toString();
 
-        userRepo.signIn(e_email, e_pass, task -> {
-            if (task.isSuccessful()) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                login(user);
-            } else {
-                invalidLogin();
-            }
-        });
-
+        if (!e_email.equals("") && !e_pass.equals("")){
+            userRepo.signIn(e_email, e_pass, task -> {
+                if (task.isSuccessful()) {
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    login(user);
+                } else {
+                    invalidLogin();
+                }
+            });
+        } else {
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "Please fill in all the fields",
+                    Toast.LENGTH_SHORT
+            );
+            toast.setGravity(Gravity.CENTER, 0, 200);
+            toast.show();
+        }
     }
-
     /**
      * Navigate to CreateUser Activity
      * @param view curr view

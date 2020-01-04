@@ -22,6 +22,7 @@ import com.example.carz.Database.Entities.CarAdapter;
 import com.example.carz.R;
 import com.example.carz.Viewmodel.CarListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -200,6 +201,7 @@ public class CarListActivity  extends AppCompatActivity {
                     break;
 
                 case 3:
+                    FirebaseAuth.getInstance().signOut();
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.clear();
                     editor.apply();

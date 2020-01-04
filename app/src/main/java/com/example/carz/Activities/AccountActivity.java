@@ -24,6 +24,7 @@ import com.example.carz.R;
 import com.example.carz.Util.OnAsyncEventListener;
 import com.example.carz.Viewmodel.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * Account details activity
@@ -56,6 +57,7 @@ public class AccountActivity extends AppCompatActivity {
         //listener for Logout button (destroys session)
         Button logoutBtn = findViewById(R.id.logout_btn);
         logoutBtn.setOnClickListener(view -> {
+            FirebaseAuth.getInstance().signOut();
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.clear();
             editor.apply();
