@@ -14,6 +14,9 @@ import com.example.carz.R;
 import com.example.carz.Database.Repository.UserRepo;
 import com.example.carz.Util.OnAsyncEventListener;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * New account creation activity
  */
@@ -60,38 +63,41 @@ public class CreateUserActivity extends AppCompatActivity {
         EditText telephoneT = findViewById(R.id.telephone);
         String telephone = telephoneT.getText().toString();
 
-        //make sure no fields are empty
-        if(     email.equals("")
-                || firstName.equals("")
-                || lastName.equals("")
-                || pass1.equals("")
-                || pass2.equals("")
-                || address1.equals("")
-                || telephone.equals("")
-        ) createToast("Please complete all of the fields!");
-        else {
+        if (isEmailValid(email) && isPassLongEnough(pass1)){
+            //make sure no fields are empty
+            if(     email.equals("")
+                    || firstName.equals("")
+                    || lastName.equals("")
+                    || pass1.equals("")
+                    || pass2.equals("")
+                    || address1.equals("")
+                    || telephone.equals("")
+            ) createToast("Please complete all of the fields!");
+            else {
+                //check if both password fields are the same
+                if (pass1.equals(pass2)) {
 
-            //check if both password fields are the same
-            if (pass1.equals(pass2)) {
+                    User user = new User(firstName, lastName, email, pass1, telephone, address1);
 
-                User user = new User(firstName, lastName, email, pass1, telephone, address1);
+                    ur.register(user, new OnAsyncEventListener() {
+                        @Override
+                        public void onSuccess() {
+                            Log.d(TAG, "createUserWithEmail: success");
+                            setResponse(true);
+                        }
 
-                ur.register(user, new OnAsyncEventListener() {
-                    @Override
-                    public void onSuccess() {
-                        Log.d(TAG, "createUserWithEmail: success");
-                        setResponse(true);
-                    }
+                        @Override
+                        public void onFailure(Exception e) {
+                            Log.d(TAG, "createUserWithEmail: failure", e);
+                            setResponse(false);
+                        }
+                    });
 
-                    @Override
-                    public void onFailure(Exception e) {
-                        Log.d(TAG, "createUserWithEmail: failure", e);
-                        setResponse(false);
-                    }
-                });
-
-            } else
-                createToast("Your passwords do not match!");
+                } else
+                    createToast("Your passwords do not match!");
+            }
+        } else {
+            createToast("Invalid Email address or password too short !");
         }
     }
 
@@ -118,6 +124,29 @@ public class CreateUserActivity extends AppCompatActivity {
             createToast("Account created successfully!");
         } else
             createToast("Error while creating user...");
+    }
+
+    /**
+     * method is used for checking valid email id format.
+     *
+     * @param email
+     * @return boolean true for valid false for invalid
+     */
+    public static boolean isEmailValid(String email) {
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    /**
+     * @param pass
+     * @return boolean true for valid false for invalid
+     */
+    public static boolean isPassLongEnough(String pass) {
+        if(pass.length() >= 6) return true;
+        else return false;
+
     }
 
 }

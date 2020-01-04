@@ -16,6 +16,9 @@ import com.example.carz.Database.Repository.UserRepo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class LoginActivity extends AppCompatActivity {
 
     String e_email = "";
@@ -122,5 +125,6 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
+
 }
 
