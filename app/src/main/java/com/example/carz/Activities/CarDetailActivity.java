@@ -303,11 +303,11 @@ public class CarDetailActivity extends AppCompatActivity {
         conditionE.setText(car.getCondition());
 
         TextView userPhoneTextView = findViewById(R.id.phone_2);
-        String phone = "Contact number : " + car.getUser();
+        String phone = "Contact number : " + carUser.getTelephone();
         userPhoneTextView.setText(phone);
 
         TextView userMailTextView = findViewById(R.id.mail_2);
-        String mail = "Contact email : " + car.getUser();
+        String mail = "Contact email : " + carUser.getEmail();
         userMailTextView.setText(mail);
 
         //Makes FAB visible
