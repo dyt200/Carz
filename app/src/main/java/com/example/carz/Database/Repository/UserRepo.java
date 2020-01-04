@@ -34,7 +34,7 @@ public class UserRepo {
     }
 
     public void signIn(final String email, final String password,
-                       final OnCompleteListener<AuthResult> listener) {
+                            final OnCompleteListener<AuthResult> listener) {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(listener);
     }

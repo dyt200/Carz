@@ -80,24 +80,24 @@ public class CarListLiveData extends LiveData<List<Car>> {
                 cars.add(entity);
             }
             else if (entity.getManufacturer() == carSearchParameters.getManufacturer()){
-                cars.add(entity);
-            }
-            else if (entity.getMileage() >= carSearchParameters.getMinMileage() && carSearchParameters.getMinMileage() > 0 ){
-                cars.add(entity);
-            }
-            else if (entity.getMileage() <= carSearchParameters.getMaxMileage() && carSearchParameters.getMaxMileage() > 0){
-                cars.add(entity);
-            }
-            else if (entity.getYear() >= carSearchParameters.getMinYear() && carSearchParameters.getMinYear() > 0){
-                cars.add(entity);
-            }
-            else if (entity.getYear() <= carSearchParameters.getMaxYear() && carSearchParameters.getMaxYear() > 0){
-                cars.add(entity);
-            }
-            else if (entity.getModel().equals(carSearchParameters.getModel())){
-                cars.add(entity);
-            }
+            cars.add(entity);
         }
+        else if (entity.getMileage() >= carSearchParameters.getMinMileage() && carSearchParameters.getMinMileage() > 0 ){
+            cars.add(entity);
+        }
+        else if (entity.getMileage() <= carSearchParameters.getMaxMileage() && carSearchParameters.getMaxMileage() > 0){
+            cars.add(entity);
+        }
+        else if (entity.getYear() >= carSearchParameters.getMinYear() && carSearchParameters.getMinYear() > 0){
+            cars.add(entity);
+        }
+        else if (entity.getYear() <= carSearchParameters.getMaxYear() && carSearchParameters.getMaxYear() > 0){
+            cars.add(entity);
+        }
+        else if (entity.getModel().equals(carSearchParameters.getModel())){
+            cars.add(entity);
+        }
+    }
         return cars;
     }
 
