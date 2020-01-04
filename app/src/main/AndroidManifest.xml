@@ -18,7 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.CarDetailActivity"/>
+        <activity
+            android:name=".Activities.CarDetailActivity"
+            android:parentActivityName=".Activities.CarListActivity"
+            />
         <activity android:name=".Activities.LoginActivity"/>
         <activity android:name=".Activities.CarListActivity"/>
         <activity

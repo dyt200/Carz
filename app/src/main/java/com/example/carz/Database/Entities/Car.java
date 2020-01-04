@@ -154,18 +154,21 @@ public class Car {
     }
 
     //Returns the mileage in Swiss style
+    @Exclude
     public String getFormattedMileageString() {
         String mileString = NumberFormat.getNumberInstance(Locale.UK).format(mileage) + " km";
         return mileString.replaceAll(",", "'");
     }
 
     //Returns the price in Swiss style and in CHF
+    @Exclude
     public String getFormattedPriceString() {
         String priceString = NumberFormat.getNumberInstance(Locale.UK).format(price) + ".- CHF";
         return priceString.replaceAll(",", "'");
     }
 
     //returns the name of the manufacturer
+    @Exclude
     public String getManufacturerString() {
         String string;
         switch(this.manufacturer) {
@@ -192,6 +195,7 @@ public class Car {
     }
 
     //returns the name of the type
+    @Exclude
     public String getTypeString() {
         String string;
         switch(this.type) {

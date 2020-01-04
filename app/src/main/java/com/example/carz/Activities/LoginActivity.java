@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
+        // TODO Display dont diplay login page if user is allready connected
         if (user != null){
             login(user);
         }
